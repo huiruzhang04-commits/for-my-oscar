@@ -767,30 +767,7 @@ body {
     box-shadow: 0 2px 0 #222;
 }
 
-@media (max-width: 1000px) {
-    #game-container {
-        transform: scale(0.95);
-        transform-origin: top center;
-    }
-}
-
-@media (max-width: 800px) {
-    #game-container {
-        transform: scale(0.85);
-    }
-}
-
-@media (max-width: 600px) {
-    #game-container {
-        transform: scale(0.75);
-    }
-}
-
-@media (max-width: 480px) {
-    #game-container {
-        transform: scale(0.65);
-    }
-}
+/* OLD SCALE RULES REMOVED - replaced by responsive layout below */
 
 /* ==================== �ֻ��������ư�ť ==================== */
 #touch-controls {
@@ -890,43 +867,59 @@ body {
     }
 }
 
-/* ==================== ��Ӧʽ���� ==================== */
-/* ����Ϸ��������Ӧ */
+/* ==================== Responsive Layout ==================== */
+/* Game container - responsive width */
 #game-container {
     width: 100%;
     max-width: 960px;
-    padding: 0 10px;
+    margin: 0 auto;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
-/* �ö���״̬������Ӧ */
+/* Game header - responsive */
 #game-header {
     width: 100% !important;
     max-width: 960px;
     box-sizing: border-box;
 }
 
-/* �û�����������Ӧ */
+/* Canvas container - keep 3:2 aspect ratio */
 #game-canvas-container {
     width: 100% !important;
     max-width: 960px;
-    height: auto;
-    aspect-ratio: 960 / 640; /* ���� 3:2 ���� */
+    height: auto !important;
+    aspect-ratio: 960 / 640;
+    overflow: hidden;
+    margin: 0 auto;
 }
 
-/* �û�������Ӧ */
+/* Canvas - fill container */
 #game-canvas {
     width: 100% !important;
     height: 100% !important;
+    display: block;
 }
 
-/* �ֻ��˵���������ťλ�ã������ڵ���Ϸ */
+/* Touch controls - inside game on mobile */
 @media (max-width: 1024px) {
     #touch-controls {
         display: flex !important;
         justify-content: space-between;
         align-items: flex-end;
-        padding: 0 20px 20px 20px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 0 15px calc(env(safe-area-inset-bottom) + 10px) 15px;
         box-sizing: border-box;
+        z-index: 9999;
+        background: linear-gradient(transparent, rgba(0,0,0,0.3));
+        pointer-events: none;
+    }
+    
+    #touch-controls .touch-btn {
+        pointer-events: all;
     }
     
     .touch-left, .touch-right {
@@ -938,27 +931,31 @@ body {
     }
     
     .touch-btn {
-        width: 70px;
-        height: 70px;
-        font-size: 28px;
+        width: 65px;
+        height: 65px;
+        font-size: 26px;
     }
 }
 
-/* С���ֻ���һ���Ż� */
+/* Small phone optimization */
 @media (max-width: 480px) {
     .touch-btn {
-        width: 60px;
-        height: 60px;
-        font-size: 24px;
+        width: 55px;
+        height: 55px;
+        font-size: 22px;
     }
     
     #game-header {
         flex-wrap: wrap;
         gap: 5px;
-        padding: 8px 10px;
+        padding: 8px 5px;
     }
     
     .ui-item {
-        font-size: 14px;
+        font-size: 13px;
+    }
+    
+    #game-container {
+        padding: 5px;
     }
 }
