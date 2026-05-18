@@ -780,21 +780,20 @@ body {
     }
 }
 
-/* ==================== ÊÖ»ú´¥Ãþ¿ØÖÆ°´Å¥ ==================== */
+/* ==================== ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ°ï¿½Å¥ ==================== */
 #touch-controls {
     position: fixed;
     bottom: 20px;
     left: 0;
     right: 0;
     height: 200px;
-    pointer-events: none;
-    z-index: 1000;
+    z-index: 9999;
     display: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     #touch-controls {
-        display: block;
+        display: block !important;
     }
     
     #game-controls {
