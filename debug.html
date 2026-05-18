@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Debug</title>
+    <style>
+        body { margin: 0; background: #000; color: #0f0; font-family: monospace; }
+        #log { padding: 20px; white-space: pre-wrap; }
+    </style>
+</head>
+<body><div id="log">Loading...</div>
+<script>
+const log = (msg) => { document.getElementById('log').textContent += '\n' + msg; console.log(msg); };
+try {
+    log('1. DOM ready');
+    const canvas = document.getElementById('game-canvas');
+    log('2. Canvas: ' + !!canvas);
+    
+    // Test sprite loading
+    log('3. Loading sprites...');
+    // Load SpriteLoader
+</script>
+<script src="js/data/words.js"></script>
+<script src="js/data/progress.js"></script>
+<script src="js/engine/Input.js"></script>
+<script src="js/engine/Physics.js"></script>
+<script src="js/engine/SpriteLoader.js"></script>
+<script>
+(async () => {
+    try {
+        await window.spriteLoader.loadAll();
+        log('4. Sprites loaded: ' + window.spriteLoader.images.size);
+        
+        // Check main-menu element
+        const menu = document.getElementById('main-menu');
+        log('5. Main menu element: ' + !!menu);
+        if (menu) {
+            log('6. Menu classes: ' + menu.className);
+            log('7. Menu display (computed): ' + getComputedStyle(menu).display);
+            log('8. Menu z-index: ' + getComputedStyle(menu).zIndex);
+            log('9. Menu offsetTop: ' + menu.offsetTop);
+            log('10. Menu innerHTML length: ' + menu.innerHTML.length);
+        }
+        
+        // Check canvas container
+        const container = document.getElementById('game-canvas-container');
+        if (container) {
+            log('11. Container position: ' + getComputedStyle(container).position);
+            log('12. Container size: ' + container.offsetWidth + 'x' + container.offsetHeight);
+        }
+        
+        log('13. === ALL CHECKS PASSED ===');
+    } catch(e) {
+        log('ERROR: ' + e.message + '\n' + e.stack);
+    }
+})();
+</script>
+<canvas id="game-canvas" width="960" height="640"></canvas>
+<!-- Include the full HTML structure -->
+<div id="game-canvas-container" style="position:relative;width:960px;height:640px;">
+<div id="main-menu" class="menu-screen">
+    <h1>Test Menu</h1>
+    <button id="start-btn">Start</button>
+</div>
+</div>
+</body>
+</html>

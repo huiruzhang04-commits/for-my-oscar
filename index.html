@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍄 马里奥英语游戏</title>
+    <link rel="stylesheet" href="css/game.css">
+</head>
+<body>
+    <div id="game-container">
+        <div id="game-header">
+            <div class="ui-item">
+                <span class="ui-coins">🪙</span>
+                <span id="coin-count">0</span>
+            </div>
+            <div class="ui-item">
+                <span class="ui-words">📖</span>
+                <span id="level-info">L1 Aa</span>
+                <span id="word-progress">0/4</span>
+            </div>
+            <div class="ui-item">
+                <span>⏱️</span>
+                <span id="game-timer">0:00</span>
+            </div>
+            <div class="ui-item lives-display">
+                <span>❤️ 生命:</span>
+                <span id="lives-count">3</span>
+                <div class="lives-hearts" id="lives-hearts">
+                    <span class="heart">❤️</span>
+                    <span class="heart">❤️</span>
+                    <span class="heart">❤️</span>
+                </div>
+            </div>
+            <div class="ui-item">
+                <span>进度</span>
+                <div class="ui-progress-bar">
+                    <div id="progress-fill" class="ui-progress-fill" style="width: 0%"></div>
+                </div>
+            </div>
+            <button id="pause-btn" class="pause-btn">⏸ 暂停</button>
+        </div>
+
+        <div id="game-canvas-container">
+            <canvas id="game-canvas" width="960" height="640"></canvas>
+
+            <div id="main-menu" class="menu-screen">
+                <h1>🍄 马里奥英语游戏</h1>
+                <p class="subtitle">在跑酷中学习英语！</p>
+                <div class="menu-buttons">
+                    <button id="start-btn" class="menu-btn primary">🎮 开始冒险</button>
+                    <button id="world-select-btn" class="menu-btn">🌍 选择世界</button>
+                    <button id="word-library-btn" class="menu-btn">📖 单词库</button>
+                    <button id="settings-btn" class="menu-btn">⚙️ 设置</button>
+                </div>
+            </div>
+
+            <div id="word-card-modal" class="modal hidden">
+                <div class="word-card">
+                    <div class="word-card-header">
+                        <span id="word-icon" class="word-icon">🍎</span>
+                        <div class="word-text">
+                            <span id="word-english" class="word-english">apple</span>
+                            <span id="word-phonetic" class="word-phonetic">/ˈæpl/</span>
+                        </div>
+                    </div>
+                    <div id="word-sentence" class="word-sentence">
+                        I want to eat an <span class="blank"></span>.
+                    </div>
+                    <div id="word-options" class="word-options">
+                    </div>
+                </div>
+            </div>
+
+            <div id="boss-card-modal" class="modal hidden">
+                <div class="boss-screen">
+                    <div class="boss-hp-bar">
+                        <div id="boss-hp-fill" class="boss-hp-fill" style="width: 100%"></div>
+                    </div>
+                    <div id="boss-hp-label" class="boss-hp-label">库巴 HP</div>
+                    <div id="boss-sprite" class="boss-sprite"></div>
+                    <div class="word-card word-card-boss">
+                        <div id="boss-progress" class="boss-progress">
+                            <div class="boss-dot"></div>
+                            <div class="boss-dot"></div>
+                            <div class="boss-dot"></div>
+                        </div>
+                        <div id="boss-sentence" class="word-card-header">
+                            <span id="boss-english">I want to eat an ___.</span>
+                        </div>
+                        <div id="boss-translation" class="word-sentence">
+                            我想吃一个___。
+                        </div>
+                        <div id="boss-options" class="word-options">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="level-complete-modal" class="modal hidden">
+                <div class="level-complete">
+                    <div id="coin-rain" class="coin-rain"></div>
+                    <div id="complete-title" class="level-complete-title">🎉 第一关通过！</div>
+                    <div id="complete-subtitle" class="level-complete-sub">Letter Aa</div>
+                    <div class="level-complete-stats">
+                        <div class="stat-box">
+                            <div id="correct-count" class="stat-num">4/4</div>
+                            <div class="stat-label">答对单词</div>
+                        </div>
+                        <div class="stat-box">
+                            <div id="coins-earned" class="stat-num">25</div>
+                            <div class="stat-label">金币</div>
+                        </div>
+                        <div class="stat-box">
+                            <div id="letters-learned" class="stat-num">Aa ✓</div>
+                            <div class="stat-label">已学字母</div>
+                        </div>
+                    </div>
+                    <button id="next-level-btn" class="level-complete-btn">进入第二关 →</button>
+                </div>
+            </div>
+
+            <div id="world-select-modal" class="modal hidden">
+                <div class="world-select">
+                    <h2>🌍 选择世界</h2>
+                    <div id="world-list" class="world-list">
+                    </div>
+                    <button id="close-world-btn" class="close-btn">← 返回</button>
+                </div>
+            </div>
+
+            <div id="pause-modal" class="modal hidden">
+                <div class="pause-menu">
+                    <h2>⏸️ 游戏暂停</h2>
+                    <div class="pause-buttons">
+                        <button id="resume-btn" class="menu-btn primary">▶️ 继续</button>
+                        <button id="restart-btn" class="menu-btn">🔄 重新开始</button>
+                        <button id="quit-btn" class="menu-btn">🏠 返回主菜单</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="level-select-modal" class="modal hidden">
+                <div class="level-select">
+                    <h2 id="world-title">🌿 世界1：草地王国</h2>
+                    <div id="level-list" class="level-list">
+                    </div>
+                    <button id="close-level-btn" class="close-btn">← 返回</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="game-controls">
+            <div class="control-hint">
+                <span class="key">←</span> <span class="key">→</span> 移动
+                <span class="key">空格</span> 跳跃
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data/words.js"></script>
+    <script src="js/data/progress.js"></script>
+    <script src="js/engine/Input.js"></script>
+    <script src="js/engine/Physics.js"></script>
+    <script src="js/engine/SpriteLoader.js"></script>
+    <script src="js/engine/Renderer.js"></script>
+    <script src="js/engine/SoundManager.js"></script>
+    <script src="js/entities/Player.js"></script>
+    <script src="js/entities/Goomba.js"></script>
+    <script src="js/entities/Items.js"></script>
+    <script src="js/entities/Boss.js"></script>
+    <script src="js/levels/LevelManager.js"></script>
+    <script src="js/ui/WordCard.js"></script>
+    <script src="js/ui/GameUI.js"></script>
+    <script src="js/engine/GameEngine.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,2011 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🍄 马里奥英语游戏 · 全部CSS素材</title>
+<style>
+/* ========== 基础 ========== */
+body { margin: 0; padding: 40px; background: #222; font-family: 'Arial', sans-serif; color: #fff; }
+h1 { color: #FFD700; font-size: 22px; margin-bottom: 8px; }
+h2 { color: #aaa; font-size: 16px; margin: 40px 0 16px; border-bottom: 1px solid #444; padding-bottom: 8px; }
+h3 { margin: 0; }
+.desc { color: #888; font-size: 13px; margin-bottom: 16px; }
+.preview { display: flex; gap: 30px; flex-wrap: wrap; align-items: flex-start; margin-bottom: 20px; }
+.char-label { text-align: center; color: #fff; font-size: 14px; margin-top: 12px; text-shadow: 1px 1px 0 #000; }
+.pixel { display: inline-block; }
+
+/* 场景元素行 — 关键修复 */
+.scene-row {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: flex-start;
+  margin: 20px 0;
+}
+.scene-row > div {
+  flex-shrink: 0;
+}
+
+.toc { background: #1a1a2e; padding: 24px; border-radius: 12px; margin-bottom: 40px; }
+.toc h2 { margin-top: 0; border: none; padding: 0; }
+.toc a { color: #4CAF50; text-decoration: none; display: block; padding: 6px 0; font-size: 14px; }
+.toc a:hover { color: #8BC34A; }
+.section-divider { margin: 60px 0 30px; padding: 16px 0; border-top: 2px solid #333; }
+
+/* ================================================================ */
+/*  像素马里奥 + 场景元素（px- 前缀）                                 */
+/* ================================================================ */
+
+
+  /* ========== 像素马里奥 16x16 ========== */
+  .mario-pixel {
+    display: grid;
+    grid-template-columns: repeat(16, 6px);
+    grid-template-rows: repeat(16, 6px);
+    gap: 0;
+    image-rendering: pixelated;
+  }
+  .mario-pixel-big {
+    grid-template-columns: repeat(16, 10px);
+    grid-template-rows: repeat(16, 10px);
+  }
+  .mario-pixel-star {
+    grid-template-columns: repeat(16, 6px);
+    grid-template-rows: repeat(16, 6px);
+    animation: starPower 0.2s infinite;
+  }
+  @keyframes starPower {
+    0% { filter: hue-rotate(0deg) brightness(1.2); }
+    33% { filter: hue-rotate(120deg) brightness(1.4); }
+    66% { filter: hue-rotate(240deg) brightness(1.2); }
+    100% { filter: hue-rotate(360deg) brightness(1.4); }
+  }
+
+  /* 颜色 */
+  .px-r { background: #E53935; } /* 红 帽子/衣服 */
+  .px-s { background: #FFCCBC; } /* 肤色 */
+  .px-b { background: #6D4C41; } /* 棕 头发/胡子/鞋 */
+  .px-u { background: #1E88E5; } /* 蓝 工装裤 */
+  .px-y { background: #FDD835; } /* 黄 纽扣 */
+  .px-w { background: #FFFFFF; } /* 白 手套/眼睛 */
+  .px-e { background: #1565C0; } /* 深蓝 裤子阴影 */
+  .px-x { background: transparent; } /* 空 */
+
+  /* 像素跳跃动画 */
+  .mario-pixel-wrap { animation: pixelBounce 0.8s ease-in-out infinite; }
+  @keyframes pixelBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+
+  /* ========== 场景元素 像素版 ========== */
+  .coin-pixel {
+    display: grid;
+    grid-template-columns: repeat(8, 5px);
+    grid-template-rows: repeat(8, 5px);
+    gap: 0;
+    animation: coinSpin 1s ease-in-out infinite;
+  }
+  @keyframes coinSpin {
+    0%, 100% { transform: scaleX(1); }
+    50% { transform: scaleX(0.2); }
+  }
+  .px-g { background: #FFD700; }
+  .px-d { background: #E65100; }
+
+  .block-pixel {
+    display: grid;
+    grid-template-columns: repeat(8, 5px);
+    grid-template-rows: repeat(8, 5px);
+    gap: 0;
+    animation: blockFloat 2s ease-in-out infinite;
+  }
+  @keyframes blockFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+  }
+  .px-o { background: #FFA000; }
+  .px-p { background: #BF360C; }
+
+  .mushroom-pixel {
+    display: grid;
+    grid-template-columns: repeat(8, 5px);
+    grid-template-rows: repeat(8, 5px);
+    gap: 0;
+  }
+
+  .star-pixel {
+    display: grid;
+    grid-template-columns: repeat(8, 5px);
+    grid-template-rows: repeat(8, 5px);
+    gap: 0;
+    animation: starGlow 0.5s ease-in-out infinite alternate;
+  }
+  @keyframes starGlow {
+    0% { filter: brightness(1); }
+    100% { filter: brightness(1.3); }
+  }
+
+  .goomba-pixel {
+    display: grid;
+    grid-template-columns: repeat(8, 5px);
+    grid-template-rows: repeat(8, 5px);
+    gap: 0;
+    animation: goombaWalk 0.4s steps(2) infinite;
+  }
+  @keyframes goombaWalk {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(3px); }
+  }
+
+  /* 移动平台动画 */
+  @keyframes platformMove {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(20px); }
+  }
+
+  /* 消失云平台动画 */
+  @keyframes cloudFade {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+  .px-n { background: #8D6E63; }
+  .px-m { background: #5D4037; }
+
+  .pipe-pixel {
+    display: grid;
+    grid-template-columns: repeat(8, 5px);
+    grid-template-rows: repeat(12, 5px);
+    gap: 0;
+  }
+  .px-l { background: #4CAF50; }
+  .px-k { background: #2E7D32; }
+  .px-t { background: #000000; } /* 纯黑 */
+  .px-h { background: #1B5E20; }
+
+  
+  .specs h3 { color: #FFD700; margin-top: 16px; font-size: 15px; }
+  .specs code { background: rgba(255,255,255,0.15); padding: 2px 6px; border-radius: 4px; font-size: 12px; }
+
+
+/* ================================================================ */
+/*  库巴                                                             */
+/* ================================================================ */
+
+
+  .koopa-container {
+    display: flex;
+    gap: 80px;
+    align-items: flex-end;
+  }
+
+  .koopa-label {
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+    margin-top: 16px;
+  }
+
+  /* ========== 库巴主体 ========== */
+  .koopa {
+    position: relative;
+    width: 200px;
+    height: 260px;
+  }
+
+  /* 角 */
+  .horn {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 30px solid #8B4513;
+    z-index: 10;
+  }
+  .horn::after {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: -8px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 20px solid #CD853F;
+  }
+  .horn-left {
+    top: 20px;
+    left: 30px;
+    transform: rotate(-20deg);
+  }
+  .horn-right {
+    top: 20px;
+    right: 30px;
+    transform: rotate(20deg);
+  }
+
+  /* 头部 */
+  .head {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 90px;
+    background: #4CAF50;
+    border-radius: 50% 50% 40% 40%;
+    z-index: 5;
+    overflow: visible;
+  }
+
+  /* 头部鳞片纹理 */
+  .head::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 15px;
+    width: 90px;
+    height: 30px;
+    background: #388E3C;
+    border-radius: 50%;
+  }
+
+  /* 眉毛 */
+  .eyebrow {
+    position: absolute;
+    width: 30px;
+    height: 8px;
+    background: #2E7D32;
+    border-radius: 4px;
+    top: 20px;
+    z-index: 8;
+  }
+  .eyebrow-left {
+    left: 18px;
+    transform: rotate(-15deg);
+  }
+  .eyebrow-right {
+    right: 18px;
+    transform: rotate(15deg);
+  }
+
+  /* 眼睛 */
+  .eye {
+    position: absolute;
+    width: 24px;
+    height: 28px;
+    background: #fff;
+    border-radius: 50%;
+    top: 28px;
+    z-index: 8;
+    overflow: hidden;
+    border: 2px solid #2E7D32;
+  }
+  .eye::before {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #d32f2f;
+    border-radius: 50%;
+    top: 8px;
+    left: 6px;
+  }
+  .eye::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #fff;
+    border-radius: 50%;
+    top: 6px;
+    left: 10px;
+  }
+  .eye-left {
+    left: 20px;
+  }
+  .eye-right {
+    right: 20px;
+  }
+
+  /* 鼻子 */
+  .nose {
+    position: absolute;
+    width: 20px;
+    height: 16px;
+    background: #388E3C;
+    border-radius: 50%;
+    top: 42px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9;
+  }
+
+  /* 嘴巴 */
+  .mouth {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 25px;
+    background: #c62828;
+    border-radius: 0 0 30px 30px;
+    z-index: 8;
+    overflow: hidden;
+  }
+  /* 牙齿 */
+  .mouth::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 8px;
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 16px 0 0 #fff, 32px 0 0 #fff;
+  }
+  /* 舌头 */
+  .mouth::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 12px;
+    background: #e53935;
+    border-radius: 50% 50% 0 0;
+  }
+
+  /* 身体/壳 */
+  .shell {
+    position: absolute;
+    top: 110px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 160px;
+    height: 120px;
+    background: #2E7D32;
+    border-radius: 50% 50% 45% 45%;
+    z-index: 3;
+    overflow: hidden;
+  }
+
+  /* 壳的浅色腹部 */
+  .shell::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 80px;
+    background: #F9A825;
+    border-radius: 50% 50% 45% 45%;
+  }
+
+  /* 壳的尖刺 */
+  .shell-spikes {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 160px;
+    height: 30px;
+    z-index: 4;
+  }
+  .spike {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 20px solid #1B5E20;
+  }
+  .spike:nth-child(1) { left: 10px; top: 5px; }
+  .spike:nth-child(2) { left: 35px; top: 0; }
+  .spike:nth-child(3) { left: 60px; top: -3px; }
+  .spike:nth-child(4) { left: 85px; top: 0; }
+  .spike:nth-child(5) { left: 110px; top: 5px; }
+
+  /* 壳的纹路 */
+  .shell-lines {
+    position: absolute;
+    top: 115px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140px;
+    height: 100px;
+    z-index: 4;
+  }
+  .shell-line {
+    position: absolute;
+    background: #1B5E20;
+    border-radius: 50%;
+  }
+  .shell-line:nth-child(1) {
+    width: 60px; height: 4px; top: 15px; left: 40px; transform: rotate(-10deg);
+  }
+  .shell-line:nth-child(2) {
+    width: 50px; height: 4px; top: 35px; left: 45px; transform: rotate(5deg);
+  }
+  .shell-line:nth-child(3) {
+    width: 40px; height: 4px; top: 55px; left: 50px; transform: rotate(-5deg);
+  }
+
+  /* 手臂 */
+  .arm {
+    position: absolute;
+    width: 40px;
+    height: 50px;
+    background: #4CAF50;
+    border-radius: 20px;
+    top: 130px;
+    z-index: 6;
+  }
+  .arm-left {
+    left: 5px;
+    transform: rotate(20deg);
+  }
+  .arm-right {
+    right: 5px;
+    transform: rotate(-20deg);
+  }
+
+  /* 爪子 */
+  .claw {
+    position: absolute;
+    bottom: -5px;
+    width: 100%;
+    height: 18px;
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+  }
+  .claw-finger {
+    width: 8px;
+    height: 18px;
+    background: #fff;
+    border-radius: 0 0 4px 4px;
+    border: 1px solid #e0e0e0;
+  }
+
+  /* 腿 */
+  .leg {
+    position: absolute;
+    width: 36px;
+    height: 45px;
+    background: #4CAF50;
+    border-radius: 18px;
+    bottom: 0;
+    z-index: 6;
+  }
+  .leg-left {
+    left: 35px;
+  }
+  .leg-right {
+    right: 35px;
+  }
+
+  /* 脚 */
+  .foot {
+    position: absolute;
+    bottom: -8px;
+    width: 45px;
+    height: 18px;
+    background: #388E3C;
+    border-radius: 22px;
+    left: -5px;
+  }
+  .foot::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 8px;
+    display: flex;
+    justify-content: center;
+    gap: 3px;
+  }
+  .toe {
+    width: 10px;
+    height: 12px;
+    background: #fff;
+    border-radius: 0 0 5px 5px;
+    border: 1px solid #e0e0e0;
+    position: absolute;
+    bottom: -4px;
+  }
+  .toe:nth-child(1) { left: 5px; }
+  .toe:nth-child(2) { left: 17px; }
+  .toe:nth-child(3) { left: 29px; }
+
+  /* 尾巴 */
+  .tail {
+    position: absolute;
+    bottom: 30px;
+    right: -15px;
+    width: 30px;
+    height: 30px;
+    background: #2E7D32;
+    border-radius: 50% 0 50% 50%;
+    transform: rotate(45deg);
+    z-index: 2;
+  }
+
+  /* 火焰效果（Boss战用） */
+  .flame {
+    position: absolute;
+    width: 20px;
+    height: 25px;
+    background: radial-gradient(ellipse, #FF6D00, #FF3D00, transparent);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    animation: flicker 0.3s infinite alternate;
+  }
+  .flame-1 { left: -30px; top: 50px; animation-delay: 0s; }
+  .flame-2 { left: -25px; top: 70px; animation-delay: 0.15s; width: 16px; height: 20px; }
+
+  @keyframes flicker {
+    0% { transform: scale(1) rotate(-5deg); opacity: 0.9; }
+    100% { transform: scale(1.1) rotate(5deg); opacity: 1; }
+  }
+
+  /* ========== 小库巴（普通敌人版） ========== */
+  .koopa-mini {
+    position: relative;
+    width: 80px;
+    height: 100px;
+    transform: scale(0.8);
+  }
+
+  /* ========== 变体：被踩后的龟壳 ========== */
+  .shell-only {
+    position: relative;
+    width: 120px;
+    height: 70px;
+  }
+  .shell-only .shell-
+  .shell-only .shell-body::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90px;
+    height: 45px;
+    background: #F9A825;
+    border-radius: 50% 50% 45% 45%;
+  }
+  .shell-only .shell-spikes-mini {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 20px;
+  }
+  .shell-only .spike-mini {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 14px solid #1B5E20;
+  }
+  .shell-only .spike-mini:nth-child(1) { left: 10px; }
+  .shell-only .spike-mini:nth-child(2) { left: 30px; top: -3px; }
+  .shell-only .spike-mini:nth-child(3) { left: 50px; top: -5px; }
+  .shell-only .spike-mini:nth-child(4) { left: 70px; top: -3px; }
+  .shell-only .spike-mini:nth-child(5) { left: 90px; }
+
+  /* 动画 */
+  .koopa-boss {
+    animation: bossIdle 1.5s ease-in-out infinite;
+  }
+  @keyframes bossIdle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+
+  .koopa-hurt {
+    animation: bossHurt 0.3s ease-in-out;
+  }
+  @keyframes bossHurt {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-20px); }
+    50% { transform: translateX(20px); }
+    75% { transform: translateX(-10px); }
+    100% { transform: translateX(0); }
+  }
+
+  /* ========== 设计说明 ========== */
+  
+  
+  
+
+.koopa-container { display: flex; gap: 80px; align-items: flex-end; }
+.koopa-label { text-align: center; color: #fff; font-size: 14px; margin-top: 16px; }
+
+/* ================================================================ */
+/*  UI 组件                                                          */
+/* ================================================================ */
+
+  body {
+    margin: 0;
+    padding: 40px;
+    background: #222;
+    font-family: 'Arial', sans-serif;
+    color: #fff;
+  }
+  h1 { color: #FFD700; font-size: 22px; margin-bottom: 8px; }
+  h2 { color: #aaa; font-size: 16px; margin: 40px 0 16px; border-bottom: 1px solid #444; padding-bottom: 8px; }
+  .desc { color: #888; font-size: 13px; margin-bottom: 16px; }
+  .preview { display: flex; gap: 30px; flex-wrap: wrap; align-items: flex-start; margin-bottom: 20px; }
+
+  /* ========== 1. 游戏画布背景 ========== */
+  .game-canvas {
+    width: 480px;
+    height: 320px;
+    background: linear-gradient(180deg, #5c94fc 0%, #5c94fc 60%, #8BCE63 60%, #8BCE63 62%, #5a8a2a 62%);
+    border: 3px solid #333;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    image-rendering: pixelated;
+  }
+  /* 云 */
+  .cloud {
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+    opacity: 0.9;
+  }
+  .cloud-1 { width: 50px; height: 24px; top: 30px; left: 60px; }
+  .cloud-1::before { content:''; position:absolute; width:30px; height:20px; background:#fff; border-radius:50%; top:-10px; left:10px; }
+  .cloud-2 { width: 40px; height: 20px; top: 50px; left: 200px; }
+  .cloud-2::before { content:''; position:absolute; width:24px; height:16px; background:#fff; border-radius:50%; top:-8px; left:8px; }
+  .cloud-3 { width: 55px; height: 26px; top: 25px; left: 350px; }
+  .cloud-3::before { content:''; position:absolute; width:34px; height:22px; background:#fff; border-radius:50%; top:-12px; left:12px; }
+  /* 地面砖块 */
+  .ground {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 64px;
+    background: #c84c09;
+    display: grid;
+    grid-template-columns: repeat(30, 16px);
+    grid-template-rows: repeat(4, 16px);
+    gap: 0;
+  }
+  .brick { border: 1px solid #a0360a; box-sizing: border-box; }
+  .brick-light { background: #d4621a; border: 1px solid #a0360a; box-sizing: border-box; }
+  /* 山 */
+  .hill {
+    position: absolute;
+    bottom: 64px;
+    width: 80px;
+    height: 40px;
+    background: #6ab04c;
+    border-radius: 40px 40px 0 0;
+  }
+  .hill-1 { left: 30px; }
+  .hill-2 { left: 280px; width: 60px; height: 30px; border-radius: 30px 30px 0 0; }
+
+  /* ========== 2. 单词卡 ========== */
+  .word-card {
+    width: 320px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    text-align: center;
+    color: #333;
+  }
+  .word-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .word-icon {
+    font-size: 40px;
+    line-height: 1;
+  }
+  .word-english {
+    font-size: 32px;
+    font-weight: 800;
+    color: #1a1a2e;
+    letter-spacing: 1px;
+  }
+  .word-sentence {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 16px;
+    padding: 8px 16px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    line-height: 1.5;
+  }
+  .word-sentence .blank {
+    display: inline-block;
+    width: 60px;
+    border-bottom: 3px solid #E53935;
+    margin: 0 4px;
+    vertical-align: bottom;
+  }
+  .word-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .word-option {
+    padding: 12px 16px;
+    background: #f0f0f0;
+    border: 3px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: #333;
+  }
+  .word-option:hover {
+    background: #e3f2fd;
+    border-color: #1E88E5;
+    transform: scale(1.02);
+  }
+  .word-option.correct {
+    background: #E8F5E9;
+    border-color: #4CAF50;
+    color: #2E7D32;
+    animation: pop 0.3s ease;
+  }
+  .word-option.wrong {
+    background: #FFEBEE;
+    border-color: #E53935;
+    color: #C62828;
+    animation: shake 0.3s ease;
+  }
+  @keyframes pop { 0%{transform:scale(1)} 50%{transform:scale(1.08)} 100%{transform:scale(1)} }
+  @keyframes shake { 0%{transform:translateX(0)} 25%{transform:translateX(-6px)} 50%{transform:translateX(6px)} 75%{transform:translateX(-3px)} 100%{transform:translateX(0)} }
+
+  /* 单词卡变体：Boss战（3题连续） */
+  .word-card-boss {
+    border: 4px solid #E53935;
+    position: relative;
+  }
+  .word-card-boss::before {
+    content: '🔥 库巴挑战';
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #E53935;
+    color: #fff;
+    padding: 4px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .boss-progress {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    margin-bottom: 12px;
+  }
+  .boss-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #e0e0e0;
+    border: 2px solid #bbb;
+  }
+  .boss-dot.active { background: #E53935; border-color: #C62828; }
+  .boss-dot.done { background: #4CAF50; border-color: #2E7D32; }
+
+  /* ========== 3. UI条 ========== */
+  .game-ui {
+    width: 480px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px;
+    background: #1a1a2e;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+  .ui-item { display: flex; align-items: center; gap: 6px; }
+  .ui-label { color: #888; font-size: 12px; }
+  .ui-value { color: #FFD700; font-weight: 700; font-size: 16px; }
+  .ui-coins { color: #FFD700; }
+  .ui-words { color: #4CAF50; }
+  .ui-progress-bar {
+    width: 120px;
+    height: 8px;
+    background: #333;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .ui-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4CAF50, #8BC34A);
+    border-radius: 4px;
+    transition: width 0.3s;
+  }
+
+  /* ========== 4. 通关画面 ========== */
+  .level-complete {
+    width: 480px;
+    height: 320px;
+    background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+  .level-complete-title {
+    font-size: 36px;
+    font-weight: 900;
+    color: #FFD700;
+    text-shadow: 3px 3px 0 #BF360C;
+    margin-bottom: 8px;
+  }
+  .level-complete-sub {
+    font-size: 18px;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+  .level-complete-stats {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+  .stat-box {
+    text-align: center;
+    background: rgba(255,255,255,0.1);
+    padding: 12px 20px;
+    border-radius: 12px;
+  }
+  .stat-num { font-size: 28px; font-weight: 900; color: #FFD700; }
+  .stat-label { font-size: 12px; color: #aaa; margin-top: 4px; }
+  .level-complete-btn {
+    padding: 12px 32px;
+    background: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #2E7D32;
+  }
+  .level-complete-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #2E7D32; }
+  /* 金币雨动画 */
+  .coin-rain {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+  }
+  .falling-coin {
+    position: absolute;
+    width: 16px; height: 16px;
+    background: radial-gradient(circle at 40% 40%, #FFD700, #FFA000);
+    border-radius: 50%;
+    border: 2px solid #E65100;
+    animation: fall linear infinite;
+  }
+  @keyframes fall {
+    0% { transform: translateY(-20px) rotate(0deg); opacity:1; }
+    100% { transform: translateY(340px) rotate(360deg); opacity:0.3; }
+  }
+
+  /* ========== 5. 库巴战画面 ========== */
+  .boss-screen {
+    width: 480px;
+    height: 320px;
+    background: linear-gradient(180deg, #1a0a2e 0%, #2d1b4e 60%, #3d2b1e 62%);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .boss-hp-bar {
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 16px;
+    background: #333;
+    border-radius: 8px;
+    border: 2px solid #666;
+    overflow: hidden;
+  }
+  .boss-hp-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #E53935, #FF5722);
+    border-radius: 6px;
+    transition: width 0.5s;
+  }
+  .boss-hp-label {
+    position: absolute;
+    top: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: #aaa;
+  }
+
+  /* ========== 6. 问号砖块弹出效果 ========== */
+  .block-popup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .block-popup .coin-fly {
+    width: 24px; height: 24px;
+    background: radial-gradient(circle at 40% 40%, #FFD700, #FFA000);
+    border-radius: 50%;
+    border: 2px solid #E65100;
+    animation: coinFly 0.6s ease-out forwards;
+  }
+  @keyframes coinFly {
+    0% { transform: translateY(0) scale(1); opacity:1; }
+    100% { transform: translateY(-40px) scale(0.5); opacity:0; }
+  }
+
+  /* ========== 7. 操作提示 ========== */
+  .controls-hint {
+    display: flex;
+    gap: 20px;
+    padding: 16px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 8px;
+  }
+  .key-hint {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #aaa;
+  }
+  .key-cap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: #333;
+    border: 2px solid #555;
+    border-radius: 6px;
+    font-size: 16px;
+    color: #fff;
+    box-shadow: 0 3px 0 #222;
+  }
+
+  /* 配色参考 */
+  .color-ref {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+  .color-swatch {
+    width: 60px;
+    height: 40px;
+    border-radius: 6px;
+    border: 2px solid #555;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 2px;
+    font-size: 9px;
+    color: #fff;
+    text-shadow: 0 1px 2px #000;
+  }
+
+
+@keyframes bubble { 0%{transform:translateY(0); opacity:0.8;} 100%{transform:translateY(-200px); opacity:0;} }
+@keyframes flicker { 0%{transform:scale(1) rotate(-5deg); opacity:0.9;} 100%{transform:scale(1.1) rotate(5deg); opacity:1;} }
+
+
+</style>
+</head>
+<body>
+
+<div class="toc">
+  <h2>📋 素材目录</h2>
+  <a href="#sec-0">0. 关卡元素 · 5个世界</a>
+  <a href="#sec-1">1. 游戏画布背景 · 5个世界</a>
+  <a href="#sec-2">2. 角色 · 马里奥 + 库巴</a>
+  <a href="#sec-3">3. 场景元素 · 像素版</a>
+  <a href="#sec-4">4. 单词卡 · 普通题</a>
+  <a href="#sec-5">5. Boss战单词卡 · 库巴挑战</a>
+  <a href="#sec-6">6. 游戏UI条</a>
+  <a href="#sec-7">7. 通关画面</a>
+  <a href="#sec-8">8. 库巴战画面</a>
+  <a href="#sec-9">9. 操作提示 · 手机端</a>
+  <a href="#sec-10">10. 操作提示 · 电脑端</a>
+  <a href="#sec-11">11. 单词库</a>
+  <a href="#sec-12">12. 配色参考</a>
+</div>
+
+<div class="section-divider" id="sec-0"></div>
+<h2>0. 关卡元素 · 5个世界</h2>
+<p class="desc">每个世界独有敌人和道具，共用金币、问号砖块、蘑菇、星星</p>
+<!-- 共用元素 -->
+<div style="margin-bottom:12px;">
+  <span style="color:#FFD700; font-size:14px; font-weight:700;">共用元素（所有世界）</span>
+  <div style="color:#888; font-size:12px; margin-top:4px;">🪙 金币 · ❓ 问号砖块 · 🍄 蘑菇 · ⭐ 星星 · 🐢 库巴（Boss）</div>
+</div>
+
+<!-- 世界1 草地 -->
+<h3 style="color:#4CAF50; font-size:14px; margin:20px 0 12px;">🌿 世界1：草地王国</h3>
+<div class="preview">
+  <div style="text-align:center;">
+    <div style="display:grid; grid-template-columns:repeat(8,5px); grid-template-rows:repeat(8,5px); gap:0;">
+      <div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div style="background:#8D6E63"></div><div style="background:#8D6E63"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#8D6E63"></div><div style="background:#8D6E63"></div><div style="background:#8D6E63"></div><div style="background:#8D6E63"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div style="background:#8D6E63"></div><div style="background:#8D6E63"></div><div style="background:#8D6E63"></div><div style="background:#8D6E63"></div><div style="background:#8D6E63"></div><div style="background:#8D6E63"></div><div class="px-x"></div>
+      <div style="background:#8D6E63"></div><div style="background:#fff"></div><div style="background:#fff"></div><div style="background:#8D6E63"></div><div style="background:#8D6E63"></div><div style="background:#fff"></div><div style="background:#fff"></div><div style="background:#8D6E63"></div>
+      <div style="background:#8D6E63"></div><div style="background:#fff"></div><div style="background:#5D4037"></div><div style="background:#8D6E63"></div><div style="background:#8D6E63"></div><div style="background:#5D4037"></div><div style="background:#fff"></div><div style="background:#8D6E63"></div>
+      <div class="px-x"></div><div style="background:#8D6E63"></div><div style="background:#8D6E63"></div><div style="background:#8D6E63"></div><div style="background:#8D6E63"></div><div style="background:#8D6E63"></div><div style="background:#8D6E63"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#5D4037"></div><div style="background:#5D4037"></div><div style="background:#5D4037"></div><div style="background:#5D4037"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div style="background:#5D4037"></div><div style="background:#5D4037"></div><div class="px-x"></div><div class="px-x"></div><div style="background:#5D4037"></div><div style="background:#5D4037"></div><div class="px-x"></div>
+    </div>
+    <div class="char-label">板栗怪</div>
+  </div>
+  <div style="text-align:center;">
+    <div style="display:grid; grid-template-columns:repeat(8,5px); grid-template-rows:repeat(10,5px); gap:0;">
+      <div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div style="background:#4CAF50"></div><div style="background:#4CAF50"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#4CAF50"></div><div style="background:#4CAF50"></div><div style="background:#4CAF50"></div><div style="background:#4CAF50"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div style="background:#1B5E20"></div><div style="background:#4CAF50"></div><div style="background:#4CAF50"></div><div style="background:#4CAF50"></div><div style="background:#4CAF50"></div><div style="background:#1B5E20"></div><div class="px-x"></div>
+      <div style="background:#1B5E20"></div><div style="background:#2E7D32"></div><div style="background:#4CAF50"></div><div style="background:#4CAF50"></div><div style="background:#4CAF50"></div><div style="background:#4CAF50"></div><div style="background:#2E7D32"></div><div style="background:#1B5E20"></div>
+      <div style="background:#1B5E20"></div><div style="background:#2E7D32"></div><div style="background:#4CAF50"></div><div style="background:#4CAF50"></div><div style="background:#4CAF50"></div><div style="background:#4CAF50"></div><div style="background:#2E7D32"></div><div style="background:#1B5E20"></div>
+      <div class="px-x"></div><div style="background:#1B5E20"></div><div style="background:#2E7D32"></div><div style="background:#4CAF50"></div><div style="background:#4CAF50"></div><div style="background:#2E7D32"></div><div style="background:#1B5E20"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#1B5E20"></div><div style="background:#2E7D32"></div><div style="background:#2E7D32"></div><div style="background:#1B5E20"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div style="background:#1B5E20"></div><div style="background:#1B5E20"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div style="background:#1B5E20"></div><div style="background:#1B5E20"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#1B5E20"></div><div style="background:#1B5E20"></div><div style="background:#1B5E20"></div><div style="background:#1B5E20"></div><div class="px-x"></div><div class="px-x"></div>
+    </div>
+    <div class="char-label">管道</div>
+  </div>
+</div>
+
+<!-- 世界2 洞穴 -->
+<h3 style="color:#FF8F00; font-size:14px; margin:20px 0 12px;">🕳️ 世界2：洞穴王国</h3>
+<div class="preview">
+  <div style="text-align:center;">
+    <div style="display:grid; grid-template-columns:repeat(8,5px); grid-template-rows:repeat(8,5px); gap:0;">
+      <div style="background:#4E342E"></div><div style="background:#4E342E"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div style="background:#4E342E"></div><div style="background:#4E342E"></div>
+      <div style="background:#4E342E"></div><div style="background:#6D4C41"></div><div style="background:#4E342E"></div><div class="px-x"></div><div class="px-x"></div><div style="background:#4E342E"></div><div style="background:#6D4C41"></div><div style="background:#4E342E"></div>
+      <div class="px-x"></div><div style="background:#4E342E"></div><div style="background:#6D4C41"></div><div style="background:#4E342E"></div><div style="background:#4E342E"></div><div style="background:#6D4C41"></div><div style="background:#4E342E"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#4E342E"></div><div style="background:#6D4C41"></div><div style="background:#6D4C41"></div><div style="background:#4E342E"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#fff"></div><div style="background:#6D4C41"></div><div style="background:#6D4C41"></div><div style="background:#fff"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div style="background:#4E342E"></div><div style="background:#4E342E"></div><div style="background:#6D4C41"></div><div style="background:#6D4C41"></div><div style="background:#4E342E"></div><div style="background:#4E342E"></div><div class="px-x"></div>
+      <div style="background:#4E342E"></div><div class="px-x"></div><div class="px-x"></div><div style="background:#4E342E"></div><div style="background:#4E342E"></div><div class="px-x"></div><div class="px-x"></div><div style="background:#4E342E"></div>
+      <div style="background:#4E342E"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div style="background:#4E342E"></div>
+    </div>
+    <div class="char-label">蝙蝠</div>
+  </div>
+  <div style="text-align:center;">
+    <div style="display:grid; grid-template-columns:repeat(8,5px); grid-template-rows:repeat(8,5px); gap:0;">
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#8D6E63"></div><div style="background:#8D6E63"></div><div style="background:#8D6E63"></div><div style="background:#8D6E63"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div style="background:#8D6E63"></div><div style="background:#A1887F"></div><div style="background:#A1887F"></div><div style="background:#A1887F"></div><div style="background:#A1887F"></div><div style="background:#8D6E63"></div><div class="px-x"></div>
+      <div style="background:#8D6E63"></div><div style="background:#A1887F"></div><div style="background:#fff"></div><div style="background:#A1887F"></div><div style="background:#A1887F"></div><div style="background:#fff"></div><div style="background:#A1887F"></div><div style="background:#8D6E63"></div>
+      <div style="background:#8D6E63"></div><div style="background:#A1887F"></div><div style="background:#fff"></div><div style="background:#A1887F"></div><div style="background:#A1887F"></div><div style="background:#fff"></div><div style="background:#A1887F"></div><div style="background:#8D6E63"></div>
+      <div style="background:#8D6E63"></div><div style="background:#A1887F"></div><div style="background:#A1887F"></div><div style="background:#A1887F"></div><div style="background:#A1887F"></div><div style="background:#A1887F"></div><div style="background:#A1887F"></div><div style="background:#8D6E63"></div>
+      <div class="px-x"></div><div style="background:#8D6E63"></div><div style="background:#8D6E63"></div><div style="background:#8D6E63"></div><div style="background:#8D6E63"></div><div style="background:#8D6E63"></div><div style="background:#8D6E63"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#5D4037"></div><div style="background:#5D4037"></div><div style="background:#5D4037"></div><div style="background:#5D4037"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div style="background:#5D4037"></div><div style="background:#5D4037"></div><div class="px-x"></div><div class="px-x"></div><div style="background:#5D4037"></div><div style="background:#5D4037"></div><div class="px-x"></div>
+    </div>
+    <div class="char-label">蜘蛛</div>
+  </div>
+  <div style="text-align:center;">
+    <div style="display:grid; grid-template-columns:repeat(6,5px); grid-template-rows:repeat(12,5px); gap:0;">
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#FF6D00"></div><div style="background:#FF6D00"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div style="background:#FF6D00"></div><div style="background:#FFD54F"></div><div style="background:#FFD54F"></div><div style="background:#FF6D00"></div><div class="px-x"></div>
+      <div class="px-x"></div><div style="background:#FF6D00"></div><div style="background:#FFD54F"></div><div style="background:#FFD54F"></div><div style="background:#FF6D00"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#FF6D00"></div><div style="background:#FF6D00"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#8B4513"></div><div style="background:#8B4513"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#8B4513"></div><div style="background:#8B4513"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#8B4513"></div><div style="background:#8B4513"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#8B4513"></div><div style="background:#8B4513"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#8B4513"></div><div style="background:#8B4513"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#8B4513"></div><div style="background:#8B4513"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#8B4513"></div><div style="background:#8B4513"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#8B4513"></div><div style="background:#8B4513"></div><div class="px-x"></div><div class="px-x"></div>
+    </div>
+    <div class="char-label">火把</div>
+  </div>
+</div>
+
+<!-- 世界3 海底 -->
+<h3 style="color:#0277BD; font-size:14px; margin:20px 0 12px;">🐠 世界3：海底王国</h3>
+<div class="preview">
+  <div style="text-align:center;">
+    <div style="display:grid; grid-template-columns:repeat(8,5px); grid-template-rows:repeat(8,5px); gap:0;">
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#E91E63"></div><div style="background:#E91E63"></div><div style="background:#E91E63"></div><div style="background:#E91E63"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div style="background:#E91E63"></div><div style="background:#F48FB1"></div><div style="background:#F48FB1"></div><div style="background:#F48FB1"></div><div style="background:#F48FB1"></div><div style="background:#E91E63"></div><div class="px-x"></div>
+      <div style="background:#E91E63"></div><div style="background:#F48FB1"></div><div style="background:#fff"></div><div style="background:#F48FB1"></div><div style="background:#F48FB1"></div><div style="background:#fff"></div><div style="background:#F48FB1"></div><div style="background:#E91E63"></div>
+      <div style="background:#E91E63"></div><div style="background:#F48FB1"></div><div style="background:#F48FB1"></div><div style="background:#F48FB1"></div><div style="background:#F48FB1"></div><div style="background:#F48FB1"></div><div style="background:#F48FB1"></div><div style="background:#E91E63"></div>
+      <div class="px-x"></div><div style="background:#E91E63"></div><div style="background:#F48FB1"></div><div style="background:#F48FB1"></div><div style="background:#F48FB1"></div><div style="background:#F48FB1"></div><div style="background:#E91E63"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#E91E63"></div><div style="background:#E91E63"></div><div style="background:#E91E63"></div><div style="background:#E91E63"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div style="background:#E91E63"></div><div style="background:#E91E63"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div>
+    </div>
+    <div class="char-label">水母</div>
+  </div>
+  <div style="text-align:center;">
+    <div style="display:grid; grid-template-columns:repeat(8,5px); grid-template-rows:repeat(8,5px); gap:0;">
+      <div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div style="background:#FF9800"></div><div style="background:#FF9800"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#FF9800"></div><div style="background:#FFB74D"></div><div style="background:#FFB74D"></div><div style="background:#FF9800"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div style="background:#FF9800"></div><div style="background:#FFB74D"></div><div style="background:#fff"></div><div style="background:#FFB74D"></div><div style="background:#fff"></div><div style="background:#FF9800"></div><div class="px-x"></div>
+      <div style="background:#FF9800"></div><div style="background:#FFB74D"></div><div style="background:#FFB74D"></div><div style="background:#FFB74D"></div><div style="background:#FFB74D"></div><div style="background:#FFB74D"></div><div style="background:#FFB74D"></div><div style="background:#FF9800"></div>
+      <div style="background:#FF9800"></div><div style="background:#FF9800"></div><div style="background:#FFB74D"></div><div style="background:#FFB74D"></div><div style="background:#FFB74D"></div><div style="background:#FFB74D"></div><div style="background:#FF9800"></div><div style="background:#FF9800"></div>
+      <div class="px-x"></div><div style="background:#FF9800"></div><div style="background:#FF9800"></div><div style="background:#FF9800"></div><div style="background:#FF9800"></div><div style="background:#FF9800"></div><div style="background:#FF9800"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#FF9800"></div><div class="px-x"></div><div class="px-x"></div><div style="background:#FF9800"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#FF9800"></div><div class="px-x"></div><div class="px-x"></div><div style="background:#FF9800"></div><div class="px-x"></div><div class="px-x"></div>
+    </div>
+    <div class="char-label">河豚</div>
+  </div>
+</div>
+
+<!-- 世界4 天空 -->
+<h3 style="color:#42A5F5; font-size:14px; margin:20px 0 12px;">☁️ 世界4：天空之城</h3>
+<div class="preview">
+  <div style="text-align:center;">
+    <div style="display:grid; grid-template-columns:repeat(8,5px); grid-template-rows:repeat(8,5px); gap:0;">
+      <div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div style="background:#fff"></div><div style="background:#fff"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#fff"></div><div style="background:#E3F2FD"></div><div style="background:#E3F2FD"></div><div style="background:#fff"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div style="background:#fff"></div><div style="background:#E3F2FD"></div><div style="background:#E3F2FD"></div><div style="background:#E3F2FD"></div><div style="background:#E3F2FD"></div><div style="background:#fff"></div><div class="px-x"></div>
+      <div style="background:#fff"></div><div style="background:#E3F2FD"></div><div style="background:#1565C0"></div><div style="background:#E3F2FD"></div><div style="background:#E3F2FD"></div><div style="background:#1565C0"></div><div style="background:#E3F2FD"></div><div style="background:#fff"></div>
+      <div style="background:#fff"></div><div style="background:#E3F2FD"></div><div style="background:#E3F2FD"></div><div style="background:#E3F2FD"></div><div style="background:#E3F2FD"></div><div style="background:#E3F2FD"></div><div style="background:#E3F2FD"></div><div style="background:#fff"></div>
+      <div class="px-x"></div><div style="background:#fff"></div><div style="background:#E3F2FD"></div><div style="background:#fff"></div><div style="background:#fff"></div><div style="background:#E3F2FD"></div><div style="background:#fff"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#fff"></div><div style="background:#fff"></div><div style="background:#fff"></div><div style="background:#fff"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div style="background:#fff"></div><div style="background:#fff"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div>
+    </div>
+    <div class="char-label">云怪</div>
+  </div>
+  <div style="text-align:center;">
+    <div style="display:grid; grid-template-columns:repeat(8,5px); grid-template-rows:repeat(6,5px); gap:0;">
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#90CAF9"></div><div style="background:#90CAF9"></div><div style="background:#90CAF9"></div><div style="background:#90CAF9"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div style="background:#90CAF9"></div><div style="background:#E3F2FD"></div><div style="background:#E3F2FD"></div><div style="background:#E3F2FD"></div><div style="background:#E3F2FD"></div><div style="background:#90CAF9"></div><div class="px-x"></div>
+      <div style="background:#90CAF9"></div><div style="background:#E3F2FD"></div><div style="background:#fff"></div><div style="background:#E3F2FD"></div><div style="background:#E3F2FD"></div><div style="background:#fff"></div><div style="background:#E3F2FD"></div><div style="background:#90CAF9"></div>
+      <div style="background:#90CAF9"></div><div style="background:#E3F2FD"></div><div style="background:#E3F2FD"></div><div style="background:#E3F2FD"></div><div style="background:#E3F2FD"></div><div style="background:#E3F2FD"></div><div style="background:#E3F2FD"></div><div style="background:#90CAF9"></div>
+      <div class="px-x"></div><div style="background:#90CAF9"></div><div style="background:#E3F2FD"></div><div style="background:#E3F2FD"></div><div style="background:#E3F2FD"></div><div style="background:#E3F2FD"></div><div style="background:#90CAF9"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#90CAF9"></div><div style="background:#90CAF9"></div><div style="background:#90CAF9"></div><div style="background:#90CAF9"></div><div class="px-x"></div><div class="px-x"></div>
+    </div>
+    <div class="char-label">浮动平台</div>
+  </div>
+</div>
+
+<!-- 世界5 库巴城堡 -->
+<h3 style="color:#E53935; font-size:14px; margin:20px 0 12px;">🏰 世界5：库巴城堡</h3>
+<div class="preview">
+  <div style="text-align:center;">
+    <div style="display:grid; grid-template-columns:repeat(8,5px); grid-template-rows:repeat(8,5px); gap:0;">
+      <div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div style="background:#E0E0E0"></div><div style="background:#E0E0E0"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#E0E0E0"></div><div style="background:#EEEEEE"></div><div style="background:#EEEEEE"></div><div style="background:#E0E0E0"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div style="background:#E0E0E0"></div><div style="background:#EEEEEE"></div><div style="background:#fff"></div><div style="background:#EEEEEE"></div><div style="background:#fff"></div><div style="background:#E0E0E0"></div><div class="px-x"></div>
+      <div class="px-x"></div><div style="background:#E0E0E0"></div><div style="background:#EEEEEE"></div><div style="background:#EEEEEE"></div><div style="background:#EEEEEE"></div><div style="background:#EEEEEE"></div><div style="background:#E0E0E0"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#E0E0E0"></div><div style="background:#E0E0E0"></div><div style="background:#E0E0E0"></div><div style="background:#E0E0E0"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div style="background:#E0E0E0"></div><div style="background:#E0E0E0"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#E0E0E0"></div><div style="background:#E0E0E0"></div><div style="background:#E0E0E0"></div><div style="background:#E0E0E0"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div style="background:#E0E0E0"></div><div style="background:#E0E0E0"></div><div class="px-x"></div><div class="px-x"></div><div style="background:#E0E0E0"></div><div style="background:#E0E0E0"></div><div class="px-x"></div>
+    </div>
+    <div class="char-label">骷髅龟</div>
+  </div>
+  <div style="text-align:center;">
+    <div style="display:grid; grid-template-columns:repeat(12,5px); grid-template-rows:repeat(3,5px); gap:0;">
+      <div style="background:#FF6D00"></div><div style="background:#FF6D00"></div><div style="background:#FF6D00"></div><div style="background:#FF6D00"></div><div style="background:#FF6D00"></div><div style="background:#FF6D00"></div><div style="background:#FF6D00"></div><div style="background:#FF6D00"></div><div style="background:#FF6D00"></div><div style="background:#FF6D00"></div><div style="background:#FF6D00"></div><div style="background:#FF6D00"></div>
+      <div style="background:#FF6D00"></div><div style="background:#FFD54F"></div><div style="background:#FFD54F"></div><div style="background:#FF6D00"></div><div style="background:#FF6D00"></div><div style="background:#FFD54F"></div><div style="background:#FFD54F"></div><div style="background:#FF6D00"></div><div style="background:#FF6D00"></div><div style="background:#FFD54F"></div><div style="background:#FFD54F"></div><div style="background:#FF6D00"></div>
+      <div style="background:#FF6D00"></div><div style="background:#FF6D00"></div><div style="background:#FF6D00"></div><div style="background:#FF6D00"></div><div style="background:#FF6D00"></div><div style="background:#FF6D00"></div><div style="background:#FF6D00"></div><div style="background:#FF6D00"></div><div style="background:#FF6D00"></div><div style="background:#FF6D00"></div><div style="background:#FF6D00"></div><div style="background:#FF6D00"></div>
+    </div>
+    <div class="char-label">火焰棒</div>
+  </div>
+</div>
+
+<!-- 通用元素：移动平台、乌龟敌人、消失云平台 -->
+<h3 style="color:#aaa; font-size:14px; margin:20px 0 12px;">⚙️ 通用元素（跨世界使用）</h3>
+<div class="preview">
+  <!-- 移动平台 -->
+  <div style="text-align:center;">
+    <div style="display:grid; grid-template-columns:repeat(6,6px); grid-template-rows:repeat(2,6px); gap:0; animation:platformMove 2s ease-in-out infinite alternate;">
+      <div style="background:#8D6E63"></div><div style="background:#A1887F"></div><div style="background:#A1887F"></div><div style="background:#A1887F"></div><div style="background:#A1887F"></div><div style="background:#8D6E63"></div>
+      <div style="background:#6D4C41"></div><div style="background:#8D6E63"></div><div style="background:#8D6E63"></div><div style="background:#8D6E63"></div><div style="background:#8D6E63"></div><div style="background:#6D4C41"></div>
+    </div>
+    <div class="char-label">移动平台（世界2/4/5）</div>
+  </div>
+
+  <!-- 乌龟敌人 -->
+  <div style="text-align:center;">
+    <div style="display:grid; grid-template-columns:repeat(8,5px); grid-template-rows:repeat(10,5px); gap:0; animation:goombaWalk 0.4s steps(2) infinite;">
+      <!-- 头 -->
+      <div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div style="background:#4CAF50"></div><div style="background:#4CAF50"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#4CAF50"></div><div style="background:#66BB6A"></div><div style="background:#66BB6A"></div><div style="background:#4CAF50"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div style="background:#4CAF50"></div><div style="background:#fff"></div><div style="background:#66BB6A"></div><div style="background:#66BB6A"></div><div style="background:#fff"></div><div style="background:#4CAF50"></div><div class="px-x"></div>
+      <!-- 壳 -->
+      <div class="px-x"></div><div style="background:#2E7D32"></div><div style="background:#2E7D32"></div><div style="background:#8D6E63"></div><div style="background:#8D6E63"></div><div style="background:#2E7D32"></div><div style="background:#2E7D32"></div><div class="px-x"></div>
+      <div style="background:#2E7D32"></div><div style="background:#8D6E63"></div><div style="background:#A1887F"></div><div style="background:#A1887F"></div><div style="background:#A1887F"></div><div style="background:#A1887F"></div><div style="background:#8D6E63"></div><div style="background:#2E7D32"></div>
+      <div style="background:#2E7D32"></div><div style="background:#8D6E63"></div><div style="background:#A1887F"></div><div style="background:#F9A825"></div><div style="background:#F9A825"></div><div style="background:#A1887F"></div><div style="background:#8D6E63"></div><div style="background:#2E7D32"></div>
+      <div style="background:#2E7D32"></div><div style="background:#8D6E63"></div><div style="background:#A1887F"></div><div style="background:#A1887F"></div><div style="background:#A1887F"></div><div style="background:#A1887F"></div><div style="background:#8D6E63"></div><div style="background:#2E7D32"></div>
+      <div class="px-x"></div><div style="background:#2E7D32"></div><div style="background:#8D6E63"></div><div style="background:#8D6E63"></div><div style="background:#8D6E63"></div><div style="background:#8D6E63"></div><div style="background:#2E7D32"></div><div class="px-x"></div>
+      <!-- 脚 -->
+      <div class="px-x"></div><div class="px-x"></div><div style="background:#F9A825"></div><div style="background:#F9A825"></div><div style="background:#F9A825"></div><div style="background:#F9A825"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div style="background:#F9A825"></div><div style="background:#F9A825"></div><div class="px-x"></div><div class="px-x"></div><div style="background:#F9A825"></div><div style="background:#F9A825"></div><div class="px-x"></div>
+    </div>
+    <div class="char-label">乌龟敌人（世界2/4/5）</div>
+  </div>
+
+  <!-- 被踩后的龟壳 -->
+  <div style="text-align:center;">
+    <div style="display:grid; grid-template-columns:repeat(8,5px); grid-template-rows:repeat(5,5px); gap:0;">
+      <div class="px-x"></div><div style="background:#2E7D32"></div><div style="background:#2E7D32"></div><div style="background:#2E7D32"></div><div style="background:#2E7D32"></div><div style="background:#2E7D32"></div><div style="background:#2E7D32"></div><div class="px-x"></div>
+      <div style="background:#2E7D32"></div><div style="background:#8D6E63"></div><div style="background:#A1887F"></div><div style="background:#A1887F"></div><div style="background:#A1887F"></div><div style="background:#A1887F"></div><div style="background:#8D6E63"></div><div style="background:#2E7D32"></div>
+      <div style="background:#2E7D32"></div><div style="background:#8D6E63"></div><div style="background:#A1887F"></div><div style="background:#F9A825"></div><div style="background:#F9A825"></div><div style="background:#A1887F"></div><div style="background:#8D6E63"></div><div style="background:#2E7D32"></div>
+      <div style="background:#2E7D32"></div><div style="background:#8D6E63"></div><div style="background:#A1887F"></div><div style="background:#A1887F"></div><div style="background:#A1887F"></div><div style="background:#A1887F"></div><div style="background:#8D6E63"></div><div style="background:#2E7D32"></div>
+      <div class="px-x"></div><div style="background:#2E7D32"></div><div style="background:#2E7D32"></div><div style="background:#2E7D32"></div><div style="background:#2E7D32"></div><div style="background:#2E7D32"></div><div style="background:#2E7D32"></div><div class="px-x"></div>
+    </div>
+    <div class="char-label">龟壳（被踩后，可踢）</div>
+  </div>
+
+  <!-- 消失云平台 -->
+  <div style="text-align:center;">
+    <div style="display:grid; grid-template-columns:repeat(6,6px); grid-template-rows:repeat(2,6px); gap:0; animation:cloudFade 3s ease-in-out infinite;">
+      <div style="background:#E3F2FD"></div><div style="background:#fff"></div><div style="background:#fff"></div><div style="background:#fff"></div><div style="background:#fff"></div><div style="background:#E3F2FD"></div>
+      <div style="background:#BBDEFB"></div><div style="background:#E3F2FD"></div><div style="background:#E3F2FD"></div><div style="background:#E3F2FD"></div><div style="background:#E3F2FD"></div><div style="background:#BBDEFB"></div>
+    </div>
+    <div class="char-label">消失云平台（世界4，踩后3秒碎裂）</div>
+  </div>
+</div>
+
+<div class="section-divider" id="sec-1"></div>
+<h2>1. 游戏画布背景 · 5个世界</h2>
+<p class="desc">480×320px · 每个世界不同主题背景</p>
+<div class="preview">
+  <!-- 世界1：草地王国 -->
+  <div>
+    <div class="game-canvas">
+      <div class="cloud cloud-1"></div>
+      <div class="cloud cloud-2"></div>
+      <div class="cloud cloud-3"></div>
+      <div class="hill hill-1"></div>
+      <div class="hill hill-2"></div>
+      <div class="ground" id="ground"></div>
+    </div>
+    <div class="char-label">🌿 世界1：草地王国</div>
+  </div>
+
+  <!-- 世界2：洞穴王国 -->
+  <div>
+    <div class="game-canvas" style="background: linear-gradient(180deg, #1a1a2e 0%, #2d2d4e 60%, #3d2b1e 62%, #2a1a0a 100%);">
+      <!-- 火把光晕 -->
+      <div style="position:absolute; top:40px; left:80px; width:6px; height:20px; background:#8B4513;"></div>
+      <div style="position:absolute; top:30px; left:78px; width:10px; height:14px; background:radial-gradient(ellipse, #FF6D00, #FF3D00, transparent); border-radius:50% 50% 20% 20%; animation:flicker 0.3s infinite alternate;"></div>
+      <div style="position:absolute; top:40px; right:100px; width:6px; height:20px; background:#8B4513;"></div>
+      <div style="position:absolute; top:30px; right:98px; width:10px; height:14px; background:radial-gradient(ellipse, #FF6D00, #FF3D00, transparent); border-radius:50% 50% 20% 20%; animation:flicker 0.3s infinite alternate; animation-delay:0.15s;"></div>
+      <!-- 石笋 -->
+      <div style="position:absolute; bottom:64px; left:120px; width:0; height:0; border-left:12px solid transparent; border-right:12px solid transparent; border-top:30px solid #4a4a6a;"></div>
+      <div style="position:absolute; top:0; left:200px; width:0; height:0; border-left:15px solid transparent; border-right:15px solid transparent; border-bottom:35px solid #4a4a6a;"></div>
+      <div style="position:absolute; bottom:64px; right:60px; width:0; height:0; border-left:10px solid transparent; border-right:10px solid transparent; border-top:25px solid #4a4a6a;"></div>
+      <!-- 地面 -->
+      <div style="position:absolute; bottom:0; left:0; width:100%; height:64px; background:#3d2b1e; border-top:4px solid #5a3d1e;"></div>
+    </div>
+    <div class="char-label">🕳️ 世界2：洞穴王国</div>
+  </div>
+
+  <!-- 世界3：海底王国 -->
+  <div>
+    <div class="game-canvas" style="background: linear-gradient(180deg, #0277BD 0%, #01579B 60%, #004D7A 100%);">
+      <!-- 气泡 -->
+      <div style="position:absolute; top:60px; left:100px; width:12px; height:12px; background:rgba(255,255,255,0.3); border-radius:50%; border:1px solid rgba(255,255,255,0.5); animation:bubble 3s ease-in infinite;"></div>
+      <div style="position:absolute; top:100px; left:250px; width:8px; height:8px; background:rgba(255,255,255,0.25); border-radius:50%; border:1px solid rgba(255,255,255,0.4); animation:bubble 4s ease-in infinite; animation-delay:1s;"></div>
+      <div style="position:absolute; top:80px; right:80px; width:10px; height:10px; background:rgba(255,255,255,0.3); border-radius:50%; border:1px solid rgba(255,255,255,0.5); animation:bubble 3.5s ease-in infinite; animation-delay:0.5s;"></div>
+      <!-- 海草 -->
+      <div style="position:absolute; bottom:40px; left:60px; width:8px; height:50px; background:#2E7D32; border-radius:4px 4px 0 0; transform:rotate(-5deg);"></div>
+      <div style="position:absolute; bottom:40px; left:180px; width:8px; height:60px; background:#388E3C; border-radius:4px 4px 0 0; transform:rotate(3deg);"></div>
+      <div style="position:absolute; bottom:40px; right:120px; width:8px; height:45px; background:#2E7D32; border-radius:4px 4px 0 0; transform:rotate(-8deg);"></div>
+      <!-- 海底沙地 -->
+      <div style="position:absolute; bottom:0; left:0; width:100%; height:40px; background:#F9A825; border-top:4px solid #F57F17;"></div>
+    </div>
+    <div class="char-label">🐠 世界3：海底王国</div>
+  </div>
+</div>
+<div class="preview">
+  <!-- 世界4：天空之城 -->
+  <div>
+    <div class="game-canvas" style="background: linear-gradient(180deg, #E3F2FD 0%, #BBDEFB 60%, #90CAF9 100%);">
+      <!-- 大云层 -->
+      <div style="position:absolute; top:20px; left:30px; width:80px; height:35px; background:#fff; border-radius:20px; opacity:0.9;"></div>
+      <div style="position:absolute; top:10px; left:50px; width:50px; height:30px; background:#fff; border-radius:15px;"></div>
+      <div style="position:absolute; top:60px; right:40px; width:90px; height:40px; background:#fff; border-radius:20px; opacity:0.85;"></div>
+      <div style="position:absolute; top:50px; right:70px; width:55px; height:30px; background:#fff; border-radius:15px;"></div>
+      <!-- 浮动平台 -->
+      <div style="position:absolute; bottom:100px; left:80px; width:80px; height:16px; background:#FFA000; border-radius:4px; border:2px solid #E65100;"></div>
+      <div style="position:absolute; bottom:140px; right:100px; width:60px; height:16px; background:#FFA000; border-radius:4px; border:2px solid #E65100;"></div>
+      <div style="position:absolute; bottom:80px; left:220px; width:70px; height:16px; background:#FFA000; border-radius:4px; border:2px solid #E65100;"></div>
+      <!-- 底部云海 -->
+      <div style="position:absolute; bottom:0; left:0; width:100%; height:50px; background:rgba(255,255,255,0.6); border-radius:50% 50% 0 0 / 20px 20px 0 0;"></div>
+    </div>
+    <div class="char-label">☁️ 世界4：天空之城</div>
+  </div>
+
+  <!-- 世界5：库巴城堡 -->
+  <div>
+    <div class="game-canvas" style="background: linear-gradient(180deg, #1a0a0a 0%, #2d0a0a 60%, #3d1a0a 62%, #1a0a0a 100%);">
+      <!-- 岩浆光晕 -->
+      <div style="position:absolute; bottom:0; left:0; width:100%; height:80px; background:linear-gradient(180deg, transparent, rgba(255,87,34,0.3));"></div>
+      <!-- 城堡柱子 -->
+      <div style="position:absolute; bottom:64px; left:40px; width:30px; height:100px; background:#3d2b1e; border:2px solid #5a3d1e;"></div>
+      <div style="position:absolute; bottom:64px; right:40px; width:30px; height:100px; background:#3d2b1e; border:2px solid #5a3d1e;"></div>
+      <!-- 拱门 -->
+      <div style="position:absolute; bottom:64px; left:50%; transform:translateX(-50%); width:100px; height:80px; border-radius:50px 50px 0 0; border:4px solid #5a3d1e; border-bottom:none; background:transparent;"></div>
+      <!-- 火焰 -->
+      <div style="position:absolute; bottom:70px; left:150px; width:16px; height:20px; background:radial-gradient(ellipse, #FF6D00, #FF3D00, transparent); border-radius:50% 50% 20% 20%; animation:flicker 0.3s infinite alternate;"></div>
+      <div style="position:absolute; bottom:70px; right:150px; width:16px; height:20px; background:radial-gradient(ellipse, #FF6D00, #FF3D00, transparent); border-radius:50% 50% 20% 20%; animation:flicker 0.3s infinite alternate; animation-delay:0.15s;"></div>
+      <!-- 地面 -->
+      <div style="position:absolute; bottom:0; left:0; width:100%; height:64px; background:#2d1b0e; border-top:4px solid #4a2a10;"></div>
+    </div>
+    <div class="char-label">🏰 世界5：库巴城堡</div>
+  </div>
+</div>
+
+<style>
+@keyframes bubble { 0%{transform:translateY(0); opacity:0.8;} 100%{transform:translateY(-200px); opacity:0;} }
+@keyframes flicker { 0%{transform:scale(1) rotate(-5deg); opacity:0.9;} 100%{transform:scale(1.1) rotate(5deg); opacity:1;} }
+</style>
+
+<!-- ==================== 2. 单词卡 ==================== -->
+
+<div class="section-divider" id="sec-2"></div>
+<h2>2. 角色 · 马里奥 + 库巴</h2>
+<p class="desc">16×16像素马里奥（正常/大/星星）+ Boss库巴 + 龟壳</p>
+<h3 style="color:#E53935; font-size:14px; margin:20px 0 12px;">🍄 马里奥</h3>
+<div class="scene-row">
+  <!-- 正常马里奥 16x16 -->
+  <div>
+    <div class="mario-pixel-wrap">
+      <div class="mario-pixel">
+        <!-- Row 1: 帽子顶 -->
+        <div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div class="px-r"></div><div class="px-r"></div><div class="px-r"></div><div class="px-r"></div><div class="px-r"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div>
+<h3 style="color:#4CAF50; font-size:14px; margin:30px 0 12px;">🐢 库巴</h3>
+<div class="preview"><div class="koopa-container">
+
+  <!-- Boss库巴 -->
+  <div>
+    <div class="koopa koopa-boss">
+      <!-- 角 -->
+      <div class="horn horn-left"></div>
+      <div class="horn horn-right"></div>
+
+      <!-- 头部 -->
+      <div class="head">
+        <div class="eyebrow eyebrow-left"></div>
+        <div class="eyebrow eyebrow-right"></div>
+        <div class="eye eye-left"></div>
+        <div class="eye eye-right"></div>
+        <div class="nose"></div>
+        <div class="mouth"></div>
+      </div>
+
+      <!-- 壳尖刺 -->
+      <div class="shell-spikes">
+        <div class="spike"></div>
+        <div class="spike"></div>
+        <div class="spike"></div>
+        <div class="spike"></div>
+        <div class="spike"></div>
+      </div>
+
+      <!-- 壳 -->
+      <div class="shell">
+        <div class="shell-lines">
+          <div class="shell-line"></div>
+          <div class="shell-line"></div>
+          <div class="shell-line"></div>
+        </div>
+      </div>
+
+      <!-- 手臂 -->
+      <div class="arm arm-left">
+        <div class="claw">
+          <div class="claw-finger"></div>
+          <div class="claw-finger"></div>
+          <div class="claw-finger"></div>
+        </div>
+      </div>
+      <div class="arm arm-right">
+        <div class="claw">
+          <div class="claw-finger"></div>
+          <div class="claw-finger"></div>
+          <div class="claw-finger"></div>
+        </div>
+      </div>
+
+      <!-- 腿 -->
+      <div class="leg leg-left">
+        <div class="foot">
+          <div class="toe"></div>
+          <div class="toe"></div>
+          <div class="toe"></div>
+        </div>
+      </div>
+      <div class="leg leg-right">
+        <div class="foot">
+          <div class="toe"></div>
+          <div class="toe"></div>
+          <div class="toe"></div>
+        </div>
+      </div>
+
+      <!-- 尾巴 -->
+      <div class="tail"></div>
+
+      <!-- 火焰 -->
+      <div class="flame flame-1"></div>
+      <div class="flame flame-2"></div>
+    </div>
+    <div class="koopa-label">Boss 库巴 · 200×260px</div>
+  </div>
+
+  <!-- 龟壳 -->
+  <div>
+    <div class="shell-only">
+      <div class="shell-spikes-mini">
+        <div class="spike-mini"></div>
+        <div class="spike-mini"></div>
+        <div class="spike-mini"></div>
+        <div class="spike-mini"></div>
+        <div class="spike-mini"></div>
+      </div>
+      <div class="shell-body"></div>
+    </div>
+    <div class="koopa-label">被踩后的龟壳 · 120×70px</div>
+  </div></div>
+
+<div class="section-divider" id="sec-3"></div>
+<h2>3. 场景元素 · 像素版</h2>
+<p class="desc">8×8像素 · 金币/问号砖块/蘑菇/星星/板栗怪/管道</p>
+<div class="scene-row">
+  <!-- 金币 -->
+  <div class="pixel">
+    <div class="coin-pixel">
+      <div class="px-x"></div><div class="px-x"></div><div class="px-g"></div><div class="px-g"></div><div class="px-g"></div><div class="px-g"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-g"></div><div class="px-g"></div><div class="px-d"></div><div class="px-d"></div><div class="px-g"></div><div class="px-g"></div><div class="px-x"></div>
+      <div class="px-g"></div><div class="px-g"></div><div class="px-d"></div><div class="px-g"></div><div class="px-g"></div><div class="px-d"></div><div class="px-g"></div><div class="px-g"></div>
+      <div class="px-g"></div><div class="px-d"></div><div class="px-g"></div><div class="px-g"></div><div class="px-g"></div><div class="px-g"></div><div class="px-d"></div><div class="px-g"></div>
+      <div class="px-g"></div><div class="px-d"></div><div class="px-g"></div><div class="px-g"></div><div class="px-g"></div><div class="px-g"></div><div class="px-d"></div><div class="px-g"></div>
+      <div class="px-g"></div><div class="px-g"></div><div class="px-d"></div><div class="px-g"></div><div class="px-g"></div><div class="px-d"></div><div class="px-g"></div><div class="px-g"></div>
+      <div class="px-x"></div><div class="px-g"></div><div class="px-g"></div><div class="px-d"></div><div class="px-d"></div><div class="px-g"></div><div class="px-g"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div class="px-g"></div><div class="px-g"></div><div class="px-g"></div><div class="px-g"></div><div class="px-x"></div><div class="px-x"></div>
+    </div>
+    <div class="char-label">金币</div>
+  </div>
+
+  <!-- 问号砖块 -->
+  <div class="pixel">
+    <div class="block-pixel">
+      <div class="px-p"></div><div class="px-p"></div><div class="px-p"></div><div class="px-p"></div><div class="px-p"></div><div class="px-p"></div><div class="px-p"></div><div class="px-p"></div>
+      <div class="px-p"></div><div class="px-o"></div><div class="px-o"></div><div class="px-o"></div><div class="px-o"></div><div class="px-o"></div><div class="px-o"></div><div class="px-p"></div>
+      <div class="px-p"></div><div class="px-o"></div><div class="px-o"></div><div class="px-o"></div><div class="px-o"></div><div class="px-o"></div><div class="px-o"></div><div class="px-p"></div>
+      <div class="px-p"></div><div class="px-o"></div><div class="px-o"></div><div class="px-o"></div><div class="px-o"></div><div class="px-o"></div><div class="px-o"></div><div class="px-p"></div>
+      <div class="px-p"></div><div class="px-o"></div><div class="px-o"></div><div class="px-o"></div><div class="px-o"></div><div class="px-o"></div><div class="px-o"></div><div class="px-p"></div>
+      <div class="px-p"></div><div class="px-o"></div><div class="px-o"></div><div class="px-o"></div><div class="px-o"></div><div class="px-o"></div><div class="px-o"></div><div class="px-p"></div>
+      <div class="px-p"></div><div class="px-o"></div><div class="px-o"></div><div class="px-o"></div><div class="px-o"></div><div class="px-o"></div><div class="px-o"></div><div class="px-p"></div>
+      <div class="px-p"></div><div class="px-p"></div><div class="px-p"></div><div class="px-p"></div><div class="px-p"></div><div class="px-p"></div><div class="px-p"></div><div class="px-p"></div>
+    </div>
+    <div class="char-label">问号砖块</div>
+  </div>
+
+  <!-- 蘑菇 -->
+  <div class="pixel">
+    <div class="mushroom-pixel">
+      <div class="px-x"></div><div class="px-x"></div><div class="px-r"></div><div class="px-r"></div><div class="px-r"></div><div class="px-r"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-r"></div><div class="px-r"></div><div class="px-r"></div><div class="px-r"></div><div class="px-r"></div><div class="px-r"></div><div class="px-x"></div>
+      <div class="px-r"></div><div class="px-r"></div><div class="px-w"></div><div class="px-r"></div><div class="px-r"></div><div class="px-w"></div><div class="px-r"></div><div class="px-r"></div>
+      <div class="px-r"></div><div class="px-w"></div><div class="px-w"></div><div class="px-r"></div><div class="px-r"></div><div class="px-w"></div><div class="px-w"></div><div class="px-r"></div>
+      <div class="px-s"></div><div class="px-s"></div><div class="px-s"></div><div class="px-s"></div><div class="px-s"></div><div class="px-s"></div><div class="px-s"></div><div class="px-s"></div>
+      <div class="px-x"></div><div class="px-s"></div><div class="px-s"></div><div class="px-s"></div><div class="px-s"></div><div class="px-s"></div><div class="px-s"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div class="px-s"></div><div class="px-s"></div><div class="px-s"></div><div class="px-s"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div class="px-s"></div><div class="px-s"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div>
+    </div>
+    <div class="char-label">蘑菇</div>
+  </div>
+
+  <!-- 星星 -->
+  <div class="pixel">
+    <div class="star-pixel">
+      <div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div class="px-g"></div><div class="px-g"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div class="px-g"></div><div class="px-g"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-g"></div><div class="px-g"></div><div class="px-g"></div><div class="px-g"></div><div class="px-g"></div><div class="px-g"></div><div class="px-x"></div>
+      <div class="px-g"></div><div class="px-g"></div><div class="px-g"></div><div class="px-g"></div><div class="px-g"></div><div class="px-g"></div><div class="px-g"></div><div class="px-g"></div>
+      <div class="px-x"></div><div class="px-x"></div><div class="px-g"></div><div class="px-g"></div><div class="px-g"></div><div class="px-g"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-g"></div><div class="px-g"></div><div class="px-x"></div><div class="px-x"></div><div class="px-g"></div><div class="px-g"></div><div class="px-x"></div>
+      <div class="px-g"></div><div class="px-g"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div class="px-g"></div><div class="px-g"></div>
+      <div class="px-g"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div class="px-g"></div>
+    </div>
+    <div class="char-label">星星</div>
+  </div>
+
+  <!-- 板栗怪 -->
+  <div class="pixel">
+    <div class="goomba-pixel">
+      <div class="px-x"></div><div class="px-x"></div><div class="px-x"></div><div class="px-n"></div><div class="px-n"></div><div class="px-x"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div class="px-n"></div><div class="px-n"></div><div class="px-n"></div><div class="px-n"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-n"></div><div class="px-n"></div><div class="px-n"></div><div class="px-n"></div><div class="px-n"></div><div class="px-n"></div><div class="px-x"></div>
+      <div class="px-n"></div><div class="px-w"></div><div class="px-w"></div><div class="px-n"></div><div class="px-n"></div><div class="px-w"></div><div class="px-w"></div><div class="px-n"></div>
+      <div class="px-n"></div><div class="px-w"></div><div class="px-m"></div><div class="px-n"></div><div class="px-n"></div><div class="px-m"></div><div class="px-w"></div><div class="px-n"></div>
+      <div class="px-x"></div><div class="px-n"></div><div class="px-n"></div><div class="px-n"></div><div class="px-n"></div><div class="px-n"></div><div class="px-n"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-x"></div><div class="px-m"></div><div class="px-m"></div><div class="px-m"></div><div class="px-m"></div><div class="px-x"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-m"></div><div class="px-m"></div><div class="px-x"></div><div class="px-x"></div><div class="px-m"></div><div class="px-m"></div><div class="px-x"></div>
+    </div>
+    <div class="char-label">板栗怪</div>
+  </div>
+
+  <!-- 管道 -->
+  <div class="pixel">
+    <div class="pipe-pixel">
+      <div class="px-x"></div><div class="px-h"></div><div class="px-k"></div><div class="px-l"></div><div class="px-l"></div><div class="px-k"></div><div class="px-h"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-h"></div><div class="px-k"></div><div class="px-l"></div><div class="px-l"></div><div class="px-k"></div><div class="px-h"></div><div class="px-x"></div>
+      <div class="px-h"></div><div class="px-k"></div><div class="px-l"></div><div class="px-l"></div><div class="px-l"></div><div class="px-l"></div><div class="px-k"></div><div class="px-h"></div>
+      <div class="px-h"></div><div class="px-k"></div><div class="px-l"></div><div class="px-l"></div><div class="px-l"></div><div class="px-l"></div><div class="px-k"></div><div class="px-h"></div>
+      <div class="px-x"></div><div class="px-h"></div><div class="px-k"></div><div class="px-l"></div><div class="px-l"></div><div class="px-k"></div><div class="px-h"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-h"></div><div class="px-k"></div><div class="px-l"></div><div class="px-l"></div><div class="px-k"></div><div class="px-h"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-h"></div><div class="px-k"></div><div class="px-l"></div><div class="px-l"></div><div class="px-k"></div><div class="px-h"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-h"></div><div class="px-k"></div><div class="px-l"></div><div class="px-l"></div><div class="px-k"></div><div class="px-h"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-h"></div><div class="px-k"></div><div class="px-l"></div><div class="px-l"></div><div class="px-k"></div><div class="px-h"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-h"></div><div class="px-k"></div><div class="px-l"></div><div class="px-l"></div><div class="px-k"></div><div class="px-h"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-h"></div><div class="px-k"></div><div class="px-l"></div><div class="px-l"></div><div class="px-k"></div><div class="px-h"></div><div class="px-x"></div>
+      <div class="px-x"></div><div class="px-h"></div><div class="px-k"></div><div class="px-l"></div><div class="px-l"></div><div class="px-k"></div><div class="px-h"></div><div class="px-x"></div>
+    </div>
+    <div class="char-label">管道</div>
+  </div>
+</div>
+
+<div class="section-divider" id="sec-4"></div>
+<h2>4. 单词卡 · 普通题</h2>
+<p class="desc">弹窗居中 · 图标+英文+例句填空+4个中文选项</p>
+<div class="preview">
+  <!-- 正常态 -->
+  <div class="word-card">
+    <div class="word-card-header">
+      <span class="word-icon">🍎</span>
+      <span class="word-english">apple</span>
+    </div>
+    <div class="word-sentence">I want to eat an <span class="blank"></span>.</div>
+    <div class="word-options">
+      <div class="word-option" onclick="this.classList.toggle('correct')">苹果</div>
+      <div class="word-option" onclick="this.classList.toggle('wrong')">猫</div>
+      <div class="word-option" onclick="this.classList.toggle('wrong')">蝙蝠</div>
+      <div class="word-option" onclick="this.classList.toggle('wrong')">书包</div>
+    </div>
+  </div>
+
+  <!-- 答对态 -->
+  <div class="word-card">
+    <div class="word-card-header">
+      <span class="word-icon">🍎</span>
+      <span class="word-english">apple</span>
+    </div>
+    <div class="word-sentence">I want to eat an <span class="blank"></span>.</div>
+    <div class="word-options">
+      <div class="word-option correct">✓ 苹果</div>
+      <div class="word-option">猫</div>
+      <div class="word-option">蝙蝠</div>
+      <div class="word-option">书包</div>
+    </div>
+  </div>
+
+  <!-- 答错态 -->
+  <div class="word-card">
+    <div class="word-card-header">
+      <span class="word-icon">🍎</span>
+      <span class="word-english">apple</span>
+    </div>
+    <div class="word-sentence">I want to eat an <span class="blank"></span>.</div>
+    <div class="word-options">
+      <div class="word-option">苹果</div>
+      <div class="word-option wrong">✗ 猫</div>
+      <div class="word-option">蝙蝠</div>
+      <div class="word-option">书包</div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 3. Boss战单词卡 ==================== -->
+
+<div class="section-divider" id="sec-5"></div>
+<h2>5. Boss战单词卡 · 库巴挑战</h2>
+<p class="desc">红边框 + "库巴挑战"标签 + 3题进度点</p>
+<div class="preview">
+  <!-- 第1题，1/3 -->
+  <div class="word-card word-card-boss">
+    <div class="boss-progress">
+      <div class="boss-dot active"></div>
+      <div class="boss-dot"></div>
+      <div class="boss-dot"></div>
+    </div>
+    <div class="word-card-header">
+      <span class="word-english">I want to eat an ___.</span>
+    </div>
+    <div class="word-sentence">我想吃一个___。</div>
+    <div class="word-options">
+      <div class="word-option">apple</div>
+      <div class="word-option">baby</div>
+      <div class="word-option">ball</div>
+      <div class="word-option">bag</div>
+    </div>
+  </div>
+
+  <!-- 第3题完成态 -->
+  <div class="word-card word-card-boss">
+    <div class="boss-progress">
+      <div class="boss-dot done"></div>
+      <div class="boss-dot done"></div>
+      <div class="boss-dot active"></div>
+    </div>
+    <div class="word-card-header">
+      <span class="word-english">The ___ is sleeping on the sofa.</span>
+    </div>
+    <div class="word-sentence">___正在沙发上睡觉。</div>
+    <div class="word-options">
+      <div class="word-option">boy</div>
+      <div class="word-option">bag</div>
+      <div class="word-option correct">✓ cat</div>
+      <div class="word-option">baby</div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 4. 游戏UI条 ==================== -->
+
+<div class="section-divider" id="sec-6"></div>
+<h2>6. 游戏UI条</h2>
+<p class="desc">画布顶部 · 金币数 / 已学单词 / 计时 / 进度 / 暂停</p>
+<div class="preview">
+  <div class="game-ui">
+    <div class="ui-item">
+      <span class="ui-coins">🪙</span>
+      <span class="ui-value">15</span>
+    </div>
+    <div class="ui-item">
+      <span class="ui-words">📖</span>
+      <span class="ui-label">L1 Aa</span>
+      <span class="ui-value">2/4</span>
+    </div>
+    <div class="ui-item">
+      <span class="ui-label">⏱️</span>
+      <span class="ui-value" id="gameTimer">0:35</span>
+    </div>
+    <div class="ui-item">
+      <span class="ui-label">进度</span>
+      <div class="ui-progress-bar">
+        <div class="ui-progress-fill" style="width: 50%"></div>
+      </div>
+    </div>
+    <div class="ui-item">
+      <button style="background:#555; color:#fff; border:2px solid #777; border-radius:6px; padding:4px 12px; font-size:13px; cursor:pointer;">⏸ 暂停</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 5. 通关画面 ==================== -->
+
+<div class="section-divider" id="sec-7"></div>
+<h2>7. 通关画面</h2>
+<p class="desc">暗底 + 金币雨动画 + 统计 + 进入下一关按钮</p>
+<div class="preview">
+  <div class="level-complete">
+    <div class="coin-rain" id="coinRain"></div>
+    <div class="level-complete-title">🎉 第一关通过！</div>
+    <div class="level-complete-sub">Letter Aa · It is a/an X.</div>
+    <div class="level-complete-stats">
+      <div class="stat-box">
+        <div class="stat-num">3/4</div>
+        <div class="stat-label">答对单词</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">25</div>
+        <div class="stat-label">金币</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">Aa ✓</div>
+        <div class="stat-label">已学字母</div>
+      </div>
+    </div>
+    <button class="level-complete-btn">进入第二关 →</button>
+  </div>
+</div>
+
+<!-- ==================== 6. 库巴战画面 ==================== -->
+
+<div class="section-divider" id="sec-8"></div>
+<h2>8. 库巴战画面</h2>
+<p class="desc">暗紫底 + 库巴HP条 + 单词卡居中</p>
+<div class="preview">
+  <div class="boss-screen">
+    <div class="boss-hp-bar">
+      <div class="boss-hp-fill" style="width: 66%"></div>
+    </div>
+    <div class="boss-hp-label">库巴 HP</div>
+    <!-- 库巴占位 -->
+    <div style="font-size: 60px; margin-bottom: 20px;">🐢</div>
+    <!-- 单词卡会浮在这里 -->
+    <div class="word-card word-card-boss" style="transform: scale(0.85);">
+      <div class="boss-progress">
+        <div class="boss-dot done"></div>
+        <div class="boss-dot active"></div>
+        <div class="boss-dot"></div>
+      </div>
+      <div class="word-card-header">
+        <span class="word-english">It is a ___.</span>
+      </div>
+      <div class="word-sentence">这是一个___。</div>
+      <div class="word-options">
+        <div class="word-option">ball</div>
+        <div class="word-option">baby</div>
+        <div class="word-option">boy</div>
+        <div class="word-option">banana</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 7. 操作提示 ==================== -->
+
+<div class="section-divider" id="sec-9"></div>
+<h2>9. 操作提示 · 手机端</h2>
+<div class="preview">
+  <div style="width:480px; padding:20px; background:#1a1a2e; border-radius:12px;">
+    <div style="text-align:center; color:#aaa; font-size:14px; margin-bottom:16px;">📱 触屏操作</div>
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <!-- 左侧：方向键 -->
+      <div style="display:flex; gap:8px;">
+        <div style="width:60px; height:60px; background:#333; border:3px solid #555; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:24px; color:#fff; box-shadow:0 4px 0 #222;">←</div>
+        <div style="width:60px; height:60px; background:#333; border:3px solid #555; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:24px; color:#fff; box-shadow:0 4px 0 #222;">→</div>
+      </div>
+      <!-- 右侧：动作键 -->
+      <div style="display:flex; gap:8px; align-items:flex-end;">
+        <div style="width:60px; height:60px; background:#1E88E5; border:3px solid #1565C0; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; color:#fff; font-weight:700; box-shadow:0 4px 0 #0D47A1;">B</div>
+        <div style="width:60px; height:60px; background:#4CAF50; border:3px solid #2E7D32; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; color:#fff; font-weight:700; box-shadow:0 4px 0 #1B5E20;">A</div>
+      </div>
+    </div>
+    <div style="display:flex; justify-content:space-between; margin-top:8px; padding:0 8px;">
+      <div style="color:#666; font-size:11px; text-align:center; width:130px;">← → 左右移动</div>
+      <div style="display:flex; gap:32px;">
+        <div style="color:#666; font-size:11px; text-align:center;">B 子弹</div>
+        <div style="color:#666; font-size:11px; text-align:center;">A 跳跃</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider" id="sec-10"></div>
+<h2>10. 操作提示 · 电脑端</h2>
+<div class="preview">
+  <div style="width:480px; padding:20px; background:#1a1a2e; border-radius:12px;">
+    <div style="text-align:center; color:#aaa; font-size:14px; margin-bottom:16px;">💻 键盘操作</div>
+    <div style="display:flex; gap:24px; justify-content:center; flex-wrap:wrap;">
+      <!-- 移动 -->
+      <div style="text-align:center;">
+        <div style="display:flex; gap:6px; margin-bottom:6px;">
+          <div class="key-cap">←</div>
+          <div class="key-cap">→</div>
+        </div>
+        <div style="color:#888; font-size:11px;">左右移动</div>
+      </div>
+      <!-- 短跳 -->
+      <div style="text-align:center;">
+        <div style="display:flex; gap:6px; margin-bottom:6px;">
+          <div class="key-cap" style="width:80px;">空格</div>
+        </div>
+        <div style="color:#888; font-size:11px;">短按 = 小跳</div>
+      </div>
+      <!-- 长跳 -->
+      <div style="text-align:center;">
+        <div style="display:flex; gap:6px; margin-bottom:6px;">
+          <div class="key-cap" style="width:80px;">长按空格</div>
+        </div>
+        <div style="color:#888; font-size:11px;">长按 = 大跳</div>
+      </div>
+      <!-- 子弹 -->
+      <div style="text-align:center;">
+        <div style="display:flex; gap:6px; margin-bottom:6px;">
+          <div class="key-cap" style="width:100px;">空格 × 2</div>
+        </div>
+        <div style="color:#888; font-size:11px;">连按两下 = 子弹</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 8. 配色参考 ==================== -->
+
+<div class="section-divider" id="sec-11"></div>
+<h2>11. 单词库</h2>
+<p class="desc">每关通关后解锁 · 点击可听发音 · 卡片式布局</p>
+<div class="preview">
+  <!-- L1 单词库 -->
+  <div style="width:480px; background:#1a1a2e; border-radius:12px; padding:20px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+      <div style="font-size:18px; font-weight:700; color:#FFD700;">🌿 世界1 · L1 Aa</div>
+      <div style="font-size:13px; color:#4CAF50;">✓ 已通关</div>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+      <div style="background:#fff; border-radius:12px; padding:12px; display:flex; align-items:center; gap:12px; cursor:pointer;">
+        <span style="font-size:32px;">🍎</span>
+        <div>
+          <div style="font-size:18px; font-weight:700; color:#1a1a2e;">apple</div>
+          <div style="font-size:13px; color:#888;">苹果</div>
+        </div>
+        <div style="margin-left:auto; width:28px; height:28px; background:#E3F2FD; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px;">🔊</div>
+      </div>
+      <div style="background:#fff; border-radius:12px; padding:12px; display:flex; align-items:center; gap:12px; cursor:pointer;">
+        <span style="font-size:32px;">🐱</span>
+        <div>
+          <div style="font-size:18px; font-weight:700; color:#1a1a2e;">cat</div>
+          <div style="font-size:13px; color:#888;">猫</div>
+        </div>
+        <div style="margin-left:auto; width:28px; height:28px; background:#E3F2FD; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px;">🔊</div>
+      </div>
+      <div style="background:#fff; border-radius:12px; padding:12px; display:flex; align-items:center; gap:12px; cursor:pointer;">
+        <span style="font-size:32px;">🦇</span>
+        <div>
+          <div style="font-size:18px; font-weight:700; color:#1a1a2e;">bat</div>
+          <div style="font-size:13px; color:#888;">蝙蝠</div>
+        </div>
+        <div style="margin-left:auto; width:28px; height:28px; background:#E3F2FD; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px;">🔊</div>
+      </div>
+      <div style="background:#fff; border-radius:12px; padding:12px; display:flex; align-items:center; gap:12px; cursor:pointer;">
+        <span style="font-size:32px;">🎒</span>
+        <div>
+          <div style="font-size:18px; font-weight:700; color:#1a1a2e;">bag</div>
+          <div style="font-size:13px; color:#888;">包</div>
+        </div>
+        <div style="margin-left:auto; width:28px; height:28px; background:#E3F2FD; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px;">🔊</div>
+      </div>
+    </div>
+    <!-- 句型总结 -->
+    <div style="margin-top:16px; padding:12px; background:rgba(255,255,255,0.05); border-radius:8px; border-left:3px solid #FFD700;">
+      <div style="font-size:12px; color:#888; margin-bottom:4px;">本关句型</div>
+      <div style="font-size:14px; color:#fff;">It is a/an X. · Is it a X? · It is not a X.</div>
+    </div>
+  </div>
+
+  <!-- 单词库总览（世界选择） -->
+  <div style="width:480px; background:#1a1a2e; border-radius:12px; padding:20px;">
+    <div style="font-size:18px; font-weight:700; color:#FFD700; margin-bottom:16px;">📖 单词库</div>
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      <div style="display:flex; align-items:center; gap:12px; padding:12px; background:rgba(76,175,80,0.15); border:2px solid #4CAF50; border-radius:10px; cursor:pointer;">
+        <span style="font-size:24px;">🌿</span>
+        <div style="flex:1;">
+          <div style="font-size:15px; font-weight:700; color:#fff;">世界1：草地王国</div>
+          <div style="font-size:12px; color:#888;">Aa~Ee · 5课 · 19个词</div>
+        </div>
+        <div style="color:#4CAF50; font-size:13px;">3/5 ✓</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:12px; padding:12px; background:rgba(255,255,255,0.05); border:2px solid #444; border-radius:10px; cursor:pointer; opacity:0.5;">
+        <span style="font-size:24px;">🕳️</span>
+        <div style="flex:1;">
+          <div style="font-size:15px; font-weight:700; color:#fff;">世界2：洞穴王国</div>
+          <div style="font-size:12px; color:#888;">Ff~Jj · 5课 · 17个词</div>
+        </div>
+        <div style="color:#666; font-size:13px;">🔒</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:12px; padding:12px; background:rgba(255,255,255,0.05); border:2px solid #444; border-radius:10px; cursor:pointer; opacity:0.5;">
+        <span style="font-size:24px;">🐠</span>
+        <div style="flex:1;">
+          <div style="font-size:15px; font-weight:700; color:#fff;">世界3：海底王国</div>
+          <div style="font-size:12px; color:#888;">Kk~Pp · 6课 · 24个词</div>
+        </div>
+        <div style="color:#666; font-size:13px;">🔒</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:12px; padding:12px; background:rgba(255,255,255,0.05); border:2px solid #444; border-radius:10px; cursor:pointer; opacity:0.5;">
+        <span style="font-size:24px;">☁️</span>
+        <div style="flex:1;">
+          <div style="font-size:15px; font-weight:700; color:#fff;">世界4：天空之城</div>
+          <div style="font-size:12px; color:#888;">Qq~Uu · 5课 · 18个词</div>
+        </div>
+        <div style="color:#666; font-size:13px;">🔒</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:12px; padding:12px; background:rgba(255,255,255,0.05); border:2px solid #444; border-radius:10px; cursor:pointer; opacity:0.5;">
+        <span style="font-size:24px;">🏰</span>
+        <div style="flex:1;">
+          <div style="font-size:15px; font-weight:700; color:#fff;">世界5：库巴城堡</div>
+          <div style="font-size:12px; color:#888;">Vv~Zz · 5课 · 15个词</div>
+        </div>
+        <div style="color:#666; font-size:13px;">🔒</div>
+      </div>
+    </div>
+    <div style="margin-top:12px; text-align:center; font-size:12px; color:#666;">已学 4 / 93 个单词</div>
+  </div>
+</div>
+
+<div class="section-divider" id="sec-12"></div>
+<h2>12. 配色参考</h2>
+<div class="preview">
+  <div style="width:480px; padding:16px; background:#1a1a2e; border-radius:8px;">
+    <div style="color:#FFD700; font-size:14px; margin-bottom:12px;">马里奥角色</div>
+    <div class="color-ref">
+      <div class="color-swatch" style="background:#E53935">红帽</div>
+      <div class="color-swatch" style="background:#FFCCBC">肤色</div>
+      <div class="color-swatch" style="background:#6D4C41">棕</div>
+      <div class="color-swatch" style="background:#1E88E5">蓝裤</div>
+      <div class="color-swatch" style="background:#FDD835">黄扣</div>
+      <div class="color-swatch" style="background:#fff; color:#333">白</div>
+      <div class="color-swatch" style="background:#000">黑</div>
+    </div>
+    <div style="color:#FFD700; font-size:14px; margin:16px 0 12px;">库巴</div>
+    <div class="color-ref">
+      <div class="color-swatch" style="background:#4CAF50">绿</div>
+      <div class="color-swatch" style="background:#2E7D32">深绿</div>
+      <div class="color-swatch" style="background:#1B5E20">最深</div>
+      <div class="color-swatch" style="background:#F9A825">黄腹</div>
+      <div class="color-swatch" style="background:#8B4513">角棕</div>
+      <div class="color-swatch" style="background:#d32f2f">瞳红</div>
+    </div>
+    <div style="color:#FFD700; font-size:14px; margin:16px 0 12px;">场景元素</div>
+    <div class="color-ref">
+      <div class="color-swatch" style="background:#FFD700">金</div>
+      <div class="color-swatch" style="background:#E65100">金暗</div>
+      <div class="color-swatch" style="background:#FFA000">砖橙</div>
+      <div class="color-swatch" style="background:#BF360C">砖边</div>
+      <div class="color-swatch" style="background:#8D6E63">栗棕</div>
+      <div class="color-swatch" style="background:#5D4037">栗深</div>
+      <div class="color-swatch" style="background:#4CAF50">管绿</div>
+      <div class="color-swatch" style="background:#1B5E20">管深</div>
+    </div>
+    <div style="color:#FFD700; font-size:14px; margin:16px 0 12px;">游戏界面</div>
+    <div class="color-ref">
+      <div class="color-swatch" style="background:#5c94fc">天蓝</div>
+      <div class="color-swatch" style="background:#8BCE63">草绿</div>
+      <div class="color-swatch" style="background:#c84c09">地砖</div>
+      <div class="color-swatch" style="background:#E53935">红</div>
+      <div class="color-swatch" style="background:#1E88E5">蓝</div>
+      <div class="color-swatch" style="background:#4CAF50">绿</div>
+      <div class="color-swatch" style="background:#FFD700">金</div>
+      <div class="color-swatch" style="background:#FFA000">橙</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const ground = document.getElementById('ground');
+if (ground) {
+  for (let i = 0; i < 120; i++) {
+    const brick = document.createElement('div');
+    brick.className = (Math.floor(i/30) + i) % 2 === 0 ? 'brick' : 'brick-light';
+    ground.appendChild(brick);
+  }
+}
+const rain = document.getElementById('coinRain');
+if (rain) {
+  for (let i = 0; i < 15; i++) {
+    const coin = document.createElement('div');
+    coin.className = 'falling-coin';
+    coin.style.left = Math.random() * 100 + '%';
+    coin.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+    coin.style.animationDelay = Math.random() * 2 + 's';
+    rain.appendChild(coin);
+  }
+}
+</script>
+
+</body>
+</html>

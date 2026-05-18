@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>马里奥 像素CSS</title>
+<style>
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #5c94fc;
+    font-family: 'Arial', sans-serif;
+    gap: 50px;
+    padding: 40px;
+  }
+  h1 { color: #fff; font-size: 24px; text-shadow: 2px 2px 0 #000; }
+  .row { display: flex; gap: 60px; align-items: flex-end; flex-wrap: wrap; justify-content: center; }
+  .char-label { text-align: center; color: #fff; font-size: 14px; margin-top: 12px; text-shadow: 1px 1px 0 #000; }
+  .pixel { display: inline-block; }
+
+  /* ========== 像素马里奥 16x16 ========== */
+  .mario-pixel {
+    display: grid;
+    grid-template-columns: repeat(16, 6px);
+    grid-template-rows: repeat(16, 6px);
+    gap: 0;
+    image-rendering: pixelated;
+  }
+  .mario-pixel-big {
+    grid-template-columns: repeat(16, 10px);
+    grid-template-rows: repeat(16, 10px);
+  }
+  .mario-pixel-star {
+    grid-template-columns: repeat(16, 6px);
+    grid-template-rows: repeat(16, 6px);
+    animation: starPower 0.2s infinite;
+  }
+  @keyframes starPower {
+    0% { filter: hue-rotate(0deg) brightness(1.2); }
+    33% { filter: hue-rotate(120deg) brightness(1.4); }
+    66% { filter: hue-rotate(240deg) brightness(1.2); }
+    100% { filter: hue-rotate(360deg) brightness(1.4); }
+  }
+
+  /* 颜色 */
+  .r { background: #E53935; } /* 红 帽子/衣服 */
+  .s { background: #FFCCBC; } /* 肤色 */
+  .b { background: #6D4C41; } /* 棕 头发/胡子/鞋 */
+  .u { background: #1E88E5; } /* 蓝 工装裤 */
+  .y { background: #FDD835; } /* 黄 纽扣 */
+  .w { background: #FFFFFF; } /* 白 手套/眼睛 */
+  .e { background: #1565C0; } /* 深蓝 裤子阴影 */
+  .x { background: transparent; } /* 空 */
+
+  /* 像素跳跃动画 */
+  .mario-pixel-wrap { animation: pixelBounce 0.8s ease-in-out infinite; }
+  @keyframes pixelBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+
+  /* ========== 场景元素 像素版 ========== */
+  .coin-pixel {
+    display: grid;
+    grid-template-columns: repeat(8, 5px);
+    grid-template-rows: repeat(8, 5px);
+    gap: 0;
+    animation: coinSpin 1s ease-in-out infinite;
+  }
+  @keyframes coinSpin {
+    0%, 100% { transform: scaleX(1); }
+    50% { transform: scaleX(0.2); }
+  }
+  .g { background: #FFD700; }
+  .d { background: #E65100; }
+
+  .block-pixel {
+    display: grid;
+    grid-template-columns: repeat(8, 5px);
+    grid-template-rows: repeat(8, 5px);
+    gap: 0;
+    animation: blockFloat 2s ease-in-out infinite;
+  }
+  @keyframes blockFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+  }
+  .o { background: #FFA000; }
+  .p { background: #BF360C; }
+
+  .mushroom-pixel {
+    display: grid;
+    grid-template-columns: repeat(8, 5px);
+    grid-template-rows: repeat(8, 5px);
+    gap: 0;
+  }
+
+  .star-pixel {
+    display: grid;
+    grid-template-columns: repeat(8, 5px);
+    grid-template-rows: repeat(8, 5px);
+    gap: 0;
+    animation: starGlow 0.5s ease-in-out infinite alternate;
+  }
+  @keyframes starGlow {
+    0% { filter: brightness(1); }
+    100% { filter: brightness(1.3); }
+  }
+
+  .goomba-pixel {
+    display: grid;
+    grid-template-columns: repeat(8, 5px);
+    grid-template-rows: repeat(8, 5px);
+    gap: 0;
+    animation: goombaWalk 0.4s steps(2) infinite;
+  }
+  @keyframes goombaWalk {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(3px); }
+  }
+  .n { background: #8D6E63; }
+  .m { background: #5D4037; }
+
+  .pipe-pixel {
+    display: grid;
+    grid-template-columns: repeat(8, 5px);
+    grid-template-rows: repeat(12, 5px);
+    gap: 0;
+  }
+  .l { background: #4CAF50; }
+  .k { background: #2E7D32; }
+  .t { background: #000000; } /* 纯黑 */
+  .h { background: #1B5E20; }
+
+  .specs {
+    color: #fff; font-size: 13px; line-height: 2; max-width: 700px;
+    background: rgba(0,0,0,0.3); padding: 24px; border-radius: 12px; margin-top: 20px;
+  }
+  .specs h3 { color: #FFD700; margin-top: 16px; font-size: 15px; }
+  .specs code { background: rgba(255,255,255,0.15); padding: 2px 6px; border-radius: 4px; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<h1>🍄 马里奥 像素CSS 设计</h1>
+
+<div class="row">
+  <!-- 正常马里奥 16x16 -->
+  <div>
+    <div class="mario-pixel-wrap">
+      <div class="mario-pixel">
+        <!-- Row 1: 帽子顶 -->
+        <div class="x"></div><div class="x"></div><div class="x"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <!-- Row 2: 帽子 -->
+        <div class="x"></div><div class="x"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <!-- Row 3: 头发+脸 -->
+        <div class="x"></div><div class="x"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="s"></div><div class="s"></div><div class="t"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="b"></div><div class="s"></div><div class="b"></div><div class="s"></div><div class="s"></div><div class="s"></div><div class="s"></div><div class="s"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="b"></div><div class="s"></div><div class="b"></div><div class="b"></div><div class="s"></div><div class="s"></div><div class="s"></div><div class="b"></div><div class="b"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="x"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="b"></div><div class="s"></div><div class="b"></div><div class="b"></div><div class="s"></div><div class="s"></div><div class="s"></div><div class="b"></div><div class="b"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <!-- Row 6: 脸下半 -->
+        <div class="x"></div><div class="x"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <!-- Row 7: 身体上 -->
+        <div class="x"></div><div class="x"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <!-- Row 8: 身体+手臂 -->
+        <div class="x"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <!-- Row 9: 工装裤上+纽扣 -->
+        <div class="x"></div><div class="u"></div><div class="u"></div><div class="r"></div><div class="y"></div><div class="u"></div><div class="y"></div><div class="r"></div><div class="u"></div><div class="u"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <!-- Row 10: 工装裤 -->
+        <div class="x"></div><div class="u"></div><div class="u"></div><div class="u"></div><div class="u"></div><div class="u"></div><div class="u"></div><div class="u"></div><div class="u"></div><div class="u"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <!-- Row 11: 裤子+腿 -->
+        <div class="x"></div><div class="x"></div><div class="u"></div><div class="u"></div><div class="u"></div><div class="x"></div><div class="u"></div><div class="u"></div><div class="u"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <!-- Row 12: 鞋 -->
+        <div class="x"></div><div class="x"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="x"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <!-- Row 13-16 空 -->
+        <div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+      </div>
+    </div>
+    <div class="char-label">马里奥 · 16×16 · 96px</div>
+  </div>
+
+  <!-- 大马里奥 16x16 放大 -->
+  <div>
+    <div class="mario-pixel-wrap">
+      <div class="mario-pixel mario-pixel-big">
+        <div class="x"></div><div class="x"></div><div class="x"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="x"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="x"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="s"></div><div class="s"></div><div class="t"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="b"></div><div class="s"></div><div class="b"></div><div class="s"></div><div class="s"></div><div class="s"></div><div class="s"></div><div class="s"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="b"></div><div class="s"></div><div class="b"></div><div class="b"></div><div class="s"></div><div class="s"></div><div class="s"></div><div class="b"></div><div class="b"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="x"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="x"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="u"></div><div class="u"></div><div class="r"></div><div class="y"></div><div class="u"></div><div class="y"></div><div class="r"></div><div class="u"></div><div class="u"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="u"></div><div class="u"></div><div class="u"></div><div class="u"></div><div class="u"></div><div class="u"></div><div class="u"></div><div class="u"></div><div class="u"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="x"></div><div class="u"></div><div class="u"></div><div class="u"></div><div class="x"></div><div class="u"></div><div class="u"></div><div class="u"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="x"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="x"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+      </div>
+    </div>
+    <div class="char-label">大马里奥 · 16×10px = 160px</div>
+  </div>
+
+  <!-- 星星马里奥 -->
+  <div>
+    <div class="mario-pixel-wrap">
+      <div class="mario-pixel mario-pixel-star">
+        <div class="x"></div><div class="x"></div><div class="x"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="x"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="x"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="s"></div><div class="s"></div><div class="t"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="b"></div><div class="s"></div><div class="b"></div><div class="s"></div><div class="s"></div><div class="s"></div><div class="s"></div><div class="s"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="b"></div><div class="s"></div><div class="b"></div><div class="b"></div><div class="s"></div><div class="s"></div><div class="s"></div><div class="b"></div><div class="b"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="x"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="x"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="u"></div><div class="u"></div><div class="r"></div><div class="y"></div><div class="u"></div><div class="y"></div><div class="r"></div><div class="u"></div><div class="u"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="u"></div><div class="u"></div><div class="u"></div><div class="u"></div><div class="u"></div><div class="u"></div><div class="u"></div><div class="u"></div><div class="u"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="x"></div><div class="u"></div><div class="u"></div><div class="u"></div><div class="x"></div><div class="u"></div><div class="u"></div><div class="u"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="x"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="x"></div><div class="b"></div><div class="b"></div><div class="b"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+        <div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+      </div>
+    </div>
+    <div class="char-label">星星马里奥 · 无敌闪烁</div>
+  </div>
+</div>
+
+<!-- 场景元素 -->
+<h1 style="margin-top: 40px; font-size: 20px;">🧱 场景元素 像素版</h1>
+<div class="row">
+  <!-- 金币 -->
+  <div class="pixel">
+    <div class="coin-pixel">
+      <div class="x"></div><div class="x"></div><div class="g"></div><div class="g"></div><div class="g"></div><div class="g"></div><div class="x"></div><div class="x"></div>
+      <div class="x"></div><div class="g"></div><div class="g"></div><div class="d"></div><div class="d"></div><div class="g"></div><div class="g"></div><div class="x"></div>
+      <div class="g"></div><div class="g"></div><div class="d"></div><div class="g"></div><div class="g"></div><div class="d"></div><div class="g"></div><div class="g"></div>
+      <div class="g"></div><div class="d"></div><div class="g"></div><div class="g"></div><div class="g"></div><div class="g"></div><div class="d"></div><div class="g"></div>
+      <div class="g"></div><div class="d"></div><div class="g"></div><div class="g"></div><div class="g"></div><div class="g"></div><div class="d"></div><div class="g"></div>
+      <div class="g"></div><div class="g"></div><div class="d"></div><div class="g"></div><div class="g"></div><div class="d"></div><div class="g"></div><div class="g"></div>
+      <div class="x"></div><div class="g"></div><div class="g"></div><div class="d"></div><div class="d"></div><div class="g"></div><div class="g"></div><div class="x"></div>
+      <div class="x"></div><div class="x"></div><div class="g"></div><div class="g"></div><div class="g"></div><div class="g"></div><div class="x"></div><div class="x"></div>
+    </div>
+    <div class="char-label">金币</div>
+  </div>
+
+  <!-- 问号砖块 -->
+  <div class="pixel">
+    <div class="block-pixel">
+      <div class="p"></div><div class="p"></div><div class="p"></div><div class="p"></div><div class="p"></div><div class="p"></div><div class="p"></div><div class="p"></div>
+      <div class="p"></div><div class="o"></div><div class="o"></div><div class="o"></div><div class="o"></div><div class="o"></div><div class="o"></div><div class="p"></div>
+      <div class="p"></div><div class="o"></div><div class="o"></div><div class="o"></div><div class="o"></div><div class="o"></div><div class="o"></div><div class="p"></div>
+      <div class="p"></div><div class="o"></div><div class="o"></div><div class="o"></div><div class="o"></div><div class="o"></div><div class="o"></div><div class="p"></div>
+      <div class="p"></div><div class="o"></div><div class="o"></div><div class="o"></div><div class="o"></div><div class="o"></div><div class="o"></div><div class="p"></div>
+      <div class="p"></div><div class="o"></div><div class="o"></div><div class="o"></div><div class="o"></div><div class="o"></div><div class="o"></div><div class="p"></div>
+      <div class="p"></div><div class="o"></div><div class="o"></div><div class="o"></div><div class="o"></div><div class="o"></div><div class="o"></div><div class="p"></div>
+      <div class="p"></div><div class="p"></div><div class="p"></div><div class="p"></div><div class="p"></div><div class="p"></div><div class="p"></div><div class="p"></div>
+    </div>
+    <div class="char-label">问号砖块</div>
+  </div>
+
+  <!-- 蘑菇 -->
+  <div class="pixel">
+    <div class="mushroom-pixel">
+      <div class="x"></div><div class="x"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="x"></div><div class="x"></div>
+      <div class="x"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="r"></div><div class="x"></div>
+      <div class="r"></div><div class="r"></div><div class="w"></div><div class="r"></div><div class="r"></div><div class="w"></div><div class="r"></div><div class="r"></div>
+      <div class="r"></div><div class="w"></div><div class="w"></div><div class="r"></div><div class="r"></div><div class="w"></div><div class="w"></div><div class="r"></div>
+      <div class="s"></div><div class="s"></div><div class="s"></div><div class="s"></div><div class="s"></div><div class="s"></div><div class="s"></div><div class="s"></div>
+      <div class="x"></div><div class="s"></div><div class="s"></div><div class="s"></div><div class="s"></div><div class="s"></div><div class="s"></div><div class="x"></div>
+      <div class="x"></div><div class="x"></div><div class="s"></div><div class="s"></div><div class="s"></div><div class="s"></div><div class="x"></div><div class="x"></div>
+      <div class="x"></div><div class="x"></div><div class="x"></div><div class="s"></div><div class="s"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+    </div>
+    <div class="char-label">蘑菇</div>
+  </div>
+
+  <!-- 星星 -->
+  <div class="pixel">
+    <div class="star-pixel">
+      <div class="x"></div><div class="x"></div><div class="x"></div><div class="g"></div><div class="g"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+      <div class="x"></div><div class="x"></div><div class="x"></div><div class="g"></div><div class="g"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+      <div class="x"></div><div class="g"></div><div class="g"></div><div class="g"></div><div class="g"></div><div class="g"></div><div class="g"></div><div class="x"></div>
+      <div class="g"></div><div class="g"></div><div class="g"></div><div class="g"></div><div class="g"></div><div class="g"></div><div class="g"></div><div class="g"></div>
+      <div class="x"></div><div class="x"></div><div class="g"></div><div class="g"></div><div class="g"></div><div class="g"></div><div class="x"></div><div class="x"></div>
+      <div class="x"></div><div class="g"></div><div class="g"></div><div class="x"></div><div class="x"></div><div class="g"></div><div class="g"></div><div class="x"></div>
+      <div class="g"></div><div class="g"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="g"></div><div class="g"></div>
+      <div class="g"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="x"></div><div class="g"></div>
+    </div>
+    <div class="char-label">星星</div>
+  </div>
+
+  <!-- 板栗怪 -->
+  <div class="pixel">
+    <div class="goomba-pixel">
+      <div class="x"></div><div class="x"></div><div class="x"></div><div class="n"></div><div class="n"></div><div class="x"></div><div class="x"></div><div class="x"></div>
+      <div class="x"></div><div class="x"></div><div class="n"></div><div class="n"></div><div class="n"></div><div class="n"></div><div class="x"></div><div class="x"></div>
+      <div class="x"></div><div class="n"></div><div class="n"></div><div class="n"></div><div class="n"></div><div class="n"></div><div class="n"></div><div class="x"></div>
+      <div class="n"></div><div class="w"></div><div class="w"></div><div class="n"></div><div class="n"></div><div class="w"></div><div class="w"></div><div class="n"></div>
+      <div class="n"></div><div class="w"></div><div class="m"></div><div class="n"></div><div class="n"></div><div class="m"></div><div class="w"></div><div class="n"></div>
+      <div class="x"></div><div class="n"></div><div class="n"></div><div class="n"></div><div class="n"></div><div class="n"></div><div class="n"></div><div class="x"></div>
+      <div class="x"></div><div class="x"></div><div class="m"></div><div class="m"></div><div class="m"></div><div class="m"></div><div class="x"></div><div class="x"></div>
+      <div class="x"></div><div class="m"></div><div class="m"></div><div class="x"></div><div class="x"></div><div class="m"></div><div class="m"></div><div class="x"></div>
+    </div>
+    <div class="char-label">板栗怪</div>
+  </div>
+
+  <!-- 管道 -->
+  <div class="pixel">
+    <div class="pipe-pixel">
+      <div class="x"></div><div class="h"></div><div class="k"></div><div class="l"></div><div class="l"></div><div class="k"></div><div class="h"></div><div class="x"></div>
+      <div class="x"></div><div class="h"></div><div class="k"></div><div class="l"></div><div class="l"></div><div class="k"></div><div class="h"></div><div class="x"></div>
+      <div class="h"></div><div class="k"></div><div class="l"></div><div class="l"></div><div class="l"></div><div class="l"></div><div class="k"></div><div class="h"></div>
+      <div class="h"></div><div class="k"></div><div class="l"></div><div class="l"></div><div class="l"></div><div class="l"></div><div class="k"></div><div class="h"></div>
+      <div class="x"></div><div class="h"></div><div class="k"></div><div class="l"></div><div class="l"></div><div class="k"></div><div class="h"></div><div class="x"></div>
+      <div class="x"></div><div class="h"></div><div class="k"></div><div class="l"></div><div class="l"></div><div class="k"></div><div class="h"></div><div class="x"></div>
+      <div class="x"></div><div class="h"></div><div class="k"></div><div class="l"></div><div class="l"></div><div class="k"></div><div class="h"></div><div class="x"></div>
+      <div class="x"></div><div class="h"></div><div class="k"></div><div class="l"></div><div class="l"></div><div class="k"></div><div class="h"></div><div class="x"></div>
+      <div class="x"></div><div class="h"></div><div class="k"></div><div class="l"></div><div class="l"></div><div class="k"></div><div class="h"></div><div class="x"></div>
+      <div class="x"></div><div class="h"></div><div class="k"></div><div class="l"></div><div class="l"></div><div class="k"></div><div class="h"></div><div class="x"></div>
+      <div class="x"></div><div class="h"></div><div class="k"></div><div class="l"></div><div class="l"></div><div class="k"></div><div class="h"></div><div class="x"></div>
+      <div class="x"></div><div class="h"></div><div class="k"></div><div class="l"></div><div class="l"></div><div class="k"></div><div class="h"></div><div class="x"></div>
+    </div>
+    <div class="char-label">管道</div>
+  </div>
+</div>
+
+<div class="specs">
+  <h3>🎨 像素配色</h3>
+  红（帽/衣）：<code>#E53935</code> · 肤色：<code>#FFCCBC</code> · 棕（发/须/鞋）：<code>#6D4C41</code><br>
+  蓝（工装裤）：<code>#1E88E5</code> · 黄（纽扣）：<code>#FDD835</code> · 白（手套/眼）：<code>#FFFFFF</code><br>
+  金（金币）：<code>#FFD700</code> · 金币暗：<code>#E65100</code> · 砖橙：<code>#FFA000</code> · 砖边：<code>#BF360C</code><br>
+  板栗棕：<code>#8D6E63</code> · 板栗深：<code>#5D4037</code> · 管绿：<code>#4CAF50</code> · 管深绿：<code>#1B5E20</code>
+
+  <h3>📐 尺寸</h3>
+  马里奥：16×16格 × 6px = 96×96px<br>
+  大马里奥：16×16格 × 10px = 160×160px<br>
+  场景元素：8×8格 × 5px = 40×40px · 管道：8×12格 = 40×60px
+</div>
+
+</body>
+</html>
