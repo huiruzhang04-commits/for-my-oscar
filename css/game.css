@@ -769,14 +769,26 @@ body {
 
 @media (max-width: 1000px) {
     #game-container {
-        transform: scale(0.8);
+        transform: scale(0.95);
         transform-origin: top center;
     }
 }
 
 @media (max-width: 800px) {
     #game-container {
-        transform: scale(0.6);
+        transform: scale(0.85);
+    }
+}
+
+@media (max-width: 600px) {
+    #game-container {
+        transform: scale(0.75);
+    }
+}
+
+@media (max-width: 480px) {
+    #game-container {
+        transform: scale(0.65);
     }
 }
 
@@ -802,27 +814,31 @@ body {
 }
 
 .touch-left {
-    position: absolute;
-    bottom: 20px;
+    position: fixed;
+    bottom: 100px;
     left: 20px;
+    z-index: 10001;
 }
 
 .touch-right {
-    position: absolute;
-    bottom: 20px;
-    left: 120px;
+    position: fixed;
+    bottom: 100px;
+    left: 110px;
+    z-index: 10001;
 }
 
 .touch-jump {
-    position: absolute;
-    bottom: 20px;
+    position: fixed;
+    bottom: 100px;
     right: 20px;
+    z-index: 10001;
 }
 
 .touch-fire {
-    position: absolute;
-    bottom: 120px;
+    position: fixed;
+    bottom: 190px;
     right: 20px;
+    z-index: 10001;
 }
 
 .touch-btn {
@@ -871,5 +887,78 @@ body {
     .touch-fire {
         right: 10px;
         bottom: 90px;
+    }
+}
+
+/* ==================== ��Ӧʽ���� ==================== */
+/* ����Ϸ��������Ӧ */
+#game-container {
+    width: 100%;
+    max-width: 960px;
+    padding: 0 10px;
+}
+
+/* �ö���״̬������Ӧ */
+#game-header {
+    width: 100% !important;
+    max-width: 960px;
+    box-sizing: border-box;
+}
+
+/* �û�����������Ӧ */
+#game-canvas-container {
+    width: 100% !important;
+    max-width: 960px;
+    height: auto;
+    aspect-ratio: 960 / 640; /* ���� 3:2 ���� */
+}
+
+/* �û�������Ӧ */
+#game-canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* �ֻ��˵���������ťλ�ã������ڵ���Ϸ */
+@media (max-width: 1024px) {
+    #touch-controls {
+        display: flex !important;
+        justify-content: space-between;
+        align-items: flex-end;
+        padding: 0 20px 20px 20px;
+        box-sizing: border-box;
+    }
+    
+    .touch-left, .touch-right {
+        position: static;
+    }
+    
+    .touch-jump, .touch-fire {
+        position: static;
+    }
+    
+    .touch-btn {
+        width: 70px;
+        height: 70px;
+        font-size: 28px;
+    }
+}
+
+/* С���ֻ���һ���Ż� */
+@media (max-width: 480px) {
+    .touch-btn {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+    }
+    
+    #game-header {
+        flex-wrap: wrap;
+        gap: 5px;
+        padding: 8px 10px;
+    }
+    
+    .ui-item {
+        font-size: 14px;
     }
 }
