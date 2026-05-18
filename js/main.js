@@ -11,12 +11,12 @@ window.onerror = function(msg, src, line, col, err) {
 
 // Dynamically resize canvas to match container (mobile full-screen fix)
 function resizeCanvas() {
-    resizeCanvas(); // set initial canvas size
     const canvas = document.getElementById('game-canvas');
     const container = document.getElementById('game-canvas-container');
     if (!canvas || !container) return;
     const w = container.clientWidth;
     const h = container.clientHeight;
+    if (w === 0 || h === 0) return;
     if (canvas.width !== w || canvas.height !== h) {
         canvas.width = w;
         canvas.height = h;
@@ -25,12 +25,15 @@ function resizeCanvas() {
 }
 window.addEventListener('resize', resizeCanvas);
 
+window.addEventListener('resize', resizeCanvas);
+
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('📦 DOMContentLoaded fired!');
     console.log('body exists:', !!document.body);
     console.log('game-canvas exists:', !!document.getElementById('game-canvas'));
     console.log('main-menu exists:', !!document.getElementById('main-menu'));
 
+    resizeCanvas(); // set initial canvas size
     const canvas = document.getElementById('game-canvas');
     const statusEl = document.getElementById('loading-status') || createLoadingStatus();
 
