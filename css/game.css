@@ -39,7 +39,8 @@ body {
 }
 
 #game-header {
-    width: 960px;
+    width: 100%;
+    max-width: 960px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -47,6 +48,7 @@ body {
     background: var(--ui-bg);
     border-radius: 12px 12px 0 0;
     border: 3px solid #333;
+    box-sizing: border-box;
     border-bottom: none;
 }
 
@@ -139,14 +141,20 @@ body {
 
 #game-canvas-container {
     position: relative;
-    width: 960px;
-    height: 640px;
+    width: 100%;
+    max-width: 960px;
+    height: auto;
+    aspect-ratio: 960 / 640;
     border: 3px solid #333;
     border-top: none;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 #game-canvas {
     display: block;
+    width: 100%;
+    height: 100%;
     background: var(--sky-blue);
     image-rendering: pixelated;
     image-rendering: crisp-edges;
@@ -734,7 +742,8 @@ body {
 }
 
 #game-controls {
-    width: 960px;
+    width: 100%;
+    max-width: 960px;
     padding: 12px 20px;
     background: var(--ui-bg);
     border-radius: 0 0 12px 12px;
@@ -867,41 +876,8 @@ body {
     }
 }
 
-/* ==================== Responsive Layout ==================== */
-/* Game container - responsive width */
-#game-container {
-    width: 100%;
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 10px;
-    box-sizing: border-box;
-}
-
-/* Game header - responsive */
-#game-header {
-    width: 100% !important;
-    max-width: 960px;
-    box-sizing: border-box;
-}
-
-/* Canvas container - keep 3:2 aspect ratio */
-#game-canvas-container {
-    width: 100% !important;
-    max-width: 960px;
-    height: auto !important;
-    aspect-ratio: 960 / 640;
-    overflow: hidden;
-    margin: 0 auto;
-}
-
-/* Canvas - fill container */
-#game-canvas {
-    width: 100% !important;
-    height: 100% !important;
-    display: block;
-}
-
-/* Touch controls - inside game on mobile */
+/* ==================== Responsive Layout (Mobile) ==================== */
+/* Touch controls - fixed at bottom on mobile */
 @media (max-width: 1024px) {
     #touch-controls {
         display: flex !important;
