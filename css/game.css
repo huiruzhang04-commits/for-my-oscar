@@ -876,62 +876,128 @@ body {
     }
 }
 
-/* ==================== Responsive Layout (Mobile) ==================== */
-/* Touch controls - fixed at bottom on mobile */
+/* ==================== Mobile Full-Screen Layout ==================== */
+/* On mobile: scale the entire game to fit screen width */
 @media (max-width: 1024px) {
+    html, body {
+        overflow-x: hidden;
+        width: 100%;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Game container: full width, no max-width limit on mobile */
+    #game-container {
+        width: 100vw !important;
+        max-width: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        transform-origin: top left;
+    }
+
+    /* Header: full width */
+    #game-header {
+        width: 100% !important;
+        max-width: none !important;
+        box-sizing: border-box !important;
+        border-radius: 0 !important;
+    }
+
+    /* Canvas container: fill available height */
+    #game-canvas-container {
+        width: 100% !important;
+        max-width: none !important;
+        height: auto !important;
+        aspect-ratio: unset !important;
+        /* Use calc to leave room for touch buttons at bottom */
+        height: calc(100vh - 60px - 50px) !important;
+        min-height: 300px;
+        border-radius: 0 !important;
+        overflow: hidden;
+    }
+
+    /* Canvas: fill container completely */
+    #game-canvas {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: contain;
+    }
+
+    /* Game controls bar: full width */
+    #game-controls {
+        width: 100% !important;
+        max-width: none !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Touch controls: fixed at bottom of screen, outside game area */
     #touch-controls {
         display: flex !important;
         justify-content: space-between;
-        align-items: flex-end;
-        position: fixed;
+        align-items: center;
+        position: fixed !important;
         bottom: 0;
         left: 0;
         right: 0;
-        padding: 0 15px calc(env(safe-area-inset-bottom) + 10px) 15px;
+        height: 60px;
+        padding: 5px 15px calc(env(safe-area-inset-bottom) + 5px) 15px;
         box-sizing: border-box;
-        z-index: 9999;
-        background: linear-gradient(transparent, rgba(0,0,0,0.3));
+        z-index: 99999;
+        background: rgba(0, 0, 0, 0.4);
         pointer-events: none;
+        border-top: 1px solid rgba(255,255,255,0.1);
     }
-    
+
     #touch-controls .touch-btn {
         pointer-events: all;
+        touch-action: manipulation;
     }
-    
-    .touch-left, .touch-right {
-        position: static;
+
+    /* Touch button positions: use flex layout */
+    .touch-left,
+    .touch-right,
+    .touch-jump,
+    .touch-fire {
+        position: static !important;
+        bottom: auto !important;
+        left: auto !important;
+        right: auto !important;
     }
-    
-    .touch-jump, .touch-fire {
-        position: static;
-    }
-    
+
     .touch-btn {
-        width: 65px;
-        height: 65px;
-        font-size: 26px;
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+        flex-shrink: 0;
     }
 }
 
-/* Small phone optimization */
+/* Small phone (iPhone SE etc.) */
 @media (max-width: 480px) {
     .touch-btn {
-        width: 55px;
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+
+    #game-canvas-container {
+        height: calc(100vh - 55px - 45px) !important;
+    }
+
+    #touch-controls {
         height: 55px;
-        font-size: 22px;
     }
-    
+
     #game-header {
+        padding: 8px 10px;
         flex-wrap: wrap;
-        gap: 5px;
-        padding: 8px 5px;
+        gap: 4px;
     }
-    
+
     .ui-item {
-        font-size: 13px;
-    }
-    
-    #game-container {
-        padding: 5px;
+        font-size: 12px;
     }
 }
