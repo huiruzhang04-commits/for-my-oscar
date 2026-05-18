@@ -9,6 +9,22 @@ window.onerror = function(msg, src, line, col, err) {
     return false;
 };
 
+// Dynamically resize canvas to match container (mobile full-screen fix)
+function resizeCanvas() {
+    resizeCanvas(); // set initial canvas size
+    const canvas = document.getElementById('game-canvas');
+    const container = document.getElementById('game-canvas-container');
+    if (!canvas || !container) return;
+    const w = container.clientWidth;
+    const h = container.clientHeight;
+    if (canvas.width !== w || canvas.height !== h) {
+        canvas.width = w;
+        canvas.height = h;
+        console.log('Canvas resized to', w, 'x', h);
+    }
+}
+window.addEventListener('resize', resizeCanvas);
+
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('📦 DOMContentLoaded fired!');
     console.log('body exists:', !!document.body);
