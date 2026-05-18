@@ -23,6 +23,20 @@ class InputManager {
         });
     }
 
+    // 触摸控制：按下按钮
+    setKeyDown(code) {
+        if (!this.keys[code]) {
+            this.justPressed[code] = true;
+        }
+        this.keys[code] = true;
+    }
+
+    // 触摸控制：松开按钮
+    setKeyUp(code) {
+        this.keys[code] = false;
+        this.justReleased[code] = true;
+    }
+
     isPressed(code) {
         return this.keys[code] === true;
     }

@@ -155,6 +155,22 @@
                 <span class="key">空格</span> 跳跃
             </div>
         </div>
+        
+        <!-- 手机触摸控制按钮 -->
+        <div id="touch-controls">
+            <div class="touch-left">
+                <button id="touch-left" class="touch-btn">←</button>
+            </div>
+            <div class="touch-right">
+                <button id="touch-right" class="touch-btn">→</button>
+            </div>
+            <div class="touch-jump">
+                <button id="touch-jump" class="touch-btn">↑</button>
+            </div>
+            <div class="touch-fire">
+                <button id="touch-fire" class="touch-btn">🔥</button>
+            </div>
+        </div>
     </div>
 
     <script src="js/data/words.js"></script>
@@ -173,5 +189,83 @@
     <script src="js/ui/GameUI.js"></script>
     <script src="js/engine/GameEngine.js"></script>
     <script src="js/main.js"></script>
+
+    <!-- 初始化手机触摸控制 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 等待游戏初始化完成
+            setTimeout(() => {
+                const leftBtn = document.getElementById('touch-left');
+                const rightBtn = document.getElementById('touch-right');
+                const jumpBtn = document.getElementById('touch-jump');
+                const fireBtn = document.getElementById('touch-fire');
+
+                // 左按钮
+                if (leftBtn) {
+                    leftBtn.addEventListener('touchstart', (e) => {
+                        e.preventDefault();
+                        input.setKeyDown('ArrowLeft');
+                    });
+                    leftBtn.addEventListener('touchend', (e) => {
+                        e.preventDefault();
+                        input.setKeyUp('ArrowLeft');
+                    });
+                    leftBtn.addEventListener('touchcancel', (e) => {
+                        input.setKeyUp('ArrowLeft');
+                    });
+                }
+
+                // 右按钮
+                if (rightBtn) {
+                    rightBtn.addEventListener('touchstart', (e) => {
+                        e.preventDefault();
+                        input.setKeyDown('ArrowRight');
+                    });
+                    rightBtn.addEventListener('touchend', (e) => {
+                        e.preventDefault();
+                        input.setKeyUp('ArrowRight');
+                    });
+                    rightBtn.addEventListener('touchcancel', (e) => {
+                        input.setKeyUp('ArrowRight');
+                    });
+                }
+
+                // 跳跃按钮
+                if (jumpBtn) {
+                    jumpBtn.addEventListener('touchstart', (e) => {
+                        e.preventDefault();
+                        input.setKeyDown('Space');
+                        input.justPressed['Space'] = true;
+                    });
+                    jumpBtn.addEventListener('touchend', (e) => {
+                        e.preventDefault();
+                        input.setKeyUp('Space');
+                    });
+                    jumpBtn.addEventListener('touchcancel', (e) => {
+                        input.setKeyUp('Space');
+                    });
+                }
+
+                // 发射火球按钮（如果游戏支持）
+                if (fireBtn) {
+                    fireBtn.addEventListener('touchstart', (e) => {
+                        e.preventDefault();
+                        // 假设火球是用 'F' 键发射
+                        input.setKeyDown('KeyF');
+                        input.justPressed['KeyF'] = true;
+                    });
+                    fireBtn.addEventListener('touchend', (e) => {
+                        e.preventDefault();
+                        input.setKeyUp('KeyF');
+                    });
+                    fireBtn.addEventListener('touchcancel', (e) => {
+                        input.setKeyUp('KeyF');
+                    });
+                }
+
+                console.log('📱 触摸控制已初始化');
+            }, 1000); // 等待1秒确保游戏已加载
+        });
+    </script>
 </body>
 </html>
