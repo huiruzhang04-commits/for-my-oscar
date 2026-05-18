@@ -877,6 +877,7 @@ body {
 }
 
 /* ==================== Mobile Full-Screen Layout ==================== */
+/* True app-like full-screen: every element fills the viewport, no gaps */
 @media (max-width: 1024px) {
     html, body {
         overflow: hidden;
@@ -884,21 +885,16 @@ body {
         height: 100%;
         margin: 0;
         padding: 0;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
     }
 
     #game-container {
         width: 100vw !important;
+        height: 100dvh !important;   /* dvh = dynamic viewport height (mobile browser chrome aware) */
         max-width: none !important;
-        height: 100vh !important;
         padding: 0 !important;
         margin: 0 !important;
         gap: 0 !important;
-        overflow: hidden;
+        overflow: hidden !important;
         box-sizing: border-box !important;
         display: flex !important;
         flex-direction: column !important;
@@ -909,10 +905,10 @@ body {
         max-width: none !important;
         box-sizing: border-box !important;
         border-radius: 0 !important;
-        padding: 6px 10px !important;
+        padding: 4px 10px !important;
         flex-shrink: 0 !important;
-        min-height: auto;
-        z-index: 10;
+        min-height: auto !important;
+        z-index: 10 !important;
     }
 
     #game-controls {
@@ -921,23 +917,71 @@ body {
 
     #game-canvas-container {
         width: 100% !important;
-        max-width: none !important;
         flex: 1 1 auto !important;
         min-height: 0 !important;
+        max-height: none !important;
         aspect-ratio: unset !important;
         border-radius: 0 !important;
         border: none !important;
-        overflow: hidden;
-        position: relative;
+        overflow: hidden !important;
+        position: relative !important;
+        padding: 0 !important;
     }
 
+    /* Canvas: fills container completely (override HTML width/height attrs) */
     #game-canvas {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
         width: 100% !important;
         height: 100% !important;
-        display: block;
+        display: block !important;
     }
 
-    /* Touch bar: part of flex flow (NOT fixed), sits at bottom */
+    /* Menu: fills canvas container completely */
+    .menu-screen {
+        position: absolute !important;
+        width: 100% !important;
+        height: 100% !important;
+        left: 0 !important;
+        top: 0 !important;
+        transform: none !important;
+        box-sizing: border-box !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 10px 20px !important;
+        z-index: 5 !important;
+    }
+
+    .menu-screen h1 {
+        font-size: clamp(18px, 5vw, 28px) !important;
+        margin-bottom: 4px !important;
+        text-align: center !important;
+    }
+
+    .menu-screen .subtitle {
+        font-size: clamp(11px, 3vw, 15px) !important;
+        margin-bottom: 12px !important;
+        text-align: center !important;
+    }
+
+    .menu-buttons {
+        width: 100% !important;
+        max-width: 300px !important;
+    }
+
+    .menu-btn {
+        width: 100% !important;
+        padding: 10px 16px !important;
+        font-size: clamp(13px, 4vw, 17px) !important;
+        margin-bottom: 8px !important;
+    }
+
+    /* Touch bar: at the bottom, part of flex flow */
     #touch-controls {
         display: flex !important;
         justify-content: space-between !important;
@@ -946,14 +990,16 @@ body {
         bottom: auto !important;
         left: auto !important;
         right: auto !important;
-        height: 80px !important;
-        min-height: 80px !important;
+        top: auto !important;
         flex-shrink: 0 !important;
         width: 100% !important;
+        height: 80px !important;
+        min-height: 80px !important;
+        max-height: 80px !important;
         padding: 8px 15px calc(env(safe-area-inset-bottom) + 5px) 15px !important;
         box-sizing: border-box !important;
         z-index: 20 !important;
-        background: rgba(0, 0, 0, 0.6) !important;
+        background: rgba(0, 0, 0, 0.7) !important;
         border-top: 1px solid rgba(255,255,255,0.15) !important;
     }
 
@@ -976,22 +1022,10 @@ body {
     }
 
     .touch-btn {
-        width: 60px;
-        height: 60px;
-        font-size: 24px;
+        width: 58px !important;
+        height: 58px !important;
+        font-size: 22px !important;
         flex-shrink: 0;
-    }
-
-    .menu-screen {
-        position: absolute !important;
-        width: 100% !important;
-        left: 0 !important;
-        top: 0 !important;
-        transform: none !important;
-        box-sizing: border-box !important;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-        height: 100%;
     }
 }
 
