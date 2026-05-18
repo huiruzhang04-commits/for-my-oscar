@@ -15,3 +15,13 @@ Desktop.ini
 # Build
 dist/
 build/
+
+# Design docs (not code)
+
+# Design docs (design only, not code)
+L*_implementation_progress.md
+task-summary_*.md
+世界*完整设计*.md
+第三关完整设计.md
+第四关完整设计.md
+第五关完整设计.md
