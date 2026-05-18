@@ -823,7 +823,7 @@ body {
 .touch-right {
     position: fixed;
     bottom: 100px;
-    left: 110px;
+    left: 105px;
     z-index: 10001;
 }
 
