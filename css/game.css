@@ -880,60 +880,65 @@ body {
 /* On mobile: scale the entire game to fit screen width */
 @media (max-width: 1024px) {
     html, body {
-        overflow-x: hidden;
+        overflow: hidden;
         width: 100%;
-    }
-
-    body {
+        height: 100%;
         margin: 0;
         padding: 0;
     }
 
-    /* Game container: full width, no max-width limit on mobile */
+    /* Game container: full screen minus touch bar */
     #game-container {
         width: 100vw !important;
         max-width: none !important;
+        height: calc(100vh - 80px) !important;
         padding: 0 !important;
         margin: 0 !important;
-        transform-origin: top left;
+        gap: 0 !important;
+        overflow: hidden;
     }
 
-    /* Header: full width */
+    /* Header: compact */
     #game-header {
         width: 100% !important;
         max-width: none !important;
         box-sizing: border-box !important;
         border-radius: 0 !important;
+        padding: 6px 10px !important;
+        flex-wrap: wrap;
+        gap: 4px;
+        min-height: auto;
     }
 
-    /* Canvas container: fill available height */
+    /* Canvas container: fill remaining space */
     #game-canvas-container {
         width: 100% !important;
         max-width: none !important;
-        height: auto !important;
+        height: calc(100% - 50px) !important;
         aspect-ratio: unset !important;
-        /* Use calc to leave room for touch buttons at bottom */
-        height: calc(100vh - 60px - 50px) !important;
-        min-height: 300px;
+        min-height: 200px;
         border-radius: 0 !important;
+        border-left: none !important;
+        border-right: none !important;
         overflow: hidden;
     }
 
-    /* Canvas: fill container completely */
+    /* Canvas: fill completely, allow stretch */
     #game-canvas {
         width: 100% !important;
         height: 100% !important;
-        object-fit: contain;
+        display: block;
     }
 
-    /* Game controls bar: full width */
+    /* Game controls bar: full width, compact */
     #game-controls {
         width: 100% !important;
         max-width: none !important;
         box-sizing: border-box !important;
+        padding: 6px 10px !important;
     }
 
-    /* Touch controls: fixed at bottom of screen, outside game area */
+    /* Touch controls: fixed at bottom of screen */
     #touch-controls {
         display: flex !important;
         justify-content: space-between;
@@ -942,11 +947,11 @@ body {
         bottom: 0;
         left: 0;
         right: 0;
-        height: 60px;
-        padding: 5px 15px calc(env(safe-area-inset-bottom) + 5px) 15px;
+        height: 80px;
+        padding: 8px 15px calc(env(safe-area-inset-bottom) + 5px) 15px;
         box-sizing: border-box;
         z-index: 99999;
-        background: rgba(0, 0, 0, 0.4);
+        background: rgba(0, 0, 0, 0.5);
         pointer-events: none;
         border-top: 1px solid rgba(255,255,255,0.1);
     }
@@ -954,6 +959,7 @@ body {
     #touch-controls .touch-btn {
         pointer-events: all;
         touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
     }
 
     /* Touch button positions: use flex layout */
@@ -972,6 +978,18 @@ body {
         height: 60px;
         font-size: 24px;
         flex-shrink: 0;
+    }
+
+    /* Menu screens: fit inside canvas container */
+    .menu-screen {
+        width: 100% !important;
+        max-width: none !important;
+        left: 0 !important;
+        top: 0 !important;
+        transform: none !important;
+        box-sizing: border-box !important;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
 }
 
