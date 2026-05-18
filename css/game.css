@@ -887,15 +887,17 @@ body {
         padding: 0;
     }
 
-    /* Game container: full screen minus touch bar */
+    /* Game container: full screen, with bottom padding for touch bar */
     #game-container {
         width: 100vw !important;
         max-width: none !important;
-        height: calc(100vh - 80px) !important;
+        height: 100vh !important;
         padding: 0 !important;
+        padding-bottom: 80px !important;
         margin: 0 !important;
         gap: 0 !important;
         overflow: hidden;
+        box-sizing: border-box !important;
     }
 
     /* Header: compact */
@@ -914,9 +916,9 @@ body {
     #game-canvas-container {
         width: 100% !important;
         max-width: none !important;
-        height: calc(100% - 50px) !important;
+        flex: 1 1 auto !important;
+        min-height: 0 !important;
         aspect-ratio: unset !important;
-        min-height: 200px;
         border-radius: 0 !important;
         border-left: none !important;
         border-right: none !important;
