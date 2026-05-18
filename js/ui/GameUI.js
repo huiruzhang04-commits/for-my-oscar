@@ -26,6 +26,7 @@ class GameUI {
     }
 
     startTimer() {
+        this.stopTimer();  // 先清除旧 interval，防止叠加
         this.timerValue = 0;
         this.timerInterval = setInterval(() => {
             this.timerValue++;
@@ -160,14 +161,9 @@ class MenuUI {
     }
 
     isLevelUnlocked(levelId, worldId) {
-        const match = levelId.match(/L(\d+)/);
-        if (!match) return false;
-        const levelNum = parseInt(match[1]);
-
-        if (levelNum === 1) return true;
-
-        const prevLevel = `L${levelNum - 1}`;
-        return progressManager.isLevelCompleted(prevLevel);
+        // 测试模式：所有关卡解锁
+        console.log('[DEBUG] isLevelUnlocked called:', levelId, worldId, '-> returning true');
+        return true;
     }
 
     getWorldDataForLevel(levelNum) {

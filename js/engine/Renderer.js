@@ -175,6 +175,31 @@ class Renderer {
         });
     }
 
+    drawKoopa(enemy) {
+        const { x, y, width, height, dead, deadTimer, isShell, shellMoving, direction } = enemy;
+
+        if (dead) {
+            this.ctx.globalAlpha = Math.max(0, 1 - deadTimer / 30);
+            window.spriteLoader.draw('koopa_shell', x, y + height - 20, this.ctx, { width: 28, height: 20 });
+            this.ctx.globalAlpha = 1;
+            return;
+        }
+
+        if (isShell) {
+            // 龟壳形态
+            window.spriteLoader.draw('koopa_shell', x, y + height - 20, this.ctx, { width: 28, height: 20 });
+        } else {
+            // 行走形态
+            const walkFrame = Math.floor(Date.now() / 200) % 2;
+            window.spriteLoader.draw('koopa_walk', x, y, this.ctx, {
+                frame: walkFrame,
+                width: 28,
+                height: 36,
+                flipX: direction === -1,
+            });
+        }
+    }
+
     // ==================== Boss（库巴）====================
 
     drawBoss(boss) {

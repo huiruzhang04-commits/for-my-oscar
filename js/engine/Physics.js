@@ -56,6 +56,10 @@ class Physics {
                 player.y = platTop - player.height;
                 player.vy = 0;
                 player.onGround = true;
+                // 移动平台：玩家跟着平台水平移动
+                if (platform.moving && platform.moveAxis === 'x') {
+                    player.x += platform.vx;
+                }
                 if (platform.type === 'brick' && platform.hasItem) {
                     return { type: 'brick_hit', platform };
                 }

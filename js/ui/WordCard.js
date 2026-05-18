@@ -132,7 +132,7 @@ class BossCardUI {
     showQuestion(question) {
         this.currentQuestion = question;
         
-        this.bossEnglish.textContent = question.sentence;
+        this.bossEnglish.textContent = question.question;
         this.bossTranslation.textContent = question.translation || '';
 
         this.bossOptions.innerHTML = '';
@@ -156,6 +156,20 @@ class BossCardUI {
     }
 
     handleAnswer(btn, isCorrect) {
+        if (!isCorrect) {
+            // 答错：显示错误但不推进，允许重选
+            btn.classList.add('wrong');
+            btn.textContent = '✗ ' + btn.textContent;
+            btn.disabled = true;
+            
+            // 通知 GameEngine（Boss 前进一步）
+            if (this.onAnswer) {
+                this.onAnswer(false);
+            }
+            return; // 不推进到下一题
+        }
+
+        // 答对：显示正确，推进下一题
         const buttons = this.bossOptions.querySelectorAll('.word-option');
         buttons.forEach(b => {
             b.style.pointerEvents = 'none';
@@ -165,14 +179,9 @@ class BossCardUI {
             }
         });
 
-        if (!isCorrect) {
-            btn.classList.add('wrong');
-            btn.textContent = '✗ ' + btn.textContent;
-        }
-
         setTimeout(() => {
             if (this.onAnswer) {
-                this.onAnswer(isCorrect);
+                this.onAnswer(true);
             }
 
             this.currentIndex++;

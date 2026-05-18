@@ -25,13 +25,17 @@ class GameEngine {
         this.currentLevel = null;
         this.levelData = null;
         this.world = 1;
+        this.levelWidth = 2800;  // 默认L1宽度，会在startLevel中动态设置
+        this.clouds = [];     // 缓存云朵位置（每关生成一次，不每帧随机）
+        this.hills = [];      // 缓存山丘位置（每关生成一次，不每帧随机）
+        this.isDying = false; // 防止一帧内多次触发死亡
         
         this.coins = 0;
         this.wordsAnswered = 0;
         this.wordsCorrect = 0;
         this.currentWordIndex = 0;
         this.triggeredPoints = [];
-        this.lives = 3;  // 添加生命值，初始3条命
+        this.lives = 5;  // 初始5条命（测试模式）
         
         this.levelManager = new LevelManager();
         this.wordCardUI = new WordCardUI();
@@ -114,11 +118,15 @@ class GameEngine {
         this.currentLevel = levelId;
         this.gameState = 'loading';
         
-        // 重置生命值为3
-        this.lives = 3;
+        // 重置镜头，防止从其他关卡切换时镜头位置错误
+        this.renderer.setCamera(0, 0);
+        
+        // 重置生命值为5
+        this.lives = 5;  // 测试模式5条命
         this.updateLivesDisplay();
         
         const levelInfo = this.levelManager.loadLevel(levelId);
+        const config = this.levelManager.getLevelConfig(levelId);
         
         this.player = new Player(levelInfo.playerStart.x, levelInfo.playerStart.y);
         this.player.onGround = true;
@@ -126,6 +134,16 @@ class GameEngine {
         this.enemies = levelInfo.enemies;
         this.items = levelInfo.items;
         this.boss = levelInfo.boss;
+        
+        // 动态设置 Boss 位置到 boss trigger 附近
+        if (this.boss && config.triggerPoints) {
+            const bossTrigger = config.triggerPoints.find(t => t.type === 'boss');
+            if (bossTrigger) {
+                this.boss.startX = bossTrigger.x - 100;
+                this.boss.currentX = this.boss.startX;
+                this.boss.x = this.boss.startX;
+            }
+        }
         this.levelData = levelInfo.levelData;
         this.world = levelInfo.world;
 
@@ -136,7 +154,27 @@ class GameEngine {
         this.triggeredPoints = [];
         this.scrollDelay = 180;
 
-        const config = this.levelManager.getLevelConfig(levelId);
+        // 动态设置关卡宽度（取地面platform的width）
+        const groundPlatform = config.platforms.find(p => p.type === 'ground');
+        this.levelWidth = groundPlatform ? groundPlatform.width : 2800;
+
+        // 缓存云朵和山丘位置（只在进入关卡时生成一次，不每帧随机）
+        this.clouds = [];
+        for (let cx = 100; cx < this.levelWidth; cx += 300 + Math.random() * 100) {
+            this.clouds.push({
+                x: cx,
+                y: 60 + Math.random() * 60,
+                scale: 0.7 + Math.random() * 0.6
+            });
+        }
+        this.hills = [];
+        for (let hx = 150; hx < this.levelWidth; hx += 200 + Math.random() * 100) {
+            this.hills.push({
+                x: hx,
+                scale: 0.8 + Math.random() * 1.4
+            });
+        }
+        this.isDying = false;
         if (config.triggerPoints) {
             config.triggerPoints.forEach(tp => {
                 this.triggeredPoints.push({ ...tp, triggered: false });
@@ -177,6 +215,11 @@ class GameEngine {
     update() {
         if (this.gameState !== 'playing') return;
 
+        // 更新移动平台
+        this.platforms.forEach(p => {
+            if (p.moving) p.update();
+        });
+
         this.player.update();
 
         // 更新玩家行走动画帧
@@ -199,6 +242,9 @@ class GameEngine {
             return;
         }
 
+        // 如果正在死亡动画/复活过程中，跳过后续逻辑
+        if (this.isDying) return;
+
         const playerBounds = {
             x: this.player.x,
             y: this.player.y,
@@ -218,7 +264,7 @@ class GameEngine {
             }
         }
 
-        Physics.checkBoundary(playerBounds, 2800, this.height);
+        Physics.checkBoundary(playerBounds, this.levelWidth, this.height);  // 使用动态关卡宽度
         this.player.x = playerBounds.x;
         this.player.y = playerBounds.y;
         if (playerBounds.onGround) {
@@ -312,7 +358,7 @@ class GameEngine {
 
         this.checkTriggers();
 
-        this.boss.update();
+        if (this.boss) this.boss.update();
     }
 
     checkTriggers() {
@@ -324,6 +370,8 @@ class GameEngine {
 
                 if (trigger.type === 'word') {
                     this.showWordCard(trigger.wordIndex);
+                } else if (trigger.type === 'boss') {
+                    this.startBossFight();
                 } else if (trigger.type === 'end') {
                     this.completeLevel();
                 }
@@ -376,15 +424,28 @@ class GameEngine {
         }
 
         this.boss.activate();
+        this.bossCorrectCount = 0; // 记录答对几题
 
         this.bossCardUI.show(questions, (correct) => {
             if (correct) {
                 this.wordsCorrect++;
                 this.coins += 100;
                 this.gameUI.updateCoins(this.coins);
+                this.bossCorrectCount++;
+                
+                // Boss 后退 + 金币雨
                 this.boss.hit();
+                this.spawnCoinRain(this.boss.currentX, this.boss.y);
+                if (this.gameUI.floatingText) {
+                    this.gameUI.floatingText(`答对！+100金币 (${this.bossCorrectCount}/3)`, this.boss.currentX, this.boss.y - 40);
+                }
+                
                 if (window.soundManager) window.soundManager.playCorrect();
+                
+                // 更新 Boss HP 条
+                this.bossCardUI.updateHp(this.boss.hp);
             } else {
+                // Boss 前进（不惩罚）
                 this.boss.miss();
                 if (window.soundManager) window.soundManager.playWrong();
             }
@@ -392,8 +453,16 @@ class GameEngine {
             if (defeated) {
                 this.coins += 500;
                 this.gameUI.updateCoins(this.coins);
+                
+                // Boss 飞走动画 + 大金币雨
+                this.spawnCoinRain(this.boss.currentX, this.boss.y, 30);
+                
                 if (window.soundManager) window.soundManager.playLevelComplete();
-                this.completeLevel();
+                
+                // 延迟显示通关界面
+                setTimeout(() => {
+                    this.completeLevel();
+                }, 1500);
             }
         });
     }
@@ -428,7 +497,14 @@ class GameEngine {
             );
         }
 
-        const levelName = this.currentLevel.replace('L', '第') + '关通过';
+        // 根据是否有 Boss 决定通关消息
+        const config = this.levelManager.getLevelConfig(this.currentLevel);
+        let levelName;
+        if (config.hasBoss) {
+            levelName = `库巴被打败了！${this.currentLevel.replace('L', '第')}关通过`;
+        } else {
+            levelName = `${this.currentLevel.replace('L', '第')}关通过`;
+        }
 
         this.levelCompleteUI.show({
             levelId: this.currentLevel,
@@ -447,11 +523,11 @@ class GameEngine {
         });
     }
 
-    spawnCoinRain(x, y) {
-        for (let i = 0; i < 5; i++) {
+    spawnCoinRain(x, y, count = 5) {
+        for (let i = 0; i < count; i++) {
             setTimeout(() => {
-                this.items.push(new Coin(x + (Math.random() - 0.5) * 60, y - Math.random() * 50));
-            }, i * 100);
+                this.items.push(new Coin(x + (Math.random() - 0.5) * 100, y - Math.random() * 80));
+            }, i * 80);
         }
     }
 
@@ -495,31 +571,47 @@ class GameEngine {
     }
 
     playerDeath() {
+        if (this.isDying) return;
+        this.isDying = true;
+
         this.lives--;
+        console.log('[DEATH] lives now:', this.lives);
         this.updateLivesDisplay();
         
         if (this.lives <= 0) {
-            // 游戏结束
             this.gameOver();
+            this.isDying = false;
         } else {
-            // 重新开始当前关卡
-            this.respawnPlayer();
+            // 0.5秒后原地复活（小马里奥死亡：直接消失后立即复活）
+            setTimeout(() => {
+                this.respawnPlayer();
+                this.isDying = false;
+            }, 500);
         }
     }
 
     respawnPlayer() {
-        // 原地复活：保留当前位置，只重置状态
+        // 原地复活：回到死亡位置附近，不回起点
+        this.player.x = Math.max(50, this.player.x - 50);  // 向左50px，但不小于50
+        
+        // 如果玩家掉出屏幕，拉回屏幕内安全高度
+        const safeY = this.height - 100;
+        if (this.player.y > safeY) {
+            this.player.y = safeY;
+        }
+        
         this.player.vx = 0;
         this.player.vy = 0;
         this.player.isBig = false;
-        this.player.invincible = false;
+        this.player.invincible = true;
         this.player.isStar = false;
         this.player.width = 32;
         this.player.height = 32;
         this.player.onGround = true;
         
-        // 短暂无敌时间
-        this.player.invincible = true;
+        this.scrollDelay = 180;
+        
+        // 2秒无敌时间
         setTimeout(() => {
             if (this.player) this.player.invincible = false;
         }, 2000);
@@ -544,9 +636,9 @@ class GameEngine {
         this.renderer.drawBackground(colors);
 
         if (this.player) {
-            const autoScrollSpeed = 1;
+            const autoScrollSpeed = 1.5;  // 加快自动滚动，让玩家更快到达后半段
             const targetX = this.player.x - this.renderer.width / 3;
-            const maxX = 2800 - this.renderer.width;
+            const levelMaxX = Math.max(0, this.levelWidth - this.renderer.width);  // 动态计算
             
             const currentCamera = this.renderer.cameraX;
             let autoScrollX = currentCamera;
@@ -557,25 +649,18 @@ class GameEngine {
                 autoScrollX = currentCamera + autoScrollSpeed;
             }
             
-            const playerBasedX = Math.max(0, Math.min(targetX, maxX));
+            const playerBasedX = Math.max(0, Math.min(targetX, levelMaxX));
             
             const newCameraX = Math.max(autoScrollX, playerBasedX);
-            this.renderer.setCamera(Math.min(newCameraX, maxX), 0);
+            this.renderer.setCamera(Math.min(newCameraX, levelMaxX), 0);
         }
 
         this.renderer.applyCamera();
         
-        this.renderer.drawCloud(100, 80, 1);
-        this.renderer.drawCloud(300, 120, 0.8);
-        this.renderer.drawCloud(600, 60, 1.2);
-        this.renderer.drawCloud(850, 100, 0.9);
-        this.renderer.drawCloud(1100, 80, 1);
-        this.renderer.drawCloud(1400, 120, 0.8);
-        this.renderer.drawCloud(1700, 60, 1.2);
-        this.renderer.drawCloud(2000, 100, 0.9);
-        this.renderer.drawCloud(2300, 80, 1);
-        this.renderer.drawCloud(2600, 120, 0.8);
-        this.renderer.drawCloud(2850, 60, 1.2);
+        // 使用缓存的云朵位置（不每帧随机）
+        for (const cloud of this.clouds) {
+            this.renderer.drawCloud(cloud.x, cloud.y, cloud.scale);
+        }
 
         // 先画地面，再画山丘（山丘在地面后面）
         for (const platform of this.platforms) {
@@ -584,16 +669,10 @@ class GameEngine {
             }
         }
 
-        this.renderer.drawHill(150, 520, 1.5);
-        this.renderer.drawHill(400, 520, 1);
-        this.renderer.drawHill(700, 520, 2);
-        this.renderer.drawHill(1000, 520, 1.5);
-        this.renderer.drawHill(1300, 520, 1);
-        this.renderer.drawHill(1600, 520, 2);
-        this.renderer.drawHill(1900, 520, 1.5);
-        this.renderer.drawHill(2200, 520, 1);
-        this.renderer.drawHill(2500, 520, 2);
-        this.renderer.drawHill(2800, 520, 1.5);
+        // 使用缓存的山丘位置（不每帧随机）
+        for (const hill of this.hills) {
+            this.renderer.drawHill(hill.x, 520, hill.scale);
+        }
 
         for (const platform of this.platforms) {
             if (platform.type === 'brick') {
@@ -612,6 +691,21 @@ class GameEngine {
             } else if (platform.type === 'pipe') {
                 this.renderer.ctx.fillStyle = '#4CAF50';
                 this.renderer.ctx.fillRect(platform.x, platform.y, platform.width, platform.height);
+            } else if (platform.type === 'platform') {
+                // 移动/静止平台
+                const { x, y, width, height, moving } = platform;
+                this.renderer.ctx.fillStyle = moving ? '#5DADE2' : '#8B4513';
+                this.renderer.ctx.fillRect(x, y, width, height);
+                this.renderer.ctx.strokeStyle = moving ? '#2E86C1' : '#A0522D';
+                this.renderer.ctx.lineWidth = 2;
+                this.renderer.ctx.strokeRect(x, y, width, height);
+                if (moving) {
+                    // 移动平台标记：两侧画箭头
+                    this.renderer.ctx.fillStyle = '#fff';
+                    this.renderer.ctx.font = 'bold 14px Arial';
+                    this.renderer.ctx.fillText('↔', x + 4, y + height - 4);
+                    this.renderer.ctx.fillText('↔', x + width - 20, y + height - 4);
+                }
             }
         }
 
@@ -634,6 +728,8 @@ class GameEngine {
         for (const enemy of this.enemies) {
             if (enemy instanceof Goomba) {
                 this.renderer.drawGoomba(enemy);
+            } else if (enemy instanceof Koopa) {
+                this.renderer.drawKoopa(enemy);
             }
         }
 
@@ -643,7 +739,7 @@ class GameEngine {
 
         this.renderer.removeCamera();
 
-        if (this.boss && this.boss.active) {
+        if (this.boss) {
             const pos = this.boss.getPosition();
             this.boss.x = pos.x;
             this.boss.y = pos.y;

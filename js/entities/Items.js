@@ -195,9 +195,38 @@ class Platform {
         this.width = width;
         this.height = height;
         this.type = type;
+        // 移动平台属性
+        this.moving = false;
+        this.moveAxis = 'x';
+        this.moveSpeed = 0;
+        this.moveRange = 0;
+        this.moveOriginX = x;
+        this.moveOriginY = y;
+        this.moveDir = 1;
+        this.vx = 0;
+        this.vy = 0;
     }
 
     getBounds() {
         return this;
+    }
+
+    update() {
+        if (!this.moving) return;
+        const prevX = this.x;
+        const prevY = this.y;
+        if (this.moveAxis === 'x') {
+            this.x += this.moveSpeed * this.moveDir;
+            if (Math.abs(this.x - this.moveOriginX) >= this.moveRange) {
+                this.moveDir *= -1;
+            }
+        } else {
+            this.y += this.moveSpeed * this.moveDir;
+            if (Math.abs(this.y - this.moveOriginY) >= this.moveRange) {
+                this.moveDir *= -1;
+            }
+        }
+        this.vx = this.x - prevX;
+        this.vy = this.y - prevY;
     }
 }

@@ -2,7 +2,7 @@ const WORDS_DATA = {
   world1: {
     levels: {
       L1: {
-        letter: "A",
+        letter: "Aa",
         words: [
           {
             word: "apple",
@@ -37,7 +37,44 @@ const WORDS_DATA = {
             answer: "书包"
           }
         ]
+      },
+      L2: {
+        letter: "Bb",
+        words: [
+          {
+            word: "baby",
+            phonetic: "/ˈbeɪbi/",
+            icon: "👶",
+            sentence: "It is a ___.",
+            options: ["婴儿", "香蕉", "球", "男孩"],
+            answer: "婴儿"
+          },
+          {
+            word: "banana",
+            phonetic: "/bəˈnɑːnə/",
+            icon: "🍌",
+            sentence: "It is a ___.",
+            options: ["球", "婴儿", "男孩", "香蕉"],
+            answer: "香蕉"
+          },
+          {
+            word: "ball",
+            phonetic: "/bɔːl/",
+            icon: "⚽",
+            sentence: "It is a ___.",
+            options: ["男孩", "香蕉", "婴儿", "球"],
+            answer: "球"
+          },
+          {
+            word: "boy",
+            phonetic: "/bɔɪ/",
+            icon: "👦",
+            sentence: "It is a ___.",
+            options: ["香蕉", "球", "婴儿", "男孩"],
+            answer: "男孩"
+          }
+        ]
       }
     }
   }
-}
+};
