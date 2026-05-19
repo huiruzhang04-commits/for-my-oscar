@@ -157,6 +157,7 @@ class GameEngine {
         // 动态设置关卡宽度（取地面platform的width）
         const groundPlatform = config.platforms.find(p => p.type === 'ground');
         this.levelWidth = groundPlatform ? groundPlatform.width : 2800;
+        this.groundY = groundPlatform ? groundPlatform.y : 420;
 
         // 缓存云朵和山丘位置（只在进入关卡时生成一次，不每帧随机）
         this.clouds = [];
@@ -257,10 +258,20 @@ class GameEngine {
         const brickHit = Physics.checkPlatformCollision(playerBounds, this.platforms);
         if (brickHit && brickHit.type === 'brick_hit') {
             const brick = brickHit.platform;
-            if (brick.hit() && brick.itemGiven) {
-                if (brick.hasItem) {
-                    this.levelManager.spawnItem('mushroom', brick.x, brick.y);
-                }
+            const item = brick.hit(); // hit() returns item name string or false
+            if (item === 'coin') {
+                // 金币直接加分 + 弹出动画（不生成实体）
+                this.coins += 10;
+                this.gameUI.updateCoins(this.coins);
+                if (window.soundManager) window.soundManager.playCoin();
+                // 弹出金币动画
+                this.spawnCoinPop(brick.x + brick.width / 2, brick.y);
+            } else if (item === 'mushroom') {
+                // 蘑菇在砖块上方生成，从砖块里冒出来
+                this.levelManager.spawnItem('mushroom', brick.x, brick.y - brick.height);
+            } else if (item === 'star') {
+                // 星星弹出后弹跳
+                this.levelManager.spawnItem('star', brick.x, brick.y - brick.height);
             }
         }
 
@@ -281,6 +292,31 @@ class GameEngine {
             }
 
             const itemBounds = item.getBounds();
+            // 蘑菇和星星需要与平台碰撞（站在地面/砖块上）
+            if ((item instanceof Mushroom || item instanceof Star) && !item.collected && !item.emerging) {
+                const ib = itemBounds;
+                for (const plat of this.platforms) {
+                    if (plat.type === 'ground') continue;
+                    if (!Physics.checkCollision(ib, plat)) continue;
+                    const itemBottom = ib.y + ib.height;
+                    const platTop = plat.y;
+                    if (itemBottom > platTop && itemBottom < platTop + 16 && item.vy >= 0) {
+                        item.y = platTop - item.height;
+                        item.vy = 0;
+                        if (item instanceof Star) item.y = platTop - item.height; // Star 用 bounceY
+                    }
+                }
+                // 地面碰撞
+                const groundPlat = this.platforms.find(p => p.type === 'ground');
+                if (groundPlat && item.y + item.height >= groundPlat.y) {
+                    item.y = groundPlat.y - item.height;
+                    item.vy = 0;
+                }
+                // 碰到边界反向
+                if (item.x < 0 || item.x + item.width > this.levelWidth) {
+                    item.reverse();
+                }
+            }
             if (Physics.checkCollision(playerBounds, itemBounds)) {
                 if (item instanceof Coin) {
                     item.collect();
@@ -523,6 +559,40 @@ class GameEngine {
         });
     }
 
+    // 砖块顶出单个金币的弹出动画（纯视觉，不生成实体）
+    spawnCoinPop(x, y) {
+        const coin = { x, y, vy: -8, alpha: 1, active: true };
+        const popAnim = () => {
+            if (!coin.active) return;
+            coin.y += coin.vy;
+            coin.vy += 0.5;
+            coin.alpha -= 0.02;
+            if (coin.alpha <= 0) {
+                coin.active = false;
+                return;
+            }
+            this.renderCoinPop(coin);
+            requestAnimationFrame(popAnim);
+        };
+        requestAnimationFrame(popAnim);
+    }
+
+    renderCoinPop(coin) {
+        const ctx = this.renderer.ctx;
+        const screenX = coin.x - this.camera.x;
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, coin.alpha);
+        ctx.fillStyle = '#FFD700';
+        ctx.beginPath();
+        ctx.arc(screenX, coin.y, 10, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#DAA520';
+        ctx.font = 'bold 12px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('$', screenX, coin.y + 4);
+        ctx.restore();
+    }
+
     spawnCoinRain(x, y, count = 5) {
         for (let i = 0; i < count; i++) {
             setTimeout(() => {
@@ -636,7 +706,7 @@ class GameEngine {
         this.renderer.drawBackground(colors);
 
         if (this.player) {
-            const autoScrollSpeed = 1.5;  // 加快自动滚动，让玩家更快到达后半段
+            const autoScrollSpeed = 1.0;  // 调慢
             const targetX = this.player.x - this.renderer.width / 3;
             const levelMaxX = Math.max(0, this.levelWidth - this.renderer.width);  // 动态计算
             
@@ -670,8 +740,10 @@ class GameEngine {
         }
 
         // 使用缓存的山丘位置（不每帧随机）
+        // 获取地面 y 坐标（动态，适配不同关卡）
+        const groundY = this.groundY || 420;
         for (const hill of this.hills) {
-            this.renderer.drawHill(hill.x, 520, hill.scale);
+            this.renderer.drawHill(hill.x, groundY, hill.scale);
         }
 
         for (const platform of this.platforms) {
@@ -749,15 +821,16 @@ class GameEngine {
 
     renderMenuBackground() {
         const colors = WORLD_COLORS.world1;
+        const groundY = 420; // 960x540 分辨率下的地面 y
         this.renderer.clear(colors.sky);
         this.renderer.drawBackground(colors);
-        this.renderer.drawGround(colors, 520);
+        this.renderer.drawGround(colors, groundY);
         this.renderer.drawCloud(100, 80, 1);
         this.renderer.drawCloud(300, 120, 0.8);
         this.renderer.drawCloud(600, 60, 1.2);
         this.renderer.drawCloud(850, 100, 0.9);
-        this.renderer.drawHill(150, 520, 1.5);
-        this.renderer.drawHill(400, 520, 1);
-        this.renderer.drawHill(700, 520, 2);
+        this.renderer.drawHill(150, groundY, 1.5);
+        this.renderer.drawHill(400, groundY, 1);
+        this.renderer.drawHill(700, groundY, 2);
     }
 }

@@ -1,3 +1,17 @@
+// Word → Emoji 映射（Boss 卡片 + 单词卡片显示用）
+const WORD_EMOJI = {
+    'apple': '🍎', 'banana': '🍌', 'orange': '🍊', 'grape': '🍇',
+    'cat': '🐱', 'dog': '🐶', 'elephant': '🐘', 'monkey': '🐒',
+    'book': '📚', 'pen': '🖊️', 'pencil': '✏️', 'teacher': '👩‍🏫',
+    'school': '🏫', 'mom': '👩', 'dad': '👨', 'baby': '👶',
+    'ball': '⚽', 'boy': '👦', 'girl': '👧', 'car': '🚗',
+    'tree': '🌳', 'flower': '🌸', 'sun': '☀️', 'moon': '🌙',
+    'star': '⭐', 'heart': '❤️', 'water': '💧', 'milk': '🥛',
+    'cake': '🎂', 'ice cream': '🍦', 'pizza': '🍕', 'cookie': '🍪',
+    'bird': '🐦', 'fish': '🐟', 'ant': '🐜', 'bear': '🐻',
+    'cow': '🐄', 'pig': '🐷', 'duck': '🦆', 'hen': '🐔',
+};
+
 class WordCardUI {
     constructor() {
         this.modal = document.getElementById('word-card-modal');
@@ -133,7 +147,15 @@ class BossCardUI {
         this.currentQuestion = question;
         
         this.bossEnglish.textContent = question.question;
-        this.bossTranslation.textContent = question.translation || '';
+        // 不再显示中文翻译
+        this.bossTranslation.textContent = '';
+        
+        // 显示正确答案对应的 emoji
+        const emoji = WORD_EMOJI[question.answer] || '❓';
+        const emojiEl = document.getElementById('boss-word-emoji');
+        if (emojiEl) {
+            emojiEl.textContent = emoji;
+        }
 
         this.bossOptions.innerHTML = '';
         this.shuffleArray(question.options);

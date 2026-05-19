@@ -56,7 +56,9 @@ class Mushroom {
         this.y = y;
         this.width = 28;
         this.height = 28;
-        this.vx = 2;
+        this.vx = 0.8;  // 慢速
+        this.startX = x;  // 限制移动范围
+        this.moveRange = 120;  // 只能前后移动约120px
         this.vy = 0;
         this.active = true;
         this.collected = false;
@@ -82,6 +84,10 @@ class Mushroom {
         }
 
         this.x += this.vx;
+        // 限制移动范围，超出后反向
+        if (this.x < this.startX - this.moveRange || this.x > this.startX + this.moveRange) {
+            this.vx *= -1;
+        }
         Physics.applyGravity(this);
         Physics.updatePosition(this);
     }

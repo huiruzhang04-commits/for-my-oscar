@@ -281,7 +281,7 @@ class Renderer {
 
     drawWordTrigger(x) {
         // y 固定（地面上方）
-        const y = 488;
+        const y = 388; // 地面顶部420 - 单词块高度32 - 微调间距 = 站在地面上
         window.spriteLoader.draw('word_block', x, y, this.ctx, { width: 48, height: 40 });
     }
 

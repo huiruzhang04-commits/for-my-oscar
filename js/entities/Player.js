@@ -6,7 +6,7 @@ class Player {
         this.height = 32;
         this.vx = 0;
         this.vy = 0;
-        this.speed = 5;
+        this.speed = 4;
         this.jumpPower = -14;
         this.direction = 1;
         this.onGround = false;

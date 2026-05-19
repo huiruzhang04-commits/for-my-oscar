@@ -9,23 +9,50 @@ window.onerror = function(msg, src, line, col, err) {
     return false;
 };
 
-// Dynamically resize canvas to match container (mobile full-screen fix)
+// 固定逻辑分辨率 16:9
+const LOGIC_W = 960;
+const LOGIC_H = 540;
+
+// Dynamically resize canvas display to match container (16:9 letterbox)
 function resizeCanvas() {
     const canvas = document.getElementById('game-canvas');
     const container = document.getElementById('game-canvas-container');
     if (!canvas || !container) return;
-    const w = container.clientWidth;
-    const h = container.clientHeight;
-    if (w === 0 || h === 0) return;
-    if (canvas.width !== w || canvas.height !== h) {
-        canvas.width = w;
-        canvas.height = h;
-        console.log('Canvas resized to', w, 'x', h);
-    }
-}
-window.addEventListener('resize', resizeCanvas);
 
-window.addEventListener('resize', resizeCanvas);
+    // 只设置一次逻辑分辨率
+    if (canvas.width !== LOGIC_W || canvas.height !== LOGIC_H) {
+        canvas.width = LOGIC_W;
+        canvas.height = LOGIC_H;
+        console.log('Canvas logical size set to', LOGIC_W, 'x', LOGIC_H);
+    }
+
+    // 按 16:9 计算显示尺寸（letterbox 居中）
+    const containerW = container.clientWidth || window.innerWidth;
+    const containerH = container.clientHeight || window.innerHeight;
+    const gameRatio = LOGIC_W / LOGIC_H; // 16 / 9
+
+    let showW, showH;
+    if (containerW / containerH > gameRatio) {
+        // 容器更宽 → 以高度为基准
+        showH = containerH;
+        showW = containerH * gameRatio;
+    } else {
+        // 容器更高 → 以宽度为基准
+        showW = containerW;
+        showH = showW / gameRatio;
+    }
+
+    canvas.style.width = Math.floor(showW) + 'px';
+    canvas.style.height = Math.floor(showH) + 'px';
+    // 居中由 CSS flex 完成
+}
+
+// 防抖：避免 resize 事件触发太频繁
+let resizeTimer;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(resizeCanvas, 100);
+});
 
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('📦 DOMContentLoaded fired!');

@@ -60,12 +60,14 @@ class Physics {
                 if (platform.moving && platform.moveAxis === 'x') {
                     player.x += platform.vx;
                 }
-                if (platform.type === 'brick' && platform.hasItem) {
-                    return { type: 'brick_hit', platform };
-                }
+                // 只有从下方顶到砖块底部才触发（vy < 0 表示向上顶）
             } else if (minOverlap === overlapTop && player.vy < 0) {
                 player.y = platBottom;
                 player.vy = 0;
+                // 玩家从下方顶到砖块底部 → 触发砖块
+                if (platform.type === 'brick') {
+                    return { type: 'brick_hit', platform };
+                }
             } else if (minOverlap === overlapLeft && platform.type !== 'ground') {
                 player.x = platLeft - player.width;
                 player.vx = 0;
