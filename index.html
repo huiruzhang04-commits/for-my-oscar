@@ -201,9 +201,9 @@
                 const jumpBtn = document.getElementById('touch-jump');
                 const fireBtn = document.getElementById('touch-fire');
 
-                // 左按钮
+                // 左按钮：用 pointerdown 替代 touchstart（无300ms延迟，跨设备兼容）
                 if (leftBtn) {
-                    leftBtn.addEventListener('touchstart', (e) => {
+                    leftBtn.addEventListener('pointerdown', (e) => {
                         e.preventDefault();
                         input.setKeyDown('ArrowLeft');
                     });
@@ -218,7 +218,7 @@
 
                 // 右按钮
                 if (rightBtn) {
-                    rightBtn.addEventListener('touchstart', (e) => {
+                    rightBtn.addEventListener('pointerdown', (e) => {
                         e.preventDefault();
                         input.setKeyDown('ArrowRight');
                     });
@@ -233,7 +233,7 @@
 
                 // 跳跃按钮
                 if (jumpBtn) {
-                    jumpBtn.addEventListener('touchstart', (e) => {
+                    jumpBtn.addEventListener('pointerdown', (e) => {
                         e.preventDefault();
                         input.setKeyDown('Space');
                         input.justPressed['Space'] = true;
@@ -247,11 +247,10 @@
                     });
                 }
 
-                // 发射火球按钮（如果游戏支持）
+                // 发射火球按钮
                 if (fireBtn) {
-                    fireBtn.addEventListener('touchstart', (e) => {
+                    fireBtn.addEventListener('pointerdown', (e) => {
                         e.preventDefault();
-                        // 假设火球是用 'F' 键发射
                         input.setKeyDown('KeyF');
                         input.justPressed['KeyF'] = true;
                     });
@@ -264,8 +263,24 @@
                     });
                 }
 
-                console.log('📱 触摸控制已初始化');
-            }, 1000); // 等待1秒确保游戏已加载
+                // 菜单按钮：用 pointerdown 触发 click，修复移动端点击无反应
+                const menuButtons = [
+                    'start-btn', 'world-select-btn', 'word-library-btn', 'settings-btn',
+                    'resume-btn', 'restart-btn', 'quit-btn', 'close-world-btn', 'close-level-btn'
+                ];
+                menuButtons.forEach(id => {
+                    const btn = document.getElementById(id);
+                    if (btn) {
+                        btn.addEventListener('pointerdown', (e) => {
+                            e.stopPropagation(); // 不阻止默认行为，让 click 正常触发
+                        });
+                        btn.style.pointerEvents = 'auto';
+                        btn.style.cursor = 'pointer';
+                    }
+                });
+
+                console.log('📱 触摸控制已初始化（pointerdown 模式）');
+            }, 1000);
         });
     </script>
 </body>
