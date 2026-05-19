@@ -70,6 +70,14 @@ class GameEngine {
             progressManager.load();
             const currentLevelId = 'L1';
             console.log('Starting level:', currentLevelId);
+            // 直接操作 DOM，不依赖 this.menuUI（避免手机端 this 指向问题）
+            const menu = document.getElementById('main-menu');
+            if (menu) {
+                menu.classList.add('hidden');
+                console.log('Main menu hidden directly');
+            } else {
+                console.error('main-menu element not found!');
+            }
             this.startLevel(currentLevelId);
         });
 
