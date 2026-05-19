@@ -1,0 +1,6 @@
+﻿resizeCanvas() occurrences: 1
+  [0] pos=362: ...ile full-screen fix)
+function resizeCanvas() {
+    const canvas = document...
+DOMContentLoaded at pos: 927
+OK: no recursive call in function body

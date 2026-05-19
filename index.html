@@ -47,7 +47,7 @@
                 <h1>🍄 马里奥英语游戏</h1>
                 <p class="subtitle">在跑酷中学习英语！</p>
                 <div class="menu-buttons">
-                    <button id="start-btn" class="menu-btn primary">🎮 开始冒险</button>
+                    <button id="start-btn" class="menu-btn primary" onclick="document.getElementById('main-menu').classList.add('hidden');document.getElementById('main-menu').style.display='none';document.body.classList.add('game-started');console.log('Inline onclick fired');">🎮 开始冒险</button>
                     <button id="world-select-btn" class="menu-btn">🌍 选择世界</button>
                     <button id="word-library-btn" class="menu-btn">📖 单词库</button>
                     <button id="settings-btn" class="menu-btn">⚙️ 设置</button>

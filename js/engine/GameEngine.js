@@ -70,11 +70,15 @@ class GameEngine {
             progressManager.load();
             const currentLevelId = 'L1';
             console.log('Starting level:', currentLevelId);
-            // 直接操作 DOM，不依赖 this.menuUI（避免手机端 this 指向问题）
+            // 最激进方式隐藏菜单（桌面端和移动端双保险）
             const menu = document.getElementById('main-menu');
             if (menu) {
                 menu.classList.add('hidden');
-                console.log('Main menu hidden directly');
+                menu.style.display = 'none';
+                menu.style.visibility = 'hidden';
+                menu.style.pointerEvents = 'none';
+                menu.setAttribute('aria-hidden', 'true');
+                console.log('Main menu force-hidden (multiple methods)');
             } else {
                 console.error('main-menu element not found!');
             }
@@ -123,6 +127,13 @@ class GameEngine {
     }
 
     startLevel(levelId) {
+        // 双保险：确保菜单一定被隐藏
+        const menu = document.getElementById('main-menu');
+        if (menu) {
+            menu.classList.add('hidden');
+            menu.style.display = 'none';
+            console.log('Main menu force-hidden in startLevel');
+        }
         this.currentLevel = levelId;
         this.gameState = 'loading';
         
