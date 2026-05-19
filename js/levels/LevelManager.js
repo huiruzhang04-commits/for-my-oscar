@@ -297,7 +297,21 @@ const BOSS_QUESTIONS = {
         }
     ],
     L3: [
-        { question: 'L3 boss placeholder', options: ['A', 'B', 'C', 'D'], answer: 'A' }
+        {
+            question: 'It is a ___.',
+            options: ['cow', 'cat', 'car', 'cake'],
+            answer: 'cow'
+        },
+        {
+            question: 'I want to eat a ___.',
+            options: ['candy', 'cake', 'clock', 'cow'],
+            answer: 'cake'
+        },
+        {
+            question: 'Look at the ___ on the wall.',
+            options: ['candy', 'cow', 'clock', 'car'],
+            answer: 'clock'
+        }
     ]
 };
 

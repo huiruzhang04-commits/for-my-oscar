@@ -74,6 +74,51 @@ const WORDS_DATA = {
             answer: "男孩"
           }
         ]
+      },
+      L3: {
+        letter: "Cc",
+        words: [
+          {
+            word: "cow",
+            phonetic: "/kaʊ/",
+            icon: "🐄",
+            sentence: "It is a ___.",
+            options: ["牛", "汽车", "蛋糕", "时钟"],
+            answer: "牛"
+          },
+          {
+            word: "car",
+            phonetic: "/kɑː/",
+            icon: "🚗",
+            sentence: "I drive a ___.",
+            options: ["蛋糕", "汽车", "时钟", "糖果"],
+            answer: "汽车"
+          },
+          {
+            word: "cake",
+            phonetic: "/keɪk/",
+            icon: "🎂",
+            sentence: "I want to eat a ___.",
+            options: ["时钟", "糖果", "蛋糕", "牛"],
+            answer: "蛋糕"
+          },
+          {
+            word: "clock",
+            phonetic: "/klɒk/",
+            icon: "🕐",
+            sentence: "Look at the ___ on the wall.",
+            options: ["糖果", "时钟", "蛋糕", "汽车"],
+            answer: "时钟"
+          },
+          {
+            word: "candy",
+            phonetic: "/ˈkændi/",
+            icon: "🍬",
+            sentence: "I like to eat ___.",
+            options: ["糖果", "蛋糕", "牛", "时钟"],
+            answer: "糖果"
+          }
+        ]
       }
     }
   }
