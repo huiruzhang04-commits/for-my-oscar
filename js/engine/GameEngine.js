@@ -192,6 +192,17 @@ class GameEngine {
         this.menuUI.hideWorldSelect();
         this.menuUI.hideLevelSelect();
 
+        // 强制显示游戏画布（修复手机端点击开始冒险后画面不显示）
+        const canvasContainer = document.getElementById('game-canvas-container');
+        if (canvasContainer) {
+            canvasContainer.classList.remove('hidden');
+            canvasContainer.style.display = 'block';
+        }
+        // 重新计算 Canvas 显示尺寸（修复手机端尺寸异常）
+        if (typeof resizeCanvas === 'function') {
+            resizeCanvas();
+        }
+
         this.gameState = 'playing';
         this.gameUI.startTimer();
         this.running = true;
