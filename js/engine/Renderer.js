@@ -201,8 +201,9 @@ class Renderer {
         }
 
         const flipX = direction === -1;
-        const sw = isBig ? 32 : 16;
-        const sh = isBig ? 32 : 16;
+        // SMM2 精灵尺寸: small=51x64, big=64x80
+        const sw = isBig ? 40 : 32;   // 游戏内绘制宽度
+        const sh = isBig ? 56 : 44;   // 游戏内绘制高度
 
         // 星星状态加闪光滤镜
         if (isStar) {
@@ -228,7 +229,7 @@ class Renderer {
 
         if (dead) {
             this.ctx.globalAlpha = Math.max(0, 1 - deadTimer / 30);
-            window.spriteLoader.draw('goomba_stomp', x, y + height - 16, this.ctx, { width: 16, height: 8 });
+            window.spriteLoader.draw('goomba_stomp', x, y + height - 16, this.ctx, { width: 28, height: 16 });
             this.ctx.globalAlpha = 1;
             return;
         }
@@ -236,8 +237,8 @@ class Renderer {
         const walkFrame = Math.floor(Date.now() / 200) % 2; // 2 帧行走动画
         window.spriteLoader.draw('goomba_walk', x, y, this.ctx, {
             frame: walkFrame,
-            width: 16,
-            height: 16,
+            width: 28,
+            height: 32,
         });
     }
 
@@ -246,21 +247,21 @@ class Renderer {
 
         if (dead) {
             this.ctx.globalAlpha = Math.max(0, 1 - deadTimer / 30);
-            window.spriteLoader.draw('koopa_shell', x, y + height - 20, this.ctx, { width: 28, height: 20 });
+            window.spriteLoader.draw('koopa_shell', x, y + height - 24, this.ctx, { width: 32, height: 24 });
             this.ctx.globalAlpha = 1;
             return;
         }
 
         if (isShell) {
             // 龟壳形态
-            window.spriteLoader.draw('koopa_shell', x, y + height - 20, this.ctx, { width: 28, height: 20 });
+            window.spriteLoader.draw('koopa_shell', x, y + height - 24, this.ctx, { width: 32, height: 24 });
         } else {
             // 行走形态
             const walkFrame = Math.floor(Date.now() / 200) % 2;
             window.spriteLoader.draw('koopa_walk', x, y, this.ctx, {
                 frame: walkFrame,
-                width: 28,
-                height: 36,
+                width: 32,
+                height: 44,
                 flipX: direction === -1,
             });
         }

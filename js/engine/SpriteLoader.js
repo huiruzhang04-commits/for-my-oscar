@@ -53,52 +53,75 @@ class SpriteLoader {
         // frames: 帧数（用于动画）
         // frameWidth/frameHeight: 每帧尺寸（精灵图是横向排列的帧时）
         const spriteList = [
-            // ===== 马里奥精灵 (2x scale for 960x540 canvas) =====
-            { name: 'mario_small_walk',   src: spritePath + 'mario_small_walk.png',   frames: 3, frameWidth: 32, frameHeight: 32 },
-            { name: 'mario_small_idle',   src: spritePath + 'mario_small_idle.png',   frames: 1, frameWidth: 32, frameHeight: 32 },
-            { name: 'mario_small_jump',   src: spritePath + 'mario_small_jump.png',   frames: 1, frameWidth: 32, frameHeight: 32 },
-            { name: 'mario_big_walk',     src: spritePath + 'mario_big_walk.png',     frames: 3, frameWidth: 32, frameHeight: 64 },
-            { name: 'mario_big_idle',     src: spritePath + 'mario_big_idle.png',     frames: 1, frameWidth: 32, frameHeight: 64 },
-            { name: 'mario_big_jump',     src: spritePath + 'mario_big_jump.png',     frames: 1, frameWidth: 32, frameHeight: 64 },
-            { name: 'mario_small_star',   src: spritePath + 'mario_small_star.png',   frames: 1, frameWidth: 32, frameHeight: 32 },
-            { name: 'mario_big_star',     src: spritePath + 'mario_big_star.png',     frames: 1, frameWidth: 32, frameHeight: 64 },
+            // ===== SMM2 SMW 精灵 (从 Mario Maker 2 编辑器图标提取) =====
+            // 马里奥 - 小尺寸 (51x64)
+            { name: 'mario_small_idle',   src: spritePath + 'mario_small_idle.png',   frames: 1, frameWidth: 51, frameHeight: 64 },
+            { name: 'mario_small_walk',   src: spritePath + 'mario_small_walk.png',   frames: 3, frameWidth: 51, frameHeight: 64 },
+            { name: 'mario_small_jump',   src: spritePath + 'mario_small_jump.png',   frames: 1, frameWidth: 51, frameHeight: 64 },
+            { name: 'mario_small_dead',   src: spritePath + 'mario_small_dead.png',   frames: 1, frameWidth: 51, frameHeight: 64 },
+            // 马里奥 - 大尺寸 (64x80)
+            { name: 'mario_big_idle',     src: spritePath + 'mario_big_idle.png',     frames: 1, frameWidth: 64, frameHeight: 80 },
+            { name: 'mario_big_walk',     src: spritePath + 'mario_big_walk.png',     frames: 3, frameWidth: 64, frameHeight: 80 },
+            { name: 'mario_big_jump',     src: spritePath + 'mario_big_jump.png',     frames: 1, frameWidth: 64, frameHeight: 80 },
+            { name: 'mario_fire_idle',    src: spritePath + 'mario_fire_idle.png',    frames: 1, frameWidth: 64, frameHeight: 80 },
+            // 兼容旧名称
+            { name: 'mario_small_star',   src: spritePath + 'mario_small_jump.png',   frames: 1, frameWidth: 51, frameHeight: 64 },
+            { name: 'mario_big_star',     src: spritePath + 'mario_big_jump.png',     frames: 1, frameWidth: 64, frameHeight: 80 },
 
-            // ===== 敌人精灵 (2x) =====
-            { name: 'goomba_walk',        src: spritePath + 'goomba_walk.png',        frames: 2, frameWidth: 32, frameHeight: 32 },
-            { name: 'goomba_stomp',       src: spritePath + 'goomba_stomp.png',       frames: 1, frameWidth: 32, frameHeight: 16 },
-            { name: 'koopa_walk',         src: spritePath + 'koopa_walk.png',         frames: 2, frameWidth: 32, frameHeight: 48 },
-            { name: 'koopa_shell',       src: spritePath + 'koopa_shell.png',       frames: 1, frameWidth: 32, frameHeight: 32 },
+            // ===== 敌人精灵 =====
+            { name: 'goomba_walk',        src: spritePath + 'goomba.png',             frames: 2, frameWidth: 51, frameHeight: 64 },
+            { name: 'goomba_flying',      src: spritePath + 'goomba_flying.png',      frames: 1, frameWidth: 51, frameHeight: 64 },
+            { name: 'goomba_stomp',       src: spritePath + 'goomba.png',             frames: 1, frameWidth: 51, frameHeight: 32 },
+            { name: 'koopa_green',        src: spritePath + 'koopa_green.png',        frames: 2, frameWidth: 51, frameHeight: 64 },
+            { name: 'koopa_red',          src: spritePath + 'koopa_red.png',          frames: 2, frameWidth: 51, frameHeight: 64 },
+            { name: 'piranha_green',      src: spritePath + 'piranha_green.png',      frames: 1, frameWidth: 64, frameHeight: 80 },
+            { name: 'piranha_red',        src: spritePath + 'piranha_red.png',        frames: 1, frameWidth: 64, frameHeight: 80 },
+            { name: 'buzzy_beetle',       src: spritePath + 'buzzy_beetle.png',       frames: 1, frameWidth: 64, frameHeight: 80 },
+            // 兼容旧名称
+            { name: 'koopa_walk',         src: spritePath + 'koopa_green.png',        frames: 2, frameWidth: 51, frameHeight: 64 },
+            { name: 'koopa_shell',        src: spritePath + 'koopa_green.png',        frames: 1, frameWidth: 51, frameHeight: 64 },
 
-            // ===== 库巴/Boss (2x) =====
-            { name: 'bowser_idle',        src: spritePath + 'bowser_idle.png',        frames: 1, frameWidth: 80, frameHeight: 80 },
-            { name: 'bowser_hurt',        src: spritePath + 'bowser_hurt.png',        frames: 1, frameWidth: 80, frameHeight: 80 },
+            // ===== Boss =====
+            { name: 'bowser_idle',        src: spritePath + 'koopa_red.png',          frames: 1, frameWidth: 80, frameHeight: 80 },
+            { name: 'bowser_hurt',        src: spritePath + 'koopa_red.png',          frames: 1, frameWidth: 80, frameHeight: 80 },
 
-            // ===== 物品精灵 (2x) =====
-            { name: 'coin',               src: spritePath + 'coin.png',               frames: 4, frameWidth: 32, frameHeight: 32 },
-            { name: 'mushroom',           src: spritePath + 'mushroom.png',           frames: 1, frameWidth: 32, frameHeight: 32 },
-            { name: 'star',               src: spritePath + 'star.png',               frames: 1, frameWidth: 32, frameHeight: 32 },
+            // ===== 物品精灵 =====
+            { name: 'coin',               src: spritePath + 'coin.png',               frames: 4, frameWidth: 51, frameHeight: 64 },
+            { name: 'question_block',     src: spritePath + 'question_block.png',     frames: 1, frameWidth: 64, frameHeight: 80 },
+            { name: 'brick',              src: spritePath + 'brick.png',              frames: 1, frameWidth: 64, frameHeight: 80 },
+            { name: 'ground',             src: spritePath + 'ground.png',             frames: 1, frameWidth: 64, frameHeight: 80 },
+            { name: 'block_empty',        src: spritePath + 'block_empty.png',        frames: 1, frameWidth: 64, frameHeight: 80 },
+            // 兼容旧名称
+            { name: 'mushroom',           src: spritePath + 'brick.png',              frames: 1, frameWidth: 64, frameHeight: 80 },
+            { name: 'star',               src: spritePath + 'coin.png',               frames: 1, frameWidth: 51, frameHeight: 64 },
+            { name: 'block_question',     src: spritePath + 'question_block.png',     frames: 1, frameWidth: 64, frameHeight: 80 },
+            { name: 'block_brick',        src: spritePath + 'brick.png',              frames: 1, frameWidth: 64, frameHeight: 80 },
+            { name: 'ground_top',         src: spritePath + 'ground.png',             frames: 1, frameWidth: 64, frameHeight: 80 },
+            { name: 'ground_fill',        src: spritePath + 'ground.png',             frames: 1, frameWidth: 64, frameHeight: 80 },
 
-            // ===== 场景元素 (2x) =====
-            { name: 'block_question',     src: spritePath + 'block_question.png',     frames: 1, frameWidth: 64, frameHeight: 64 },
-            { name: 'block_brick',        src: spritePath + 'block_brick.png',        frames: 1, frameWidth: 64, frameHeight: 64 },
-            { name: 'ground_top',         src: spritePath + 'ground_top.png',         frames: 1, frameWidth: 64, frameHeight: 64 },
-            { name: 'ground_fill',        src: spritePath + 'ground_fill.png',        frames: 1, frameWidth: 64, frameHeight: 64 },
-            // SMW 地面精灵（Yoshi's Island 风格）
-            { name: 'smw_ground_top',     src: spritePath + 'smw/smw_ground_top_tile.png', frames: 1, frameWidth: 32, frameHeight: 7 },
-            { name: 'smw_ground_fill',    src: spritePath + 'smw/smw_ground_fill_tile.png', frames: 1, frameWidth: 32, frameHeight: 33 },
-            { name: 'pipe_top',           src: spritePath + 'pipe_top.png',           frames: 1, frameWidth: 128, frameHeight: 64 },
-            { name: 'pipe_body',          src: spritePath + 'pipe_body.png',          frames: 1, frameWidth: 128, frameHeight: 64 },
+            // ===== 管道 (SMM2) =====
+            { name: 'pipe_top',           src: spritePath + 'pipe_green_top.png',     frames: 1, frameWidth: 64, frameHeight: 80 },
+            { name: 'pipe_body',          src: spritePath + 'pipe_green_body.png',    frames: 1, frameWidth: 64, frameHeight: 80 },
+            { name: 'pipe_green_piranha', src: spritePath + 'pipe_green_piranha.png', frames: 1, frameWidth: 64, frameHeight: 80 },
+            { name: 'pipe_yellow',        src: spritePath + 'pipe_yellow.png',        frames: 1, frameWidth: 64, frameHeight: 80 },
+            { name: 'pipe_red',           src: spritePath + 'pipe_red.png',           frames: 1, frameWidth: 64, frameHeight: 80 },
+            { name: 'pipe_blue',          src: spritePath + 'pipe_blue.png',          frames: 1, frameWidth: 64, frameHeight: 80 },
+
+            // ===== 场景元素 (保留旧文件) =====
             { name: 'cloud',              src: spritePath + 'cloud.png',              frames: 1, frameWidth: 128, frameHeight: 64 },
             { name: 'hill',               src: spritePath + 'hill.png',               frames: 1, frameWidth: 128, frameHeight: 128 },
             { name: 'word_block',         src: spritePath + 'word_block.png',         frames: 1, frameWidth: 96, frameHeight: 80 },
 
-            // ===== SMW Super Mario World 风格素材 =====
+            // ===== SMW 背景素材 (保留) =====
             { name: 'smw_background',     src: spritePath + 'smw/smw_background_clean.png', frames: 1, frameWidth: 5120, frameHeight: 432 },
-            { name: 'smw_pipe',           src: spritePath + 'smw/smw_pipe.png',           frames: 1, frameWidth: 128, frameHeight: 64 },
-            { name: 'smw_question_block', src: spritePath + 'smw/smw_question_block.png', frames: 1, frameWidth: 32,  frameHeight: 32 },
-            { name: 'smw_brick',          src: spritePath + 'smw/smw_brick.png',          frames: 1, frameWidth: 80,  frameHeight: 32 },
-            { name: 'smw_ground_tile',    src: spritePath + 'smw/smw_ground_tile.png',    frames: 1, frameWidth: 400, frameHeight: 34 },
-            { name: 'smw_coin',           src: spritePath + 'smw/smw_coin.png',           frames: 1, frameWidth: 16,  frameHeight: 16 },
+            { name: 'smw_pipe',           src: spritePath + 'pipe_green_top.png',     frames: 1, frameWidth: 64, frameHeight: 80 },
+            { name: 'smw_question_block', src: spritePath + 'question_block.png',     frames: 1, frameWidth: 64, frameHeight: 80 },
+            { name: 'smw_brick',          src: spritePath + 'brick.png',              frames: 1, frameWidth: 64, frameHeight: 80 },
+            { name: 'smw_ground_tile',    src: spritePath + 'ground.png',             frames: 1, frameWidth: 400, frameHeight: 34 },
+            { name: 'smw_coin',           src: spritePath + 'coin.png',               frames: 1, frameWidth: 51, frameHeight: 64 },
+            // SMW 地面瓦片
+            { name: 'smw_ground_top',     src: spritePath + 'smw/smw_ground_top_tile.png', frames: 1, frameWidth: 32, frameHeight: 7 },
+            { name: 'smw_ground_fill',    src: spritePath + 'smw/smw_ground_fill_tile.png', frames: 1, frameWidth: 32, frameHeight: 33 },
         ];
 
         const promises = spriteList.map(sprite => {
