@@ -386,6 +386,8 @@ class GameEngine {
                 if (this.player.vy > 0 && playerBottom < enemyTop + enemy.height / 2) {
                     enemy.stomp();
                     this.player.vy = -10;
+                    this.player.invincible = true;  // 踩踏后短暂无敌，防止二次碰撞扣血
+                    setTimeout(() => { if (this.player) this.player.invincible = false; }, 500);
                     this.coins += 100;
                     this.gameUI.updateCoins(this.coins);
                     if (window.soundManager) window.soundManager.playStomp();
