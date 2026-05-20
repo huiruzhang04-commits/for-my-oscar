@@ -373,9 +373,8 @@ class GameEngine {
             const enemy = this.enemies[i];
             enemy.update();
 
-            if (!enemy.active) {
-                this.enemies.splice(i, 1);
-                continue;
+            if (!enemy.active || enemy.dead) {
+                continue;  // 跳过已死敌人，不删除（等待消失动画）
             }
 
             const enemyBounds = enemy.getBounds();
@@ -387,7 +386,7 @@ class GameEngine {
                     enemy.stomp();
                     this.player.vy = -10;
                     this.player.invincible = true;  // 踩踏后短暂无敌，防止二次碰撞扣血
-                    setTimeout(() => { if (this.player) this.player.invincible = false; }, 500);
+                    setTimeout(() => { if (this.player) this.player.invincible = false; }, 800);
                     this.coins += 100;
                     this.gameUI.updateCoins(this.coins);
                     if (window.soundManager) window.soundManager.playStomp();
