@@ -405,13 +405,13 @@ const BOSS_QUESTIONS = {
         },
         {
             question: 'It is a ___.',
-            options: ['banana', 'bat', 'cat', 'boy'],
+            options: ['banana', 'bat', 'alligator', 'boy'],
             answer: 'banana'
         },
         {
-            question: 'The ___ is sleeping on the sofa.',
-            options: ['boy', 'bag', 'cat', 'baby'],
-            answer: 'cat'
+            question: 'The ___ is playing with a ball.',
+            options: ['boy', 'bag', 'ball', 'baby'],
+            answer: 'boy'
         }
     ],
 
@@ -422,9 +422,9 @@ const BOSS_QUESTIONS = {
             answer: 'dad'
         },
         {
-            question: 'The ___ is sleeping on the sofa.',
+            question: 'The ___ is swimming in the pond.',
             options: ['dog', 'desk', 'door', 'duck'],
-            answer: 'cat'
+            answer: 'duck'
         },
         {
             question: 'It is a ___.',

@@ -142,7 +142,7 @@ const WORDS_DATA = {
           {
             word: "desk",
             phonetic: "/desk/",
-            icon: "🪑",
+            icon: "🗂️",
             sentence: "It is a ___.",
             options: ["鸭子", "门", "爸爸", "桌子"],
             answer: "桌子"
