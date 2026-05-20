@@ -734,13 +734,11 @@ class GameEngine {
     render() {
         const colors = WORLD_COLORS[`world${this.world}`] || WORLD_COLORS.world1;
 
-        this.renderer.clear(colors.sky);
-        this.renderer.drawBackground(colors);
-
+        // 先计算镜头位置（背景绘制需要用到）
         if (this.player) {
-            const autoScrollSpeed = 1.0;  // 调慢
+            const autoScrollSpeed = 1.0;
             const targetX = this.player.x - this.renderer.width / 3;
-            const levelMaxX = Math.max(0, this.levelWidth - this.renderer.width);  // 动态计算
+            const levelMaxX = Math.max(0, this.levelWidth - this.renderer.width);
             
             const currentCamera = this.renderer.cameraX;
             let autoScrollX = currentCamera;
@@ -752,16 +750,22 @@ class GameEngine {
             }
             
             const playerBasedX = Math.max(0, Math.min(targetX, levelMaxX));
-            
             const newCameraX = Math.max(autoScrollX, playerBasedX);
             this.renderer.setCamera(Math.min(newCameraX, levelMaxX), 0);
         }
 
+        this.renderer.clear(colors.sky);
+        this.renderer.drawBackground(colors);
+
         this.renderer.applyCamera();
         
-        // 使用缓存的云朵位置（不每帧随机）
-        for (const cloud of this.clouds) {
-            this.renderer.drawCloud(cloud.x, cloud.y, cloud.scale);
+        const useSMWBg = window.spriteLoader && window.spriteLoader.has('smw_background');
+        
+        // 使用缓存的云朵位置（SMW背景已包含远景时跳过）
+        if (!useSMWBg) {
+            for (const cloud of this.clouds) {
+                this.renderer.drawCloud(cloud.x, cloud.y, cloud.scale);
+            }
         }
 
         // 先画地面，再画山丘（山丘在地面后面）
@@ -771,30 +775,58 @@ class GameEngine {
             }
         }
 
-        // 使用缓存的山丘位置（不每帧随机）
-        // 获取地面 y 坐标（动态，适配不同关卡）
+        // 使用缓存的山丘位置（SMW背景已包含山丘时跳过）
         const groundY = this.groundY || 420;
-        for (const hill of this.hills) {
-            this.renderer.drawHill(hill.x, groundY, hill.scale);
+        if (!useSMWBg) {
+            for (const hill of this.hills) {
+                this.renderer.drawHill(hill.x, groundY, hill.scale);
+            }
         }
 
         for (const platform of this.platforms) {
             if (platform.type === 'brick') {
                 const { x, y, width, height, hasItem, itemGiven } = platform;
-                this.renderer.ctx.fillStyle = '#FFA000';
-                this.renderer.ctx.fillRect(x, y, width, height);
-                this.renderer.ctx.strokeStyle = '#BF360C';
-                this.renderer.ctx.lineWidth = 2;
-                this.renderer.ctx.strokeRect(x, y, width, height);
-                
-                if (hasItem && !itemGiven) {
-                    this.renderer.ctx.fillStyle = '#fff';
-                    this.renderer.ctx.font = 'bold 20px Arial';
-                    this.renderer.ctx.fillText('?', x + width/2 - 5, y + height/2 + 7);
+                // 使用 SMW 问号块/砖块精灵
+                if (window.spriteLoader && window.spriteLoader.has('smw_question_block')) {
+                    for (let bx = 0; bx < width; bx += 32) {
+                        window.spriteLoader.draw('smw_question_block', x + bx, y, this.renderer.ctx,
+                            { width: 32, height: 32 });
+                    }
+                    if (hasItem && !itemGiven) {
+                        this.renderer.ctx.fillStyle = '#fff';
+                        this.renderer.ctx.font = 'bold 18px Arial';
+                        this.renderer.ctx.textAlign = 'center';
+                        this.renderer.ctx.fillText('?', x + width/2, y + height/2 + 6);
+                    }
+                } else {
+                    // Fallback 色块
+                    this.renderer.ctx.fillStyle = '#FFA000';
+                    this.renderer.ctx.fillRect(x, y, width, height);
+                    this.renderer.ctx.strokeStyle = '#BF360C';
+                    this.renderer.ctx.lineWidth = 2;
+                    this.renderer.ctx.strokeRect(x, y, width, height);
+                    if (hasItem && !itemGiven) {
+                        this.renderer.ctx.fillStyle = '#fff';
+                        this.renderer.ctx.font = 'bold 20px Arial';
+                        this.renderer.ctx.fillText('?', x + width/2 - 5, y + height/2 + 7);
+                    }
                 }
             } else if (platform.type === 'pipe') {
-                this.renderer.ctx.fillStyle = '#4CAF50';
-                this.renderer.ctx.fillRect(platform.x, platform.y, platform.width, platform.height);
+                // 使用 SMW 管道精灵（如果已加载）
+                if (window.spriteLoader && window.spriteLoader.has('smw_pipe')) {
+                    const pipeH = platform.height || 64;
+                    // 管道顶部
+                    window.spriteLoader.draw('smw_pipe', platform.x - 8, platform.y, this.renderer.ctx, 
+                        { width: platform.width + 16, height: Math.min(32, pipeH) });
+                    // 管道主体（复用同一张图拉伸）
+                    if (pipeH > 32) {
+                        window.spriteLoader.draw('smw_pipe', platform.x, platform.y + 32, this.renderer.ctx,
+                            { width: platform.width, height: pipeH - 32 });
+                    }
+                } else {
+                    this.renderer.ctx.fillStyle = '#4CAF50';
+                    this.renderer.ctx.fillRect(platform.x, platform.y, platform.width, platform.height);
+                }
             } else if (platform.type === 'platform') {
                 // 移动/静止平台
                 const { x, y, width, height, moving } = platform;

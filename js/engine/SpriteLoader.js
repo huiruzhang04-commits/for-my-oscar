@@ -86,6 +86,14 @@ class SpriteLoader {
             { name: 'cloud',              src: spritePath + 'cloud.png',              frames: 1, frameWidth: 128, frameHeight: 64 },
             { name: 'hill',               src: spritePath + 'hill.png',               frames: 1, frameWidth: 128, frameHeight: 128 },
             { name: 'word_block',         src: spritePath + 'word_block.png',         frames: 1, frameWidth: 96, frameHeight: 80 },
+
+            // ===== SMW Super Mario World 风格素材 =====
+            { name: 'smw_background',     src: spritePath + 'smw/smw_background_clean.png', frames: 1, frameWidth: 5120, frameHeight: 432 },
+            { name: 'smw_pipe',           src: spritePath + 'smw/smw_pipe.png',           frames: 1, frameWidth: 128, frameHeight: 64 },
+            { name: 'smw_question_block', src: spritePath + 'smw/smw_question_block.png', frames: 1, frameWidth: 32,  frameHeight: 32 },
+            { name: 'smw_brick',          src: spritePath + 'smw/smw_brick.png',          frames: 1, frameWidth: 80,  frameHeight: 32 },
+            { name: 'smw_ground_tile',    src: spritePath + 'smw/smw_ground_tile.png',    frames: 1, frameWidth: 400, frameHeight: 34 },
+            { name: 'smw_coin',           src: spritePath + 'smw/smw_coin.png',           frames: 1, frameWidth: 16,  frameHeight: 16 },
         ];
 
         const promises = spriteList.map(sprite => {
