@@ -81,6 +81,9 @@ class SpriteLoader {
             { name: 'block_brick',        src: spritePath + 'block_brick.png',        frames: 1, frameWidth: 64, frameHeight: 64 },
             { name: 'ground_top',         src: spritePath + 'ground_top.png',         frames: 1, frameWidth: 64, frameHeight: 64 },
             { name: 'ground_fill',        src: spritePath + 'ground_fill.png',        frames: 1, frameWidth: 64, frameHeight: 64 },
+            // SMW 地面精灵（Yoshi's Island 风格）
+            { name: 'smw_ground_top',     src: spritePath + 'smw/smw_ground_top_tile.png', frames: 1, frameWidth: 32, frameHeight: 7 },
+            { name: 'smw_ground_fill',    src: spritePath + 'smw/smw_ground_fill_tile.png', frames: 1, frameWidth: 32, frameHeight: 33 },
             { name: 'pipe_top',           src: spritePath + 'pipe_top.png',           frames: 1, frameWidth: 128, frameHeight: 64 },
             { name: 'pipe_body',          src: spritePath + 'pipe_body.png',          frames: 1, frameWidth: 128, frameHeight: 64 },
             { name: 'cloud',              src: spritePath + 'cloud.png',              frames: 1, frameWidth: 128, frameHeight: 64 },

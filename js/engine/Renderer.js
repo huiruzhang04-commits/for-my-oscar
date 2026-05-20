@@ -41,18 +41,32 @@ class Renderer {
             const bgImg = window.spriteLoader.images.get('smw_background');
             if (bgImg) {
                 // SMW背景图 5120x432，远宽于画布(960)
-                // 宽度缩放到画布的 80%，保持比例
-                const scale = (this.width * 0.8) / bgImg.width;  // = 768/5120 = 0.15
-                const drawW = bgImg.width * scale;   // = 768
-                const drawH = bgImg.height * scale; // = 65
+                // 高度缩放到250px（约占画布46%），宽度随之按比例
+                const targetH = 250;
+                const scale = targetH / bgImg.height;  // = 250/432 ≈ 0.579
+                const drawW = bgImg.width * scale;   // ≈ 2967
+                const drawH = bgImg.height * scale; // = 250
                 
                 // 底部对齐地面 y=420
                 const offsetY = 420 - drawH;
                 
                 // 视差滚动：背景移动速度是前景的30%
-                const scrollX = -this.cameraX * 0.3;
+                // 背景宽度>画布，需要偏移使居中
+                const parallax = this.cameraX * 0.3;
+                const offsetX = -parallax;
                 
-                this.ctx.drawImage(bgImg, scrollX, offsetY, drawW, drawH);
+                // 裁剪超出画布的部分
+                const srcX = Math.max(0, Math.floor(-offsetX / scale));
+                const srcW = Math.min(bgImg.width - srcX, Math.ceil((this.width - offsetX) / scale));
+                const destX = Math.max(0, Math.floor(offsetX));
+                const destW = Math.min(srcW * scale, this.width - destX);
+                
+                if (destW > 0) {
+                    this.ctx.drawImage(bgImg,
+                        srcX, 0, srcW, bgImg.height,
+                        destX, offsetY, destW, drawH
+                    );
+                }
                 
                 // 天空填充上方空白
                 this.ctx.fillStyle = '#5c94fc';
@@ -70,12 +84,38 @@ class Renderer {
     }
 
     drawGround(colors, groundY, width = 2000) {
-        // 地面顶层
+        // 优先使用 SMW 地面精灵
+        const useSMWGround = window.spriteLoader && 
+            window.spriteLoader.has('smw_ground_top') && 
+            window.spriteLoader.has('smw_ground_fill');
+        
         const groundHeight = this.height - groundY;
-        window.spriteLoader.draw('ground_top', 0, groundY, this.ctx, { width: width, height: 32 });
-        // 地面主体（平铺）
-        for (let gx = 0; gx < width; gx += 32) {
-            window.spriteLoader.draw('ground_fill', gx, groundY + 32, this.ctx, { width: 32, height: groundHeight - 32 });
+        
+        if (useSMWGround) {
+            // SMW 地面：草顶7px + 土主体（剩余高度）
+            const tileW = 32;
+            const grassH = 7;
+            const dirtH = groundHeight - grassH;
+            
+            // 草顶平铺
+            for (let gx = 0; gx < width; gx += tileW) {
+                window.spriteLoader.draw('smw_ground_top', gx, groundY, this.ctx, 
+                    { width: tileW, height: grassH });
+            }
+            // 土主体平铺（从草顶下方开始）
+            if (dirtH > 0) {
+                for (let gx = 0; gx < width; gx += tileW) {
+                    window.spriteLoader.draw('smw_ground_fill', gx, groundY + grassH, this.ctx,
+                        { width: tileW, height: dirtH });
+                }
+            }
+        } else {
+            // Fallback: 原来的 PIL 生成地面
+            window.spriteLoader.draw('ground_top', 0, groundY, this.ctx, { width: width, height: 32 });
+            for (let gx = 0; gx < width; gx += 32) {
+                window.spriteLoader.draw('ground_fill', gx, groundY + 32, this.ctx, 
+                    { width: 32, height: groundHeight - 32 });
+            }
         }
     }
 
