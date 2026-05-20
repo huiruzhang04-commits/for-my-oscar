@@ -40,22 +40,21 @@ class Renderer {
         if (window.spriteLoader && window.spriteLoader.has('smw_background')) {
             const bgImg = window.spriteLoader.images.get('smw_background');
             if (bgImg) {
-                // SMW背景图原始尺寸 5120x432, 需要缩放适配逻辑分辨率
-                // 缩放到地面y=420附近对齐 (原图地面约在 y=380-430)
-                const scaleX = this.width / bgImg.width;  // 通常 > 1 因为图很宽
-                const scaleY = (this.height * 0.85) / bgImg.height;  // 背景占屏幕85%高度
-                const scale = Math.max(scaleX, scaleY);
+                // SMW背景图 5120x432，远宽于画布(960)
+                // 宽度缩放到画布的 80%，保持比例
+                const scale = (this.width * 0.8) / bgImg.width;  // = 768/5120 = 0.15
+                const drawW = bgImg.width * scale;   // = 768
+                const drawH = bgImg.height * scale; // = 65
                 
-                const drawW = bgImg.width * scale;
-                const drawH = bgImg.height * scale;
-                const offsetY = this.height - drawH - 10;  // 底部留一点空间给地面精灵
+                // 底部对齐地面 y=420
+                const offsetY = 420 - drawH;
                 
-                // 水平滚动跟随镜头
-                const scrollX = -this.cameraX * 0.3;  // 视差: 背景滚动速度是前景的30%
+                // 视差滚动：背景移动速度是前景的30%
+                const scrollX = -this.cameraX * 0.3;
                 
                 this.ctx.drawImage(bgImg, scrollX, offsetY, drawW, drawH);
                 
-                // 天空填充背景图上方的空白
+                // 天空填充上方空白
                 this.ctx.fillStyle = '#5c94fc';
                 this.ctx.fillRect(0, 0, this.width, offsetY);
                 return;
