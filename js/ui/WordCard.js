@@ -1,15 +1,23 @@
 // Word → Emoji 映射（Boss 卡片 + 单词卡片显示用）
 const WORD_EMOJI = {
-    'apple': '🍎', 'banana': '🍌', 'orange': '🍊', 'grape': '🍇',
-    'cat': '🐱', 'dog': '🐶', 'elephant': '🐘', 'monkey': '🐒',
+    // L1 Aa
+    'apple': '🍎', 'ant': '🐜', 'alligator': '🐊', 'airplane': '✈️',
+    // L2 Bb
+    'baby': '👶', 'banana': '🍌', 'ball': '⚽', 'boy': '👦',
+    'bat': '🦇', 'bag': '🎒',
+    // L3 Cc
+    'cow': '🐄', 'car': '🚗', 'cake': '🎂', 'clock': '🕐', 'candy': '🍬',
+    'cat': '🐱',
+    // L4 Dd
+    'dad': '👨', 'duck': '🦆', 'desk': '🗄️', 'door': '🚪', 'dog': '🐶',
+    // 通用
+    'orange': '🍊', 'grape': '🍇', 'elephant': '🐘', 'monkey': '🐒',
     'book': '📚', 'pen': '🖊️', 'pencil': '✏️', 'teacher': '👩‍🏫',
-    'school': '🏫', 'mom': '👩', 'dad': '👨', 'baby': '👶',
-    'ball': '⚽', 'boy': '👦', 'girl': '👧', 'car': '🚗',
+    'school': '🏫', 'mom': '👩', 'girl': '👧',
     'tree': '🌳', 'flower': '🌸', 'sun': '☀️', 'moon': '🌙',
     'star': '⭐', 'heart': '❤️', 'water': '💧', 'milk': '🥛',
-    'cake': '🎂', 'ice cream': '🍦', 'pizza': '🍕', 'cookie': '🍪',
-    'bird': '🐦', 'fish': '🐟', 'ant': '🐜', 'bear': '🐻',
-    'cow': '🐄', 'pig': '🐷', 'duck': '🦆', 'hen': '🐔',
+    'ice cream': '🍦', 'pizza': '🍕', 'cookie': '🍪',
+    'bird': '🐦', 'fish': '🐟', 'bear': '🐻', 'pig': '🐷', 'hen': '🐔',
 };
 
 class WordCardUI {
