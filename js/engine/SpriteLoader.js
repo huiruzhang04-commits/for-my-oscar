@@ -66,6 +66,8 @@ class SpriteLoader {
             // ===== 敌人精灵 (2x) =====
             { name: 'goomba_walk',        src: spritePath + 'goomba_walk.png',        frames: 2, frameWidth: 32, frameHeight: 32 },
             { name: 'goomba_stomp',       src: spritePath + 'goomba_stomp.png',       frames: 1, frameWidth: 32, frameHeight: 16 },
+            { name: 'koopa_walk',         src: spritePath + 'koopa_walk.png',         frames: 2, frameWidth: 32, frameHeight: 48 },
+            { name: 'koopa_shell',       src: spritePath + 'koopa_shell.png',       frames: 1, frameWidth: 32, frameHeight: 32 },
 
             // ===== 库巴/Boss (2x) =====
             { name: 'bowser_idle',        src: spritePath + 'bowser_idle.png',        frames: 1, frameWidth: 80, frameHeight: 80 },

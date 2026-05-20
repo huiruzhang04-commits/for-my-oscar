@@ -65,12 +65,12 @@ class LevelManager {
                     { x: 2100, y: 340, width: 64, height: 32, type: 'brick', hasItem: true, item: 'coin' },
                 ],
                 enemies: [
-                    { x: 720, y: 392, type: 'goomba' },           // 管道后第一个敌人（地面顶部420 - 敌人高28 = 392）
-                    { x: 920, y: 392, type: 'goomba' },           // 第二个敌人
+                    { x: 720, y: 392, type: 'goomba' },           // 管道后第一个敌人
+                    { x: 920, y: 392, type: 'koopa' },             // 第二个敌人 - 乌龟
                     { x: 1200, y: 392, type: 'goomba' },          // 星星后敌人
-                    { x: 1350, y: 392, type: 'goomba' },          // 无敌区敌人
+                    { x: 1350, y: 392, type: 'koopa' },           // 无敌区敌人 - 乌龟
                     { x: 1500, y: 392, type: 'goomba' },          // 综合区敌人1
-                    { x: 1650, y: 392, type: 'goomba' },          // 综合区敌人2
+                    { x: 1650, y: 392, type: 'koopa' },          // 综合区敌人2 - 乌龟
                 ],
                 items: [],
                 hasBoss: false,
