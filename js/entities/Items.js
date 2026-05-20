@@ -56,9 +56,9 @@ class Mushroom {
         this.y = y;
         this.width = 28;
         this.height = 28;
-        this.vx = 0.8;  // 慢速
+        this.vx = 0.3;  // 很慢，方便小朋友捡
         this.startX = x;  // 限制移动范围
-        this.moveRange = 120;  // 只能前后移动约120px
+        this.moveRange = 80;  // 只能前后移动约80px
         this.vy = 0;
         this.active = true;
         this.collected = false;
@@ -116,7 +116,9 @@ class Star {
         this.y = y;
         this.width = 24;
         this.height = 24;
-        this.vx = 3;
+        this.vx = 0.5;  // 慢速，不要飞走
+        this.startX = x;  // 限制移动范围
+        this.moveRange = 150;
         this.vy = 0;
         this.active = true;
         this.collected = false;
@@ -134,6 +136,10 @@ class Star {
         this.bounceY = this.y + Math.sin(this.bounceTimer * 0.2) * 5;
 
         this.x += this.vx;
+        // 限制移动范围，超出后反向
+        if (this.x < this.startX - this.moveRange || this.x > this.startX + this.moveRange) {
+            this.vx *= -1;
+        }
         Physics.applyGravity(this);
         Physics.updatePosition(this);
     }

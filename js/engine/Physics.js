@@ -106,7 +106,7 @@ class Physics {
                 const playerCenterX = player.x + player.width / 2;
                 const enemyCenterX = enemy.x + enemy.width / 2;
                 
-                if (player.vy > 0 && playerBottom < enemyTop + enemy.height / 2) {
+                if (player.vy >= 0 && playerBottom < enemyTop + enemy.height * 0.75) {
                     return { type: 'stomp', enemy };
                 } else if (player.isStar) {
                     return { type: 'star_kill', enemy };
