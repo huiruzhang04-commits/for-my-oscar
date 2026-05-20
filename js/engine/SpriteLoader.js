@@ -53,59 +53,39 @@ class SpriteLoader {
         // frames: 帧数（用于动画）
         // frameWidth/frameHeight: 每帧尺寸（精灵图是横向排列的帧时）
         const spriteList = [
-            // ===== 马里奥精灵 =====
-            // 小马里奥 - 行走动画帧（建议 2-3 帧横向排列）
-            { name: 'mario_small_walk',   src: spritePath + 'mario_small_walk.png',   frames: 3, frameWidth: 16, frameHeight: 16 },
-            // 小马里奥 - 站立
-            { name: 'mario_small_idle',   src: spritePath + 'mario_small_idle.png',   frames: 1, frameWidth: 16, frameHeight: 16 },
-            // 小马里奥 - 跳跃
-            { name: 'mario_small_jump',   src: spritePath + 'mario_small_jump.png',   frames: 1, frameWidth: 16, frameHeight: 16 },
-            // 大马里奥 - 行走
-            { name: 'mario_big_walk',     src: spritePath + 'mario_big_walk.png',     frames: 3, frameWidth: 16, frameHeight: 32 },
-            // 大马里奥 - 站立
-            { name: 'mario_big_idle',     src: spritePath + 'mario_big_idle.png',     frames: 1, frameWidth: 16, frameHeight: 32 },
-            // 大马里奥 - 跳跃
-            { name: 'mario_big_jump',     src: spritePath + 'mario_big_jump.png',     frames: 1, frameWidth: 16, frameHeight: 32 },
-            // 星星马里奥（小）
-            { name: 'mario_small_star',   src: spritePath + 'mario_small_star.png',   frames: 1, frameWidth: 16, frameHeight: 16 },
-            // 星星马里奥（大）
-            { name: 'mario_big_star',     src: spritePath + 'mario_big_star.png',     frames: 1, frameWidth: 16, frameHeight: 32 },
+            // ===== 马里奥精灵 (2x scale for 960x540 canvas) =====
+            { name: 'mario_small_walk',   src: spritePath + 'mario_small_walk.png',   frames: 3, frameWidth: 32, frameHeight: 32 },
+            { name: 'mario_small_idle',   src: spritePath + 'mario_small_idle.png',   frames: 1, frameWidth: 32, frameHeight: 32 },
+            { name: 'mario_small_jump',   src: spritePath + 'mario_small_jump.png',   frames: 1, frameWidth: 32, frameHeight: 32 },
+            { name: 'mario_big_walk',     src: spritePath + 'mario_big_walk.png',     frames: 3, frameWidth: 32, frameHeight: 64 },
+            { name: 'mario_big_idle',     src: spritePath + 'mario_big_idle.png',     frames: 1, frameWidth: 32, frameHeight: 64 },
+            { name: 'mario_big_jump',     src: spritePath + 'mario_big_jump.png',     frames: 1, frameWidth: 32, frameHeight: 64 },
+            { name: 'mario_small_star',   src: spritePath + 'mario_small_star.png',   frames: 1, frameWidth: 32, frameHeight: 32 },
+            { name: 'mario_big_star',     src: spritePath + 'mario_big_star.png',     frames: 1, frameWidth: 32, frameHeight: 64 },
 
-            // ===== 敌人精灵 =====
-            // 栗子（Goomba）- 行走
-            { name: 'goomba_walk',        src: spritePath + 'goomba_walk.png',        frames: 2, frameWidth: 16, frameHeight: 16 },
-            // 栗子 - 被踩扁
-            { name: 'goomba_stomp',       src: spritePath + 'goomba_stomp.png',       frames: 1, frameWidth: 16, frameHeight: 8  },
+            // ===== 敌人精灵 (2x) =====
+            { name: 'goomba_walk',        src: spritePath + 'goomba_walk.png',        frames: 2, frameWidth: 32, frameHeight: 32 },
+            { name: 'goomba_stomp',       src: spritePath + 'goomba_stomp.png',       frames: 1, frameWidth: 32, frameHeight: 16 },
 
-            // ===== 库巴（Boss）=====
-            { name: 'bowser_idle',         src: spritePath + 'bowser_idle.png',         frames: 1, frameWidth: 40, frameHeight: 40 },
-            { name: 'bowser_hurt',        src: spritePath + 'bowser_hurt.png',        frames: 1, frameWidth: 40, frameHeight: 40 },
+            // ===== 库巴/Boss (2x) =====
+            { name: 'bowser_idle',        src: spritePath + 'bowser_idle.png',        frames: 1, frameWidth: 80, frameHeight: 80 },
+            { name: 'bowser_hurt',        src: spritePath + 'bowser_hurt.png',        frames: 1, frameWidth: 80, frameHeight: 80 },
 
-            // ===== 物品精灵 =====
-            // 金币
-            { name: 'coin',               src: spritePath + 'coin.png',               frames: 4, frameWidth: 16, frameHeight: 16 },
-            // 蘑菇
-            { name: 'mushroom',           src: spritePath + 'mushroom.png',           frames: 1, frameWidth: 16, frameHeight: 16 },
-            // 星星
-            { name: 'star',               src: spritePath + 'star.png',               frames: 1, frameWidth: 16, frameHeight: 16 },
+            // ===== 物品精灵 (2x) =====
+            { name: 'coin',               src: spritePath + 'coin.png',               frames: 4, frameWidth: 32, frameHeight: 32 },
+            { name: 'mushroom',           src: spritePath + 'mushroom.png',           frames: 1, frameWidth: 32, frameHeight: 32 },
+            { name: 'star',               src: spritePath + 'star.png',               frames: 1, frameWidth: 32, frameHeight: 32 },
 
-            // ===== 场景元素 =====
-            // 砖块（问号块）
-            { name: 'block_question',     src: spritePath + 'block_question.png',     frames: 1, frameWidth: 32, frameHeight: 32 },
-            // 普通砖块
-            { name: 'block_brick',        src: spritePath + 'block_brick.png',        frames: 1, frameWidth: 32, frameHeight: 32 },
-            // 地面块
-            { name: 'ground_top',         src: spritePath + 'ground_top.png',         frames: 1, frameWidth: 32, frameHeight: 32 },
-            { name: 'ground_fill',        src: spritePath + 'ground_fill.png',        frames: 1, frameWidth: 32, frameHeight: 32 },
-            // 管道
-            { name: 'pipe_top',           src: spritePath + 'pipe_top.png',           frames: 1, frameWidth: 64, frameHeight: 32 },
-            { name: 'pipe_body',          src: spritePath + 'pipe_body.png',          frames: 1, frameWidth: 64, frameHeight: 32 },
-            // 云
-            { name: 'cloud',              src: spritePath + 'cloud.png',              frames: 1, frameWidth: 64, frameHeight: 32 },
-            // 山丘
-            { name: 'hill',               src: spritePath + 'hill.png',               frames: 1, frameWidth: 64, frameHeight: 64 },
-            // 单词路障（书本）
-            { name: 'word_block',         src: spritePath + 'word_block.png',         frames: 1, frameWidth: 48, frameHeight: 40 },
+            // ===== 场景元素 (2x) =====
+            { name: 'block_question',     src: spritePath + 'block_question.png',     frames: 1, frameWidth: 64, frameHeight: 64 },
+            { name: 'block_brick',        src: spritePath + 'block_brick.png',        frames: 1, frameWidth: 64, frameHeight: 64 },
+            { name: 'ground_top',         src: spritePath + 'ground_top.png',         frames: 1, frameWidth: 64, frameHeight: 64 },
+            { name: 'ground_fill',        src: spritePath + 'ground_fill.png',        frames: 1, frameWidth: 64, frameHeight: 64 },
+            { name: 'pipe_top',           src: spritePath + 'pipe_top.png',           frames: 1, frameWidth: 128, frameHeight: 64 },
+            { name: 'pipe_body',          src: spritePath + 'pipe_body.png',          frames: 1, frameWidth: 128, frameHeight: 64 },
+            { name: 'cloud',              src: spritePath + 'cloud.png',              frames: 1, frameWidth: 128, frameHeight: 64 },
+            { name: 'hill',               src: spritePath + 'hill.png',               frames: 1, frameWidth: 128, frameHeight: 128 },
+            { name: 'word_block',         src: spritePath + 'word_block.png',         frames: 1, frameWidth: 96, frameHeight: 80 },
         ];
 
         const promises = spriteList.map(sprite => {
