@@ -119,6 +119,51 @@ const WORDS_DATA = {
             answer: "糖果"
           }
         ]
+      },
+      L4: {
+        letter: "Dd",
+        words: [
+          {
+            word: "dad",
+            phonetic: "/dæd/",
+            icon: "👨",
+            sentence: "It is a ___.",
+            options: ["爸爸", "鸭子", "桌子", "门"],
+            answer: "爸爸"
+          },
+          {
+            word: "duck",
+            phonetic: "/dʌk/",
+            icon: "🦆",
+            sentence: "It is a ___.",
+            options: ["门", "爸爸", "鸭子", "桌子"],
+            answer: "鸭子"
+          },
+          {
+            word: "desk",
+            phonetic: "/desk/",
+            icon: "🪑",
+            sentence: "It is a ___.",
+            options: ["鸭子", "门", "爸爸", "桌子"],
+            answer: "桌子"
+          },
+          {
+            word: "door",
+            phonetic: "/dɔː/",
+            icon: "🚪",
+            sentence: "It is a ___.",
+            options: ["桌子", "狗", "鸭子", "门"],
+            answer: "门"
+          },
+          {
+            word: "dog",
+            phonetic: "/dɒɡ/",
+            icon: "🐕",
+            sentence: "It is a ___.",
+            options: ["门", "桌子", "爸爸", "狗"],
+            answer: "狗"
+          }
+        ]
       }
     }
   }

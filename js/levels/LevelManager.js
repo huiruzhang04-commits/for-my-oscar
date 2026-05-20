@@ -82,7 +82,60 @@ class LevelManager {
                     { x: 2300, type: 'end' },                 // 通关
                 ]
             },
-            'L3': {
+    
+        'L4': {
+            platforms: [
+                // ground 7000px
+                { x: 0, y: 420, width: 7000, height: 120, type: "ground" },
+                { x: 200, y: 340, width: 64, height: 32, type: "brick", hasItem: true, item: "coin" },
+                { x: 350, y: 340, width: 64, height: 32, type: "brick", hasItem: true, item: "mushroom" },
+                { x: 1200, y: 280, width: 96, height: 32, type: "platform", moving: true, moveAxis: "x", moveSpeed: 1, moveRange: 80 },
+                { x: 1500, y: 360, width: 64, height: 60, type: "pipe" },
+                { x: 1700, y: 340, width: 64, height: 32, type: "brick", hasItem: true, item: "coin" },
+                { x: 2400, y: 300, width: 96, height: 32, type: "platform", moving: true, moveAxis: "x", moveSpeed: 1.2, moveRange: 100 },
+                { x: 2600, y: 240, width: 96, height: 32, type: "platform", moving: true, moveAxis: "x", moveSpeed: 1, moveRange: 80 },
+                { x: 2800, y: 360, width: 64, height: 60, type: "pipe" },
+                { x: 3000, y: 340, width: 64, height: 32, type: "brick", hasItem: true, item: "star" },
+                { x: 3700, y: 340, width: 64, height: 32, type: "brick", hasItem: true, item: "mushroom" },
+                { x: 3900, y: 300, width: 96, height: 32, type: "platform", moving: true, moveAxis: "x", moveSpeed: 1.5, moveRange: 120 },
+                { x: 4100, y: 360, width: 64, height: 60, type: "pipe" },
+                { x: 4300, y: 340, width: 64, height: 32, type: "brick", hasItem: true, item: "coin" },
+                { x: 5000, y: 300, width: 96, height: 32, type: "platform", moving: true, moveAxis: "x", moveSpeed: 1.2, moveRange: 100 },
+                { x: 5200, y: 260, width: 96, height: 32, type: "platform", moving: true, moveAxis: "x", moveSpeed: 1, moveRange: 80 },
+                { x: 5300, y: 340, width: 64, height: 32, type: "brick", hasItem: true, item: "mushroom" },
+                { x: 5800, y: 340, width: 64, height: 32, type: "brick", hasItem: true, item: "coin" },
+                { x: 6000, y: 340, width: 64, height: 32, type: "brick", hasItem: true, item: "star" },
+                { x: 6200, y: 340, width: 64, height: 32, type: "brick", hasItem: true, item: "mushroom" },
+            ],
+            enemies: [
+                { x: 500, y: 392, type: "goomba" },
+                { x: 1100, y: 392, type: "goomba" },
+                { x: 1900, y: 392, type: "goomba" },
+                { x: 3100, y: 392, type: "goomba" },
+                { x: 3200, y: 392, type: "goomba" },
+                { x: 3300, y: 392, type: "goomba" },
+                { x: 3400, y: 392, type: "koopa" },
+                { x: 4400, y: 392, type: "goomba" },
+                { x: 4500, y: 392, type: "koopa" },
+                { x: 5400, y: 392, type: "goomba" },
+                { x: 5500, y: 392, type: "koopa" },
+                { x: 6000, y: 392, type: "koopa" },
+                { x: 6200, y: 392, type: "goomba" },
+                { x: 6400, y: 392, type: "koopa" },
+            ],
+            items: [],
+            hasBoss: true,
+            triggerPoints: [
+                { x: 800, type: "word", wordIndex: 0 },
+                { x: 2200, type: "word", wordIndex: 1 },
+                { x: 3700, type: "word", wordIndex: 2 },
+                { x: 4800, type: "word", wordIndex: 3 },
+                { x: 5800, type: "word", wordIndex: 4 },
+                { x: 6500, type: "boss" },
+                { x: 6900, type: "end" },
+            ]
+        },
+        'L3': {
             platforms: [
                 // ground
                 { x: 0, y: 420, width: 6000, height: 120, type: 'ground' },
@@ -361,7 +414,25 @@ const BOSS_QUESTIONS = {
             answer: 'cat'
         }
     ],
-    L3: [
+
+    L4: [
+        {
+            question: 'It is a ___.',
+            options: ['dad', 'duck', 'apple', 'cat'],
+            answer: 'dad'
+        },
+        {
+            question: 'The ___ is sleeping on the sofa.',
+            options: ['dog', 'desk', 'door', 'duck'],
+            answer: 'cat'
+        },
+        {
+            question: 'It is a ___.',
+            options: ['door', 'cow', 'car', 'clock'],
+            answer: 'door'
+        }
+    ],
+    L3:[
         {
             question: 'It is a ___.',
             options: ['cow', 'cat', 'car', 'cake'],
