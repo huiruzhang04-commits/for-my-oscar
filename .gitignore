@@ -21,7 +21,14 @@ build/
 # Design docs (design only, not code)
 L*_implementation_progress.md
 task-summary_*.md
-ÊÀ½ç*ÍêÕûÉè¼Æ*.md
-µÚÈı¹ØÍêÕûÉè¼Æ.md
-µÚËÄ¹ØÍêÕûÉè¼Æ.md
-µÚÎå¹ØÍêÕûÉè¼Æ.md
+ï¿½ï¿½ï¿½ï¿½*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*.md
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.md
+ï¿½ï¿½ï¿½Ä¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.md
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.md
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
